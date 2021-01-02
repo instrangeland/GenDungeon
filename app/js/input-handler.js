@@ -50,11 +50,11 @@ function matchInput() {
         return 'You move west.';
     }
 
-    let currentRoom = map[player.x][player.y];
-
     // Create a room if it doesn't exist
-    if (!currentRoom)
+    if (!map[player.x][player.y])
         newRoom(player.x, player.y);
+
+    let currentRoom = map[player.x][player.y];
 
     // Looking
     if (nextWord('look')) {
