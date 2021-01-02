@@ -1,0 +1,13 @@
+{
+  "author": "Julian Lachniet",
+  "description": "A text adventure where you explore procedurally generally worlds.",
+  "devDependencies": {
+    "electron": "^11.1.1"
+  },
+  "license": "GPL-3.0",
+  "name": "proceduralta",
+  "scripts": {
+    "start": "electron ."
+  },
+  "version": "0.0.1"
+}

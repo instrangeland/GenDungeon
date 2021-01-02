@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('../ttf/PressStart2P-Regular.ttf')
+}
+
+body {
+    margin: 0
+}
+
+body, #input-box {
+    background-color: #111;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px
+}
+
+#log {
+    bottom: 32px;
+    box-sizing: border-box;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+    padding: 16px;
+    position: absolute;
+    width: 100%
+}
+
+::selection {
+    background-color: #7be
+}
+
+.msg-system, .msg-game, .msg-player {
+    margin-bottom: 16px
+}
+
+.msg-system {
+    color: #add
+}
+
+.msg-game {
+    color: #eee
+}
+
+.msg-player, #input-prefix, #input-box {
+    color: #aaa
+}
+
+#input-prefix, #input-wrapper {
+    bottom: 16px;
+    position: absolute
+}
+
+#input-prefix {
+    left: 16px
+}
+
+#input-wrapper {
+    left: 48px;
+    right: 16px
+}
+
+#input-box {
+    border: none;
+    padding: 0;
+    width: 100%
+}
+
+#input-box:focus {
+    outline: none
+}
+
+#input-box::placeholder {
+    color: #666
+}
