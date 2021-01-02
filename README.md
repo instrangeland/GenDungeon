@@ -1,6 +1,6 @@
 # ProceduralTA
 
-A text adventure where you explore procedurally generally worlds.
+A text adventure where you explore procedurally generated worlds.
 
 ## Installation
 
