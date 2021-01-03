@@ -2,9 +2,9 @@
 
 'use strict';
 
-const {ipcRenderer} = require('electron')
+const {ipcRenderer} = window.require('electron');
 
-window.$ = window.jQuery = require('jquery');
+window.$ = window.jQuery = window.require('jquery');
 
 const inputBox = $('#input-box');
 const log = $('#log');
