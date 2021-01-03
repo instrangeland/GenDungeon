@@ -1,3 +1,5 @@
+// ProceduralTA is licensed under GNU General Public License v3.0.
+
 'use strict';
 
 let input;
@@ -13,7 +15,9 @@ $(window).keypress(() => {
     inputBox.trigger('focus');
 });
 
-// Called upon submitting the form
+/**
+ * Takes user input, passes it to matchInput() and logs the result
+ */
 function newInput() {
     input = inputBox.val();
     inputArray = input.toLowerCase().split(' ');
@@ -29,7 +33,10 @@ function newInput() {
     logMessage(matchInput(), 'msg-game').then();
 }
 
-// Checks the input to see what command the user intends
+/**
+ * Processes user input
+ * @return {string} The response to the input
+ */
 function matchInput() {
 
     // Moving
@@ -54,7 +61,7 @@ function matchInput() {
     if (!map[player.x][player.y])
         newRoom(player.x, player.y);
 
-    let currentRoom = map[player.x][player.y];
+    const currentRoom = map[player.x][player.y];
 
     // Looking
     if (nextWord('look')) {
@@ -69,7 +76,7 @@ function matchInput() {
             return 'What do you want to look at?';
 
         // Looking at something
-        let object = getObject(currentRoom, wordsLeft());
+        const object = getObject(currentRoom, wordsLeft());
         if (object)
             return object;
         else
@@ -77,21 +84,30 @@ function matchInput() {
     }
 
     // If the matcher doesn't find anything, try looking for an object in the current room
-    let object = getObject(currentRoom, wordsLeft());
+    const object = getObject(currentRoom, wordsLeft());
     if (object)
         return object;
+
+    // Give up
     return 'Unknown command.';
 }
 
-// Checks the next word to see if it matches something, and removes it if it does
+/**
+ * Compares the next word in the input to a given word, and removes it if it matches
+ * @param match The word to check against
+ * @return {boolean} Whether the word matches
+ */
 function nextWord(match) {
-    let word = inputArray[0];
+    const word = inputArray[0];
     if (word === match)
         inputArray.shift();
     return word === match;
 }
 
-// Gets the words still in the array
+/**
+ * Gets all unparsed words
+ * @return {string} The remaining words
+ */
 function wordsLeft() {
     return inputArray.join(' ');
 }

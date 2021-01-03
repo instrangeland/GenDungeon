@@ -1,3 +1,5 @@
+// ProceduralTA is licensed under GNU General Public License v3.0.
+
 'use strict';
 
 const inputBox = $('#input-box');
@@ -9,7 +11,12 @@ const charDelay = 10;
 const titleMessage = 'Welcome to ProceduralTA!';
 const introMessage = 'You are in a room. [0, 0]';
 
-// Animate a message appearing on screen
+/**
+ * Animates a message appearing on screen
+ * @param message The message to render
+ * @param type The type of message (msg-system, msg-game, or msg-player)
+ * @return {Promise<void>} Async promise
+ */
 async function logMessage(message, type) {
     const entry = $('<div></div>').addClass(type).appendTo(log);
     for (const char of message) {
@@ -21,7 +28,7 @@ async function logMessage(message, type) {
     }
 }
 
-// Log intro messages on load
+// Log start messages
 $(() => {
     logMessage(titleMessage, 'msg-system').then();
     logMessage(introMessage, 'msg-game').then();
