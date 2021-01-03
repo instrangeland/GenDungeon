@@ -4,23 +4,18 @@
 
 const {ipcRenderer} = window.require('electron');
 
-window.$ = window.jQuery = window.require('jquery');
+window.$ = window.require('jquery');
 
 const inputBox = $('#input-box');
 const log = $('#log');
 
-// The time between individual characters rendering in the animation
 const charDelay = 10;
 
 const titleMessage = 'Welcome to ProceduralTA!';
 const introMessage = 'You are in a room.';
 
-/**
- * Animates a message appearing on screen
- * @param message The message to render
- * @param type The type of message (msg-system, msg-game, or msg-player)
- * @return {Promise<void>} Async promise
- */
+const gameData = {};
+
 async function logMessage(message, type) {
     const entry = $('<div></div>').addClass(type).appendTo(log);
     for (const char of message) {
@@ -32,17 +27,9 @@ async function logMessage(message, type) {
     }
 }
 
-// Game start
 $(() => {
+    gameData.map = new GameMap();
+    gameData.player = new Player();
     logMessage(titleMessage, 'msg-system').then();
     logMessage(introMessage, 'msg-game').then();
-});
-
-// Load game save if it exists
-ipcRenderer.send('loadGame');
-ipcRenderer.on('loadGame-reply', (event, saveData) => {
-    if (saveData) {
-        player = saveData['player'];
-        map = saveData['map'];
-    }
 });

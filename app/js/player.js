@@ -2,6 +2,7 @@
 
 'use strict';
 
-let player = {};
-player.x = 0;
-player.y = 0;
+function Player() {
+    this.y = 0;
+    this.x = 0;
+}
