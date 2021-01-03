@@ -31,6 +31,11 @@ function newInput() {
 
     logMessage('> ' + input, 'msg-player').then();
     logMessage(matchInput(), 'msg-game').then();
+
+    const save = {};
+    save.player = player;
+    save.map = map;
+    ipcRenderer.send('saveGame', save);
 }
 
 /**

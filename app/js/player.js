@@ -2,6 +2,6 @@
 
 'use strict';
 
-const player = {};
+let player = {};
 player.x = 0;
 player.y = 0;

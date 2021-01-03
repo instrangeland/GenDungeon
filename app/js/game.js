@@ -2,6 +2,10 @@
 
 'use strict';
 
+const {ipcRenderer} = require('electron')
+
+window.$ = window.jQuery = require('jquery');
+
 const inputBox = $('#input-box');
 const log = $('#log');
 
@@ -9,7 +13,7 @@ const log = $('#log');
 const charDelay = 10;
 
 const titleMessage = 'Welcome to ProceduralTA!';
-const introMessage = 'You are in a room. [0, 0]';
+const introMessage = 'You are in a room.';
 
 /**
  * Animates a message appearing on screen
@@ -28,8 +32,17 @@ async function logMessage(message, type) {
     }
 }
 
-// Log start messages
+// Game start
 $(() => {
     logMessage(titleMessage, 'msg-system').then();
     logMessage(introMessage, 'msg-game').then();
+});
+
+// Load game save if it exists
+ipcRenderer.send('loadGame');
+ipcRenderer.on('loadGame-reply', (event, saveData) => {
+    if (saveData) {
+        player = saveData['player'];
+        map = saveData['map'];
+    }
 });

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const map = {};
+let map = {};
 
 /**
  * Creates a new room at given coordinates
