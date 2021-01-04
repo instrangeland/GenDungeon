@@ -2,8 +2,12 @@
 
 'use strict';
 
-function GameMap() {
-    this.addRoom = (y, x) => {
+class GameMap {
+    constructor() {
+        this.addRoom(0, 0);
+    }
+
+    addRoom(y, x) {
         if (!this[y]) {
             this[y] = {};
         }
@@ -13,6 +17,4 @@ function GameMap() {
             this[y][x].addMonster('Skeleton', 5);
         }
     }
-
-    this.addRoom(0, 0);
 }

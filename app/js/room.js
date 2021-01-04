@@ -2,17 +2,19 @@
 
 'use strict';
 
-function Room() {
-    this.monsters = [];
+class Room {
+    constructor() {
+        this.monsters = [];
+    }
 
-    this.addMonster = (name, hp) => {
+    addMonster(name, hp) {
         this.monsters.push({
             name: name,
             hp: hp
         });
     }
 
-    this.printMonsters = () => {
+    printMonsters() {
         let monsterDescriptions = '';
         for (const [index, monster] of this.monsters.entries()) {
             monsterDescriptions += `\n${(index + 1)}) ${monster.name} - ${monster.hp} HP`;
@@ -20,7 +22,7 @@ function Room() {
         return monsterDescriptions;
     }
 
-    this.printObject = name => {
+    printObject(name) {
         for (const monster of this.monsters) {
             if (monster.name.toLowerCase() === name) {
                 return 'You are looking at: ' + monster.name;

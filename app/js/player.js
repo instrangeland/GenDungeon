@@ -2,7 +2,9 @@
 
 'use strict';
 
-function Player() {
-    this.y = 0;
-    this.x = 0;
+class Player {
+    constructor() {
+        this.y = 0;
+        this.x = 0;
+    }
 }
