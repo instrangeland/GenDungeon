@@ -14,7 +14,7 @@ function newWindow() {
             nodeIntegration: true
         }
     });
-    window.openDevTools();
+    // window.openDevTools();
     window.removeMenu();
     window.loadFile('app/index.html').then();
 }
