@@ -25,8 +25,6 @@ function newInput() {
 
     logMessage('> ' + input, 'msg-player').then();
     logMessage(matchInput(), 'msg-game').then();
-
-    ipcRenderer.send('saveGame', JSON.parse(JSON.stringify(gameData)));
 }
 
 function matchInput() {
