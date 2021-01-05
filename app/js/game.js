@@ -12,6 +12,13 @@ const introMessage = 'You are in a room.';
 
 const gameData = {};
 
+/**
+ * Writes a message to the in-game console.
+ *
+ * @param message {string}  the message to write
+ * @param type {string}     css class to apply
+ * @returns {Promise<void>}
+ */
 async function logMessage(message, type) {
     const entry = $('<div></div>').addClass(type).appendTo(log);
     for (const char of message) {

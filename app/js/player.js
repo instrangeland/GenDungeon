@@ -2,6 +2,9 @@
 
 'use strict';
 
+/**
+ * Contains all information relevant to the player.
+ */
 class Player {
     constructor() {
         this.y = 0;

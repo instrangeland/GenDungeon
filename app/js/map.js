@@ -2,11 +2,19 @@
 
 'use strict';
 
+/**
+ * The map of the game.
+ */
 class GameMap {
     constructor() {
         this.addRoom(0, 0);
     }
 
+    /**
+     * Adds a room to the map.
+     * @param y {number}    the y-coordinate of the room
+     * @param x {number}    the x-coordinate of the room
+     */
     addRoom(y, x) {
         if (!this[y]) {
             this[y] = {};

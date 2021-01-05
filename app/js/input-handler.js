@@ -27,63 +27,78 @@ function newInput() {
     logMessage(matchInput(), 'msg-game').then();
 }
 
+/**
+ * Parses and handles user input, returning a string that should be printed to in-game console.
+ * @returns {string}
+ */
 function matchInput() {
-    const cMap = gameData.map;
-    const cPlayer = gameData.player;
+    const map = gameData.map;
+    const player = gameData.player;
 
     let response = 'Unknown command.'
 
     if (nextWord('north')) {
-        cPlayer.y++;
+        player.y++;
         response = 'You move north.';
     }
     if (nextWord('south')) {
-        cPlayer.y--;
+        player.y--;
         response = 'You move south.';
     }
     if (nextWord('east')) {
-        cPlayer.x++;
+        player.x++;
         response = 'You move east.';
     }
     if (nextWord('west')) {
-        cPlayer.x--;
+        player.x--;
         response = 'You move west.';
     }
 
-    if (!cMap[cPlayer.y]) {
-        cMap.addRoom(cPlayer.y, cPlayer.x);
-    } else if (!cMap[cPlayer.y][cPlayer.x]) {
-        cMap.addRoom(cPlayer.y, cPlayer.x);
+    if (!map[player.y]) {
+        map.addRoom(player.y, player.x);
+    } else if (!map[player.y][player.x]) {
+        map.addRoom(player.y, player.x);
     }
 
-    const cRoom = gameData.map[gameData.player.y][gameData.player.x];
+    const room = gameData.map[gameData.player.y][gameData.player.x];
 
+    /* "look [...]" */
     if (nextWord('look')) {
 
-        if (nextWord('around') || !wordsLeft())
-            return 'You are at [' + cPlayer.x + ', ' + cPlayer.y + '].\n' +
-                'Contents of this room: ' + cRoom.printMonsters();
+        /* "look" OR "look around [...]" */
+        if (nextWord('around') || !remainingWords())
+            return 'You are at [' + player.x + ', ' + player.y + '].\n' +
+                'Contents of this room: ' + room.listMonsters();
 
-        if (nextWord('at') && !wordsLeft())
+        /* "look at" */
+        if (nextWord('at') && !remainingWords())
             return 'What do you want to look at?';
 
-        const object = cRoom.printObject(wordsLeft());
-        if (object)
-            return object;
+        /* "look at [...]" */
+        const thing = room.lookAtMonster(remainingWords());
+        if (thing)
+            return thing;
         else
             return 'That doesn\'t exist here.';
     }
 
-    const object = cRoom.printObject(wordsLeft());
-    if (object)
-        return object;
+    /* "zombie" */
+    const thing = room.lookAtMonster(remainingWords());
+    if (thing)
+        return thing;
 
-    gameData.map = cMap;
-    gameData.player = cPlayer;
+    gameData.map = map;
+    gameData.player = player;
 
     return response;
 }
 
+/**
+ * Pops if given word matches next word, delimited by spaces, of the user input.
+ *
+ * @param match {string} word to match
+ * @returns {boolean} if words match
+ */
 function nextWord(match) {
     const word = inputArray[0];
     if (word === match)
@@ -91,6 +106,10 @@ function nextWord(match) {
     return word === match;
 }
 
-function wordsLeft() {
+/**
+ * Returns the rest of the unpopped words.
+ * @returns {string} the rest of the unpopped words
+ */
+function remainingWords() {
     return inputArray.join(' ');
 }
