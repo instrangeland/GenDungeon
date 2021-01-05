@@ -25,6 +25,7 @@ function newInput() {
 
     logMessage('> ' + input, 'msg-player').then();
     logMessage(matchInput(), 'msg-game').then();
+    log.scrollTop(log.prop('scrollHeight'));
 }
 
 /**
@@ -37,22 +38,22 @@ function matchInput() {
 
     nextWord('go');
 
-    /* "north [...]" */
+    /* NORTH ... */
     if (nextWord('north')) {
         player.y++;
         return 'You move north.';
     }
-    /* "south [...]" */
+    /* SOUTH ... */
     if (nextWord('south')) {
         player.y--;
         return 'You move south.';
     }
-    /* "east [...]" */
+    /* EAST ... */
     if (nextWord('east')) {
         player.x++;
         return 'You move east.';
     }
-    /* "west [...]" */
+    /* WEST ... */
     if (nextWord('west')) {
         player.x--;
         return 'You move west.';
@@ -64,22 +65,22 @@ function matchInput() {
         map.addRoom(player.y, player.x);
     }
 
-    const room = gameData.map[gameData.player.y][gameData.player.x];
+    const room = gameData.map[player.y][player.x];
 
-    /* "look [...]" */
+    /* LOOK ... */
     if (nextWord('look')) {
 
-        /* "look" OR "look around [...]" */
+        /* LOOK or LOOK AROUND ... */
         if (nextWord('around') || !remainingWords()) {
             return `You are at [${player.x}, ${player.y}].\nContents of this room: ${room.listMonsters()}`;
         }
 
-        /* "look at" */
+        /* LOOK AT */
         if (nextWord('at') && !remainingWords()) {
             return 'What do you want to look at?';
         }
 
-        /* "look at (thing)" */
+        /* LOOK ... or LOOK AT ... */
         const thing = room.getMonster(remainingWords());
         if (thing) {
             return `You are looking at: ${thing.species}.`;
@@ -87,15 +88,15 @@ function matchInput() {
         return 'That doesn\'t exist here.';
     }
 
-    /* "attack [...]" */
+    /* ATTACK ... */
     if (nextWord('attack')) {
 
-        /* "attack" */
+        /* ATTACK */
         if (!remainingWords()) {
             return 'What do you want to attack?';
         }
 
-        /* "attack (thing)" */
+        /* ATTACK ... */
         const monster = room.getMonster(remainingWords());
         if (monster) {
             monster.hp--;
@@ -108,7 +109,7 @@ function matchInput() {
         return 'That doesn\'t exist here.';
     }
 
-    /* "(thing)" */
+    /* ... */
     const thing = room.getMonster(remainingWords());
     if (thing) {
         return `You are looking at: ${thing.species}.`;

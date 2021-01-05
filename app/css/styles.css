@@ -16,13 +16,19 @@ body, #input-box {
 }
 
 #log {
-    bottom: 32px;
+    bottom: 48px;
     box-sizing: border-box;
     line-height: 1.5;
     overflow-wrap: break-word;
+    overflow-y: auto;
     padding: 16px;
     position: absolute;
+    top: 0;
     width: 100%
+}
+
+#log::-webkit-scrollbar {
+    display: none;
 }
 
 ::selection {
