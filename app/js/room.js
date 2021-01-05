@@ -13,14 +13,10 @@ class Room {
     /**
      * Adds a monster to this room.
      *
-     * @param name {string} the name of the monster
-     * @param hp {number}   the health-points of the monster
+     * @param type {string} the type of the monster
      */
-    addMonster(name, hp) {
-        this.monsters.push({
-            name: name,
-            hp: hp
-        });
+    addMonster(type) {
+        this.monsters.push(new Monster(type));
     }
 
     /**
@@ -31,15 +27,15 @@ class Room {
     listMonsters() {
         let monsterDescriptions = '';
         for (const [index, monster] of this.monsters.entries()) {
-            monsterDescriptions += `\n${(index + 1)}) ${monster.name} - ${monster.hp} HP`;
+            monsterDescriptions += `\n${(index + 1)}) ${monster.type} - ${monster.hp} HP`;
         }
         return monsterDescriptions;
     }
 
     lookAtMonster(name) {
         for (const monster of this.monsters) {
-            if (monster.name.toLowerCase() === name) {
-                return 'You are looking at: ' + monster.name;
+            if (monster.type.toLowerCase() === name) {
+                return 'You are looking at: ' + monster.type;
             }
         }
         return false;

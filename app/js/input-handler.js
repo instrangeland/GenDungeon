@@ -37,18 +37,22 @@ function matchInput() {
 
     let response = 'Unknown command.'
 
+    /* "north [...]" */
     if (nextWord('north')) {
         player.y++;
         response = 'You move north.';
     }
+    /* "south [...]" */
     if (nextWord('south')) {
         player.y--;
         response = 'You move south.';
     }
+    /* "east [...]" */
     if (nextWord('east')) {
         player.x++;
         response = 'You move east.';
     }
+    /* "west [...]" */
     if (nextWord('west')) {
         player.x--;
         response = 'You move west.';
@@ -66,26 +70,30 @@ function matchInput() {
     if (nextWord('look')) {
 
         /* "look" OR "look around [...]" */
-        if (nextWord('around') || !remainingWords())
+        if (nextWord('around') || !remainingWords()) {
             return 'You are at [' + player.x + ', ' + player.y + '].\n' +
                 'Contents of this room: ' + room.listMonsters();
+        }
 
         /* "look at" */
-        if (nextWord('at') && !remainingWords())
+        if (nextWord('at') && !remainingWords()) {
             return 'What do you want to look at?';
+        }
 
         /* "look at [...]" */
         const thing = room.lookAtMonster(remainingWords());
-        if (thing)
+        if (thing) {
             return thing;
-        else
+        } else {
             return 'That doesn\'t exist here.';
+        }
     }
 
     /* "zombie" */
     const thing = room.lookAtMonster(remainingWords());
-    if (thing)
+    if (thing) {
         return thing;
+    }
 
     gameData.map = map;
     gameData.player = player;
@@ -101,8 +109,9 @@ function matchInput() {
  */
 function nextWord(match) {
     const word = inputArray[0];
-    if (word === match)
+    if (word === match) {
         inputArray.shift();
+    }
     return word === match;
 }
 

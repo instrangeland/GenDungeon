@@ -7,7 +7,8 @@
   "license": "GPL-3.0",
   "name": "proceduralta",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "electron . test"
   },
   "version": "0.0.1",
   "dependencies": {

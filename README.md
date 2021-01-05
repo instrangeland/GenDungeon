@@ -14,6 +14,7 @@ npm install
 
 ```shell
 npm start
+npm test
 ```
 
 ## License

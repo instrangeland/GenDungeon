@@ -22,10 +22,11 @@ const gameData = {};
 async function logMessage(message, type) {
     const entry = $('<div></div>').addClass(type).appendTo(log);
     for (const char of message) {
-        if (char === '\n')
+        if (char === '\n') {
             entry.append('<br>');
-        else
+        } else {
             entry.append(char);
+        }
         await new Promise(resolve => setTimeout(resolve, charDelay));
     }
 }

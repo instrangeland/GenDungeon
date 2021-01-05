@@ -14,7 +14,9 @@ function newWindow() {
             nodeIntegration: true
         }
     });
-    // window.openDevTools();
+    if (process.argv.includes('test')) {
+        window.openDevTools();
+    }
     window.removeMenu();
     window.loadFile('app/index.html').then();
 }
@@ -22,11 +24,13 @@ function newWindow() {
 app.whenReady().then(newWindow);
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin')
+    if (process.platform !== 'darwin') {
         app.quit();
+    }
 });
 
 app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0)
+    if (BrowserWindow.getAllWindows().length === 0) {
         newWindow();
+    }
 });
