@@ -2,16 +2,16 @@
 
 'use strict';
 
-const monsterTypes = {
+const monsterSpecies = {
     ZOMBIE: 'Zombie',
     SKELETON: 'Skeleton'
 };
 
-Object.freeze(monsterTypes);
+Object.freeze(monsterSpecies);
 
 class Monster {
     constructor(type) {
-        this.type = type;
-        this.hp = 5;
+        this.species = type;
+        this.hp = 2;
     }
 }

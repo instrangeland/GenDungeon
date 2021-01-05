@@ -27,17 +27,25 @@ class Room {
     listMonsters() {
         let monsterDescriptions = '';
         for (const [index, monster] of this.monsters.entries()) {
-            monsterDescriptions += `\n${(index + 1)}) ${monster.type} - ${monster.hp} HP`;
+            monsterDescriptions += `\n${(index + 1)}) ${monster.species} - ${monster.hp} HP`;
         }
         return monsterDescriptions;
     }
 
-    lookAtMonster(name) {
+    getMonster(type) {
         for (const monster of this.monsters) {
-            if (monster.type.toLowerCase() === name) {
-                return 'You are looking at: ' + monster.type;
+            if (monster.species.toLowerCase() === type) {
+                return monster;
             }
         }
         return false;
+    }
+
+    removeMonster(type) {
+        for (const [index, monster] of this.monsters.entries()) {
+            if (monster.species.toLowerCase() === type) {
+                this.monsters.splice(index);
+            }
+        }
     }
 }

@@ -35,27 +35,27 @@ function matchInput() {
     const map = gameData.map;
     const player = gameData.player;
 
-    let response = 'Unknown command.'
+    nextWord('go');
 
     /* "north [...]" */
     if (nextWord('north')) {
         player.y++;
-        response = 'You move north.';
+        return 'You move north.';
     }
     /* "south [...]" */
     if (nextWord('south')) {
         player.y--;
-        response = 'You move south.';
+        return 'You move south.';
     }
     /* "east [...]" */
     if (nextWord('east')) {
         player.x++;
-        response = 'You move east.';
+        return 'You move east.';
     }
     /* "west [...]" */
     if (nextWord('west')) {
         player.x--;
-        response = 'You move west.';
+        return 'You move west.';
     }
 
     if (!map[player.y]) {
@@ -71,8 +71,7 @@ function matchInput() {
 
         /* "look" OR "look around [...]" */
         if (nextWord('around') || !remainingWords()) {
-            return 'You are at [' + player.x + ', ' + player.y + '].\n' +
-                'Contents of this room: ' + room.listMonsters();
+            return `You are at [${player.x}, ${player.y}].\nContents of this room: ${room.listMonsters()}`;
         }
 
         /* "look at" */
@@ -80,25 +79,42 @@ function matchInput() {
             return 'What do you want to look at?';
         }
 
-        /* "look at [...]" */
-        const thing = room.lookAtMonster(remainingWords());
+        /* "look at (thing)" */
+        const thing = room.getMonster(remainingWords());
         if (thing) {
-            return thing;
-        } else {
-            return 'That doesn\'t exist here.';
+            return `You are looking at: ${thing.species}.`;
         }
+        return 'That doesn\'t exist here.';
     }
 
-    /* "zombie" */
-    const thing = room.lookAtMonster(remainingWords());
+    /* "attack [...]" */
+    if (nextWord('attack')) {
+
+        /* "attack" */
+        if (!remainingWords()) {
+            return 'What do you want to attack?';
+        }
+
+        /* "attack (thing)" */
+        const monster = room.getMonster(remainingWords());
+        if (monster) {
+            monster.hp--;
+            if (monster.hp > 0) {
+                return `You did 1 damage, taking its HP down to ${monster.hp}.`;
+            }
+            room.removeMonster(remainingWords());
+            return `You did 1 damage. The ${monster.species.toLowerCase()} is now dead.`;
+        }
+        return 'That doesn\'t exist here.';
+    }
+
+    /* "(thing)" */
+    const thing = room.getMonster(remainingWords());
     if (thing) {
-        return thing;
+        return `You are looking at: ${thing.species}.`;
     }
 
-    gameData.map = map;
-    gameData.player = player;
-
-    return response;
+    return 'Unknown command';
 }
 
 /**

@@ -17,6 +17,7 @@ function newWindow() {
     if (process.argv.includes('test')) {
         window.openDevTools();
     }
+    window.setTitle('ProceduralTA');
     window.removeMenu();
     window.loadFile('app/index.html').then();
 }
