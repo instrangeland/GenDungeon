@@ -25,7 +25,6 @@ function newInput() {
 
     logMessage('> ' + input, 'msg-player').then();
     logMessage(matchInput(), 'msg-game').then();
-    log.scrollTop(log.prop('scrollHeight'));
 }
 
 /**

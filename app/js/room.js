@@ -44,7 +44,7 @@ class Room {
     removeMonster(type) {
         for (const [index, monster] of this.monsters.entries()) {
             if (monster.species.toLowerCase() === type) {
-                this.monsters.splice(index);
+                this.monsters.splice(index, 1);
             }
         }
     }

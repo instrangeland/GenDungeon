@@ -28,6 +28,7 @@ async function logMessage(message, type) {
             entry.append(char);
         }
         await new Promise(resolve => setTimeout(resolve, charDelay));
+        log.scrollTop(log.prop('scrollHeight'));
     }
 }
 
