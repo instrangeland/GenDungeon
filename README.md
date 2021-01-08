@@ -1,6 +1,9 @@
+![ProceduralTA Icon](icon.png)
 # ProceduralTA
 
 A text adventure where you explore procedurally generated worlds.
+
+![ProceduralTA Gameplay Screenshot](screenshot.png)
 
 ## Installation
 
