@@ -1,4 +1,4 @@
-![ProceduralTA Icon](icon.png)
+![ProceduralTA Icon](icon-225.png)
 # ProceduralTA
 
 A text adventure where you explore procedurally generated worlds.
