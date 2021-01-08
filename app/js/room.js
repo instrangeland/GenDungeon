@@ -17,6 +17,7 @@ class Room {
      */
     addMonster(type) {
         this.monsters.push(new Monster(type));
+        return this;
     }
 
     /**
@@ -33,12 +34,7 @@ class Room {
     }
 
     getMonster(type) {
-        for (const monster of this.monsters) {
-            if (monster.species.toLowerCase() === type) {
-                return monster;
-            }
-        }
-        return false;
+        return this.monsters.find(monster => monster.species.toLowerCase() === type);
     }
 
     removeMonster(type) {

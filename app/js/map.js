@@ -21,8 +21,7 @@ class GameMap {
         }
         if (!this[y][x]) {
             this[y][x] = new Room();
-            this[y][x].addMonster(monsterSpecies.ZOMBIE);
-            this[y][x].addMonster(monsterSpecies.SKELETON);
+            this[y][x].addMonster(monsterSpecies.ZOMBIE).addMonster(monsterSpecies.SKELETON);
         }
     }
 }

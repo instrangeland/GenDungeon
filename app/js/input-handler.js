@@ -24,14 +24,15 @@ function newInput() {
     inputBox.val('');
 
     logMessage('> ' + input, 'msg-player').then();
-    logMessage(matchInput(), 'msg-game').then();
+    logMessage(handleInput(), 'msg-game').then();
+    return false;
 }
 
 /**
  * Parses and handles user input, returning a string that should be printed to in-game console.
  * @returns {string}
  */
-function matchInput() {
+function handleInput() {
     const map = gameData.map;
     const player = gameData.player;
 

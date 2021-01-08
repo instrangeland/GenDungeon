@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+    <meta charset="utf-8">
     <title>ProceduralTA</title>
     <link rel="stylesheet" href="css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,9 +11,9 @@
 <body>
 
 <div id="log"></div>
-<div id="input-prefix">&gt</div>
+<div id="input-prefix">&gt;</div>
 <div id="input-wrapper">
-    <form onsubmit="newInput(); return false">
+    <form onsubmit="return newInput()">
         <label>
             <input id="input-box" type="text" placeholder="You can type here!" autocomplete="off">
         </label>
