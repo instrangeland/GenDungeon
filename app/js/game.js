@@ -12,6 +12,43 @@ const introMessage = 'You are in a room.';
 
 const gameData = {};
 
+let input;
+let inputArray;
+
+$(() => {
+    inputBox.trigger('focus');
+});
+
+$(window).keypress(() => {
+    inputBox.trigger('focus');
+});
+
+function newInput() {
+    input = inputBox.val();
+    inputArray = input.toLowerCase().split(' ');
+
+    inputArray = inputArray.filter(word => word !== 'a');
+    inputArray = inputArray.filter(word => word !== 'an');
+    inputArray = inputArray.filter(word => word !== 'the');
+
+    inputBox.val('');
+
+    logMessage('> ' + input, 'msg-player').then();
+    let response = handleInput();
+
+    for (const monster of gameData.map[gameData.player.y][gameData.player.x].monsters) {
+        if (monsterAttacksPlayer(gameData.player, monster)) {
+            response += `\n* The ${monster.species} attacks you, doing ${monster.strength} damage.`;
+        } else {
+            response += `\n* The ${monster.species} attacks you, killing you.`;
+        }
+    }
+
+    logMessage(response, 'msg-game').then();
+
+    return false;
+}
+
 /**
  * Writes a message to the in-game console.
  *

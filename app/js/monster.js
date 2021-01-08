@@ -10,8 +10,9 @@ const monsterSpecies = {
 Object.freeze(monsterSpecies);
 
 class Monster {
-    constructor(type) {
-        this.species = type;
+    constructor(species) {
+        this.species = species;
         this.hp = 2;
+        this.strength = 1;
     }
 }

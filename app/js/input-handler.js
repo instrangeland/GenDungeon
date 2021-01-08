@@ -2,32 +2,6 @@
 
 'use strict';
 
-let input;
-let inputArray;
-
-$(() => {
-    inputBox.trigger('focus');
-});
-
-$(window).keypress(() => {
-    inputBox.trigger('focus');
-});
-
-function newInput() {
-    input = inputBox.val();
-    inputArray = input.toLowerCase().split(' ');
-
-    inputArray = inputArray.filter(word => word !== 'a');
-    inputArray = inputArray.filter(word => word !== 'an');
-    inputArray = inputArray.filter(word => word !== 'the');
-
-    inputBox.val('');
-
-    logMessage('> ' + input, 'msg-player').then();
-    logMessage(handleInput(), 'msg-game').then();
-    return false;
-}
-
 /**
  * Parses and handles user input, returning a string that should be printed to in-game console.
  * @returns {string}
@@ -99,8 +73,7 @@ function handleInput() {
         /* ATTACK ... */
         const monster = room.getMonster(remainingWords());
         if (monster) {
-            monster.hp--;
-            if (monster.hp > 0) {
+            if (playerAttacksMonster(player, monster)) {
                 return `You did 1 damage, taking its HP down to ${monster.hp}.`;
             }
             room.removeMonster(remainingWords());

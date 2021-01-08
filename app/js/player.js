@@ -9,5 +9,7 @@ class Player {
     constructor() {
         this.y = 0;
         this.x = 0;
+        this.hp = 5;
+        this.strength = 1;
     }
 }
