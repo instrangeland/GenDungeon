@@ -25,7 +25,7 @@ $(window).keypress(() => {
 
 function newInput() {
     input = inputBox.val();
-    inputArray = input.toLowerCase().split(' ');
+    inputArray = input.trim().toLowerCase().split(' ');
 
     inputArray = inputArray.filter(word => word !== 'a');
     inputArray = inputArray.filter(word => word !== 'an');
