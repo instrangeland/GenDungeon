@@ -1,4 +1,5 @@
 ![ProceduralTA Icon](icon-225.png)
+
 # ProceduralTA
 
 A text adventure where you explore procedurally generated worlds.
@@ -9,16 +10,30 @@ A text adventure where you explore procedurally generated worlds.
 
 ProceduralTA is built with Electron using node.js and npm.
 
-```shell
+```
 npm install
 ```
 
 ## Usage
 
-```shell
+ProceduralTA can be run with
+
+```
 npm start
+```
+
+You can also run it with developer console enabled for debugging with
+
+```
 npm test
 ```
+
+## Building
+
+```
+electron-builder build
+```
+
 
 ## License
 
