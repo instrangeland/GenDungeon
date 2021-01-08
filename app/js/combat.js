@@ -4,7 +4,6 @@
 
 function playerAttacksMonster(player, monster) {
     monster.hp -= player.strength;
-    console.log(monster.hp);
     return monster.hp > 0;
 }
 
