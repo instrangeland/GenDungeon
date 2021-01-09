@@ -46,7 +46,7 @@ function handleInput(input) {
 
     if (nextWord('look')) {
         if (nextWord('around') || !remainingWords()) {
-            return `You are at [${player.x}, ${player.y}].\nContents of this room:\n${room.listMonsters()}`;
+            return `* ${room.description} *\n\nYou are at [${player.x}, ${player.y}].\nContents of this room:\n${room.listMonsters()}`;
         }
         if (nextWord('at') && !remainingWords()) {
             return ['What do you want to look at?', '(Try: look at thing)'];

@@ -36,6 +36,10 @@ function equalsCI(str1, str2) {
     return str1.toLowerCase() === str2.toLowerCase();
 }
 
+function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
 /**
  * Gets input from the user, parses the input, and logs the input and response.
  * @return {boolean} Always false to prevent page reload

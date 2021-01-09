@@ -12,6 +12,37 @@ class Room {
      */
     constructor() {
         this.monsters = [];
+        this.description = this.generateTitle();
+    }
+
+    /**
+     * Generates a random room description
+     * @return {string} The description
+     */
+    generateTitle() {
+        const adjectives = [
+            'An unlit',
+            'A dark',
+            'A dimly lit',
+            'A bright',
+            'A mysterious',
+            'An eerie',
+            'An unnerving',
+            'A slanted',
+            'A round',
+            'A curved',
+            'A pristine'
+        ];
+
+        const nouns = [
+            'room',
+            'passageway',
+            'corridor',
+            'tunnel',
+            'chamber'
+        ];
+
+        return `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
     }
 
     /**
