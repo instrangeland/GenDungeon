@@ -4,6 +4,9 @@
 
 const {app, BrowserWindow} = require('electron');
 
+/**
+ * Creates a new game window
+ */
 function newWindow() {
     const window = new BrowserWindow({
         width: 1000,

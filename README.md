@@ -1,10 +1,10 @@
-![ProceduralTA Icon](icon-225.png)
+![ProceduralTA Icon](readme-assets/logo.png)
 
 # ProceduralTA
 
 A text adventure where you explore procedurally generated worlds.
 
-![ProceduralTA Gameplay Screenshot](screenshot.png)
+![ProceduralTA Gameplay Screenshot](readme-assets/screenshot.png)
 
 ## Installation
 
