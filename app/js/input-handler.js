@@ -4,7 +4,7 @@
 
 /**
  * Handles user input
- * @param input The user input
+ * @param {string} input The user input
  * @return {string|string[]} The response to the input
  */
 function handleInput(input) {
@@ -82,7 +82,7 @@ function handleInput(input) {
 
     /**
      * Checks whether a given words matches the next word in the input, and removes it if it does.
-     * @param match The word to compare against
+     * @param {string} match The word to compare against
      * @return {boolean} Whether the words match
      */
     function nextWord(match) {

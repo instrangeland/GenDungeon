@@ -16,8 +16,8 @@ class GameMap {
 
     /**
      * Adds a room to the map.
-     * @param y The y-coordinate of the room
-     * @param x The x-coordinate of the room
+     * @param {number} y The y-coordinate of the room
+     * @param  {number}x The x-coordinate of the room
      * @return The map
      */
     addRoom(y, x) {

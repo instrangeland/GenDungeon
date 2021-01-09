@@ -14,7 +14,7 @@ const monsterSpecies = {
 class Monster {
     /**
      * Creates a monster.
-     * @param species The species of the monster
+     * @param {string} species The species of the monster
      */
     constructor(species) {
         this.species = species;

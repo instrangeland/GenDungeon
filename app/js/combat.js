@@ -4,8 +4,8 @@
 
 /**
  * Compute a player attacking a monster.
- * @param player The player
- * @param monster The monster
+ * @param {Player} player The player
+ * @param {Monster} monster The monster
  * @return {boolean} Whether the monster is still alive after the attack
  */
 function playerAttacksMonster(player, monster) {
@@ -15,8 +15,8 @@ function playerAttacksMonster(player, monster) {
 
 /**
  * Compute a monster attacking a player.
- * @param player The player
- * @param monster The monster
+ * @param {Player} player The player
+ * @param {Monster} monster The monster
  * @return {boolean} Whether the player is still alive after the attack
  */
 function monsterAttacksPlayer(player, monster) {

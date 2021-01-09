@@ -12,6 +12,12 @@ const charDelay = 10;
 
 const gameData = {};
 
+const logTypes = {
+    GAME: 'msg-game',
+    PLAYER: 'msg-player',
+    SYSTEM: 'msg-system'
+};
+
 $(() => {
     inputBox.trigger('focus');
 });
@@ -22,8 +28,8 @@ $(window).keypress(() => {
 
 /**
  * Compares two strings while ignoring case.
- * @param str1 The first string
- * @param str2 The second string
+ * @param {string} str1 The first string
+ * @param {string} str2 The second string
  * @return {boolean} Whether the strings match
  */
 function equalsCI(str1, str2) {
@@ -39,13 +45,13 @@ function newInput() {
     const response = handleInput(input);
     inputBox.val('');
 
-    logMessage('> ' + input, 'msg-player').then();
+    logMessage('> ' + input, logTypes.PLAYER).then();
 
     if (Array.isArray(response)) {
-        logMessage(response[0], 'msg-game').then();
-        logMessage(response[1], 'msg-system').then();
+        logMessage(response[0], logTypes.GAME).then();
+        logMessage(response[1], logTypes.SYSTEM).then();
     } else {
-        logMessage(response, 'msg-game').then();
+        logMessage(response, logTypes.GAME).then();
     }
 
     return false;
@@ -53,8 +59,8 @@ function newInput() {
 
 /**
  * Logs a message in the game UI.
- * @param message The message to log
- * @param type The type of message
+ * @param {string} message The message to log
+ * @param {string} type The type of message
  * @return {Promise<void>} Promise that the message will be logged
  */
 async function logMessage(message, type) {

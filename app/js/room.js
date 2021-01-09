@@ -16,7 +16,7 @@ class Room {
 
     /**
      * Gets a monster from a room given the species.
-     * @param species The species of the monster to find
+     * @param {string} species The species of the monster to find
      * @returns {Monster} The monster
      */
     getMonster(species) {
@@ -25,7 +25,7 @@ class Room {
 
     /**
      * Adds a new monster to the room.
-     * @param species The species of the new monster
+     * @param {string} species The species of the new monster
      * @returns {Room} The room
      */
     addMonster(species) {
@@ -35,7 +35,7 @@ class Room {
 
     /**
      * Removes a monster from the room.
-     * @param species The species of the monster to remove
+     * @param {string} species The species of the monster to remove
      * @returns {Room} The room
      */
     removeMonster(species) {
