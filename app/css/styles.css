@@ -40,7 +40,8 @@ body, #input-box {
 }
 
 .msg-system {
-    color: #add
+    color: #5af;
+    font-style: italic;
 }
 
 .msg-game {
@@ -48,7 +49,7 @@ body, #input-box {
 }
 
 .msg-player, #input-prefix, #input-box {
-    color: #aaa
+    color: #888
 }
 
 #input-prefix, #input-wrapper {
