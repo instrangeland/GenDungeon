@@ -14,8 +14,8 @@ function handleInput(input) {
         .filter(word => word !== 'an')
         .filter(word => word !== 'the');
 
-    const map = gameData.map;
     const player = gameData.player;
+    const room = gameData.map[player.y][player.x];
 
     nextWord('go');
 
@@ -36,17 +36,9 @@ function handleInput(input) {
         return 'You move west.';
     }
 
-    if (!map[player.y]) {
-        map.addRoom(player.y, player.x);
-    } else if (!map[player.y][player.x]) {
-        map.addRoom(player.y, player.x);
-    }
-
-    const room = gameData.map[player.y][player.x];
-
     if (nextWord('look')) {
         if (nextWord('around') || !remainingWords()) {
-            return `* ${room.description} *\n\nYou are at [${player.x}, ${player.y}].\nContents of this room:\n${room.listMonsters()}`;
+            return room.getInfo(player);
         }
         if (nextWord('at') && !remainingWords()) {
             return ['What do you want to look at?', '(Try: look at thing)'];
@@ -64,7 +56,7 @@ function handleInput(input) {
         }
         const monster = room.getMonster(remainingWords());
         if (monster) {
-            if (playerAttacksMonster(player, monster)) {
+            if (playerAttacksMonster(player, monster, player.strength)) {
                 return `You did 1 damage, taking its HP down to ${monster.hp}.`;
             }
             room.removeMonster(remainingWords());
@@ -78,7 +70,7 @@ function handleInput(input) {
         return `You are looking at: ${thing.species}.`;
     }
 
-    return 'Unknown command';
+    return null;
 
     /**
      * Checks whether a given words matches the next word in the input, and removes it if it does.

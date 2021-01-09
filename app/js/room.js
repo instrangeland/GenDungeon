@@ -12,6 +12,7 @@ class Room {
      */
     constructor() {
         this.monsters = [];
+        this.addMonster(monsterSpecies.ZOMBIE);
         this.description = this.generateTitle();
     }
 
@@ -84,5 +85,13 @@ class Room {
             monsterDescriptions.push(`${(index + 1)}) ${monster.species} - ${monster.hp} HP`);
         }
         return monsterDescriptions.join('\n');
+    }
+
+    /**
+     * Logs the description of the room and some other information
+     * @param player The current player
+     */
+    getInfo(player) {
+        return `* ${this.description} *\n\nYou are at [${player.x}, ${player.y}].\nContents of this room:\n${this.listMonsters()}`;
     }
 }

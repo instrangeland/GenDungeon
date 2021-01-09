@@ -6,10 +6,11 @@
  * Compute a player attacking a monster.
  * @param {Player} player The player
  * @param {Monster} monster The monster
+ * @param {number} damage The amount of damage to inflict
  * @return {boolean} Whether the monster is still alive after the attack
  */
-function playerAttacksMonster(player, monster) {
-    monster.hp -= player.strength;
+function playerAttacksMonster(player, monster, damage) {
+    monster.hp -= damage;
     return monster.hp > 0;
 }
 
@@ -17,9 +18,10 @@ function playerAttacksMonster(player, monster) {
  * Compute a monster attacking a player.
  * @param {Player} player The player
  * @param {Monster} monster The monster
+ * @param {number} damage The amount of damage to inflict
  * @return {boolean} Whether the player is still alive after the attack
  */
-function monsterAttacksPlayer(player, monster) {
-    player.hp -= monster.strength;
+function monsterAttacksPlayer(player, monster, damage) {
+    player.hp -= damage;
     return player.hp > 0;
 }

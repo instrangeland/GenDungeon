@@ -5,12 +5,20 @@
     src: url('../ttf/PressStart2P-Regular.ttf')
 }
 
+html {
+    height: 100%
+}
+
+html {
+    box-shadow: inset 0 0 16px 4px rgba(0, 0, 0, 0.5)
+}
+
 body {
     margin: 0
 }
 
 body, #input-box {
-    background-color: #111;
+    background-color: #222;
     font-family: 'Press Start 2P', monospace;
     font-size: 16px
 }
@@ -35,21 +43,32 @@ body, #input-box {
     background-color: #7be
 }
 
-.msg-system, .msg-game, .msg-player {
+.msg-combat, .msg-error, .msg-game, .msg-player, .msg-system {
     margin-bottom: 16px
 }
 
-.msg-system {
-    color: #5af;
-    font-style: italic;
+.msg-combat {
+    color: #78f
+}
+
+.msg-error {
+    color: #f56
 }
 
 .msg-game {
-    color: #eee
+    color: #ffd
+}
+
+.msg-system {
+    color: #5af
+}
+
+.msg-error, .msg-system {
+    font-style: italic;
 }
 
 .msg-player, #input-prefix, #input-box {
-    color: #888
+    color: #aaa
 }
 
 #input-prefix, #input-wrapper {
