@@ -3,31 +3,34 @@
 'use strict';
 
 /**
- * Parses and handles user input, returning a string that should be printed to in-game console.
- * @returns {string}
+ * Handles user input
+ * @param input The user input
+ * @return {string|string[]} The response to the input
  */
-function handleInput() {
+function handleInput(input) {
+    let inputArray = input.trim().toLowerCase().split(' ');
+
+    inputArray = inputArray.filter(word => word !== 'a')
+        .filter(word => word !== 'an')
+        .filter(word => word !== 'the');
+
     const map = gameData.map;
     const player = gameData.player;
 
     nextWord('go');
 
-    /* NORTH ... */
     if (nextWord('north')) {
         player.y++;
         return 'You move north.';
     }
-    /* SOUTH ... */
     if (nextWord('south')) {
         player.y--;
         return 'You move south.';
     }
-    /* EAST ... */
     if (nextWord('east')) {
         player.x++;
         return 'You move east.';
     }
-    /* WEST ... */
     if (nextWord('west')) {
         player.x--;
         return 'You move west.';
@@ -41,20 +44,13 @@ function handleInput() {
 
     const room = gameData.map[player.y][player.x];
 
-    /* LOOK ... */
     if (nextWord('look')) {
-
-        /* LOOK or LOOK AROUND ... */
         if (nextWord('around') || !remainingWords()) {
-            return `You are at [${player.x}, ${player.y}].\nContents of this room: ${room.listMonsters()}`;
+            return `You are at [${player.x}, ${player.y}].\nContents of this room:\n${room.listMonsters()}`;
         }
-
-        /* LOOK AT */
         if (nextWord('at') && !remainingWords()) {
-            return 'What do you want to look at?';
+            return ['What do you want to look at?', '(Try: look at thing)'];
         }
-
-        /* LOOK ... or LOOK AT ... */
         const thing = room.getMonster(remainingWords());
         if (thing) {
             return `You are looking at: ${thing.species}.`;
@@ -62,15 +58,10 @@ function handleInput() {
         return 'That doesn\'t exist here.';
     }
 
-    /* ATTACK ... */
     if (nextWord('attack')) {
-
-        /* ATTACK */
         if (!remainingWords()) {
-            return 'What do you want to attack?';
+            return ['What do you want to attack?', '(Try: attack thing)'];
         }
-
-        /* ATTACK ... */
         const monster = room.getMonster(remainingWords());
         if (monster) {
             if (playerAttacksMonster(player, monster)) {
@@ -82,33 +73,31 @@ function handleInput() {
         return 'That doesn\'t exist here.';
     }
 
-    /* ... */
     const thing = room.getMonster(remainingWords());
     if (thing) {
         return `You are looking at: ${thing.species}.`;
     }
 
     return 'Unknown command';
-}
 
-/**
- * Pops if given word matches next word, delimited by spaces, of the user input.
- *
- * @param match {string} word to match
- * @returns {boolean} if words match
- */
-function nextWord(match) {
-    const word = inputArray[0];
-    if (word === match) {
-        inputArray.shift();
+    /**
+     * Checks whether a given words matches the next word in the input, and removes it if it does.
+     * @param match The word to compare against
+     * @return {boolean} Whether the words match
+     */
+    function nextWord(match) {
+        const word = inputArray[0];
+        if (word === match) {
+            inputArray.shift();
+        }
+        return word === match;
     }
-    return word === match;
-}
 
-/**
- * Returns the rest of the unpopped words.
- * @returns {string} the rest of the unpopped words
- */
-function remainingWords() {
-    return inputArray.join(' ');
+    /**
+     * Gets all remaining words in the input.
+     * @return {string} The remaining words
+     */
+    function remainingWords() {
+        return inputArray.join(' ');
+    }
 }

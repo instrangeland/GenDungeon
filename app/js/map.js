@@ -3,17 +3,22 @@
 'use strict';
 
 /**
- * The map of the game.
+ * A map in which the game takes place.
+ * @class
  */
 class GameMap {
+    /**
+     * Creates a map.
+     */
     constructor() {
         this.addRoom(0, 0);
     }
 
     /**
      * Adds a room to the map.
-     * @param y {number}    the y-coordinate of the room
-     * @param x {number}    the x-coordinate of the room
+     * @param y The y-coordinate of the room
+     * @param x The x-coordinate of the room
+     * @return The map
      */
     addRoom(y, x) {
         if (!this[y]) {
@@ -23,5 +28,6 @@ class GameMap {
             this[y][x] = new Room();
             this[y][x].addMonster(monsterSpecies.ZOMBIE).addMonster(monsterSpecies.SKELETON);
         }
+        return this;
     }
 }

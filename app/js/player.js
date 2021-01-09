@@ -3,9 +3,13 @@
 'use strict';
 
 /**
- * Contains all information relevant to the player.
+ * The playable character.
+ * @class
  */
 class Player {
+    /**
+     * Creates a playable character.
+     */
     constructor() {
         this.y = 0;
         this.x = 0;

@@ -3,45 +3,55 @@
 'use strict';
 
 /**
- * Rooms are found in the map and contain entities.
+ * A room in the map.
+ * @class
  */
 class Room {
+    /**
+     * Creates a room.
+     */
     constructor() {
         this.monsters = [];
     }
 
     /**
-     * Adds a monster to this room.
-     *
-     * @param type {string} the type of the monster
+     * Gets a monster from a room given the species.
+     * @param species The species of the monster to find
+     * @returns {Monster} The monster
      */
-    addMonster(type) {
-        this.monsters.push(new Monster(type));
+    getMonster(species) {
+        return this.monsters.find(monster => equalsCI(monster.species, species));
+    }
+
+    /**
+     * Adds a new monster to the room.
+     * @param species The species of the new monster
+     * @returns {Room} The room
+     */
+    addMonster(species) {
+        this.monsters.push(new Monster(species));
         return this;
     }
 
     /**
-     * Returns a human-readable list of monsters in this room.
-     *
-     * @returns {string} the pretty list
+     * Removes a monster from the room.
+     * @param species The species of the monster to remove
+     * @returns {Room} The room
+     */
+    removeMonster(species) {
+        this.monsters.splice(this.monsters.findIndex(monster => equalsCI(monster.species, species)), 1);
+        return this;
+    }
+
+    /**
+     * Creates a formatted list of all monsters in the room.
+     * @returns {string} The formatted list
      */
     listMonsters() {
-        let monsterDescriptions = '';
+        const monsterDescriptions = [];
         for (const [index, monster] of this.monsters.entries()) {
-            monsterDescriptions += `\n${(index + 1)}) ${monster.species} - ${monster.hp} HP`;
+            monsterDescriptions.push(`${(index + 1)}) ${monster.species} - ${monster.hp} HP`);
         }
-        return monsterDescriptions;
-    }
-
-    getMonster(type) {
-        return this.monsters.find(monster => monster.species.toLowerCase() === type);
-    }
-
-    removeMonster(type) {
-        for (const [index, monster] of this.monsters.entries()) {
-            if (monster.species.toLowerCase() === type) {
-                this.monsters.splice(index, 1);
-            }
-        }
+        return monsterDescriptions.join('\n');
     }
 }
