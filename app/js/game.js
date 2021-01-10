@@ -6,7 +6,7 @@ const inputBox = $('#input-box');
 const log = $('#log');
 
 const titleMessage = 'Welcome to ProceduralTA!';
-const introMessage = 'You are in a room.';
+const introMessage = 'You are in a room. Type "look" to look around!';
 
 const gameData = {};
 
@@ -77,15 +77,13 @@ function newInput() {
             logMessage(response, logTypes.GAME);
         }
 
-        if (!map[player.y]) { // If y-coordinate is not generated yet
-            map.addRoom(player.y, player.x);
-            const room = gameData.map[player.y][player.x];
-            logMessage(room.getInfo(player), logTypes.GAME);
-        } else if (!map[player.y][player.x]) { // If x- & y- coordinate is not generated yet
+        if (!map.getRoom(player.y, player.x)) {
             map.addRoom(player.y, player.x);
             const room = gameData.map[player.y][player.x];
             logMessage(room.getInfo(player), logTypes.GAME);
         }
+
+        gameData.minimap.update();
 
         for (const monster of gameData.map[gameData.player.y][gameData.player.x].monsters) {
             if (monster.playerInteraction(gameData.player)) {
@@ -122,6 +120,7 @@ function logMessage(message, type) {
 $(() => {
     gameData.map = new GameMap();
     gameData.player = new Player();
+    gameData.minimap = new Minimap();
     logMessage(titleMessage, 'msg-system');
     logMessage(introMessage, 'msg-game');
 });

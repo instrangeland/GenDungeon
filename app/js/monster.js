@@ -69,4 +69,15 @@ class Monster {
         }
         return false;
     }
+
+    /**
+     * Gets a description of the monster and some other information.
+     * @return {string} A description of the monster
+     */
+    getInfo() {
+        const description = [];
+        description.push(`A ${this.species.toLowerCase()} with ${this.hp} HP.`);
+        description.push(`It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`);
+        return description.join(' ');
+    }
 }

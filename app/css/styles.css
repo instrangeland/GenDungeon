@@ -10,7 +10,7 @@ html {
 }
 
 html {
-    box-shadow: inset 0 0 16px 4px rgba(0, 0, 0, 0.5)
+    box-shadow: inset 0 0 16px 4px rgba(0, 0, 0, 0.25)
 }
 
 body {
@@ -97,4 +97,30 @@ body, #input-box {
 
 #input-box::placeholder {
     color: #666
+}
+
+#minimap {
+    opacity: 50%;
+    position: absolute;
+    right: 4px;
+    top: 4px
+}
+
+td {
+    background-color: #555;
+    height: 8px;
+    padding: 0;
+    width: 8px
+}
+
+.explored {
+    background-color: #eee;
+}
+
+.origin {
+    background-color: #48e;
+}
+
+.player {
+    background-color: #4e9;
 }

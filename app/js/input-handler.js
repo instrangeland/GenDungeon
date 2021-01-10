@@ -45,7 +45,7 @@ function handleInput(input) {
         }
         const thing = room.getMonster(remainingWords());
         if (thing) {
-            return `You are looking at: ${thing.species}.`;
+            return thing.getInfo();
         }
         return 'That doesn\'t exist here.';
     }
@@ -57,17 +57,17 @@ function handleInput(input) {
         const monster = room.getMonster(remainingWords());
         if (monster) {
             if (playerAttacksMonster(player, monster, player.strength)) {
-                return `You did 1 damage, taking its HP down to ${monster.hp}.`;
+                return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`;
             }
             room.removeMonster(remainingWords());
-            return `You did 1 damage. The ${monster.species.toLowerCase()} is now dead.`;
+            return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, killing it.`;
         }
         return 'That doesn\'t exist here.';
     }
 
     const thing = room.getMonster(remainingWords());
     if (thing) {
-        return `You are looking at: ${thing.species}.`;
+        return thing.getInfo();
     }
 
     return null;

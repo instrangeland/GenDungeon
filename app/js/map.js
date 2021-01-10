@@ -17,7 +17,7 @@ class GameMap {
     /**
      * Adds a room to the map.
      * @param {number} y The y-coordinate of the room
-     * @param  {number}x The x-coordinate of the room
+     * @param {number} x The x-coordinate of the room
      * @return The map
      */
     addRoom(y, x) {
@@ -28,5 +28,21 @@ class GameMap {
             this[y][x] = new Room();
         }
         return this;
+    }
+
+    /**
+     * Gets a specific room from the map.
+     * @param y {number} y The y-coordinate of the room
+     * @param x {number} x The x-coordinate of the room
+     * @return {null|*} The room
+     */
+    getRoom(y, x) {
+        if (!this[y]) {
+            return null;
+        }
+        if (!this[y][x]) {
+            return null;
+        }
+        return this[y][x];
     }
 }
