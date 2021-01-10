@@ -17,7 +17,7 @@ function handleInput(input) {
     const player = gameData.player;
     const room = gameData.map[player.y][player.x];
 
-    nextWord('go');
+    nextWord('go'); // Remove 'go' if first word
 
     if (nextWord('north')) {
         player.y++;

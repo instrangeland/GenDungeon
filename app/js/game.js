@@ -77,11 +77,11 @@ function newInput() {
             logMessage(response, logTypes.GAME);
         }
 
-        if (!map[player.y]) {
+        if (!map[player.y]) { // If y-coordinate is not generated yet
             map.addRoom(player.y, player.x);
             const room = gameData.map[player.y][player.x];
             logMessage(room.getInfo(player), logTypes.GAME);
-        } else if (!map[player.y][player.x]) {
+        } else if (!map[player.y][player.x]) { // If x- & y- coordinate is not generated yet
             map.addRoom(player.y, player.x);
             const room = gameData.map[player.y][player.x];
             logMessage(room.getInfo(player), logTypes.GAME);

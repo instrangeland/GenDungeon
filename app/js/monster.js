@@ -53,7 +53,7 @@ class Monster {
         if (this.state === monsterStates.PASSIVE) {
             if (Math.random() < this.aggression) {
                 this.state = monsterStates.ATTACKING;
-                logMessage(`- The ${this.species} sees you.`, logTypes.GAME);
+                logMessage(`- The ${this.species} sees you.`, logTypes.COMBAT);
             }
         } else {
             if (Math.random() < this.attackAccuracy) {
