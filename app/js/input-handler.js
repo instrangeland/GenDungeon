@@ -2,6 +2,16 @@
 
 'use strict';
 
+/*
+
+Shorthand commands:
+
+n, e, s, w = Directional movement
+h = Attack (hit)
+l = Look
+
+ */
+
 /**
  * Handles user input
  * @param {string} input The user input
@@ -19,28 +29,28 @@ function handleInput(input) {
 
     nextWord('go'); // Remove 'go' if first word
 
-    if (nextWord('north')) {
+    if (nextWord('north,n,up')) {
         player.y++;
         return 'You move north.';
     }
-    if (nextWord('south')) {
+    if (nextWord('south,s,down')) {
         player.y--;
         return 'You move south.';
     }
-    if (nextWord('east')) {
+    if (nextWord('east,e,right')) {
         player.x++;
         return 'You move east.';
     }
-    if (nextWord('west')) {
+    if (nextWord('west,w,left')) {
         player.x--;
         return 'You move west.';
     }
 
-    if (nextWord('look')) {
-        if (nextWord('around') || !remainingWords()) {
+    if (nextWord('look,l,search,inspect,view,see,observe')) {
+        if (nextWord('around,here,room') || !remainingWords()) {
             return room.getInfo(player);
         }
-        if (nextWord('at') && !remainingWords()) {
+        if (nextWord('at,towards') && !remainingWords()) {
             return ['What do you want to look at?', '(Try: look at thing)'];
         }
         const thing = room.getMonster(remainingWords());
@@ -50,7 +60,7 @@ function handleInput(input) {
         return 'That doesn\'t exist here.';
     }
 
-    if (nextWord('attack')) {
+    if (nextWord('attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack')) {
         if (!remainingWords()) {
             return ['What do you want to attack?', '(Try: attack thing)'];
         }
@@ -73,16 +83,16 @@ function handleInput(input) {
     return null;
 
     /**
-     * Checks whether a given words matches the next word in the input, and removes it if it does.
-     * @param {string} match The word to compare against
-     * @return {boolean} Whether the words match
+     * Checks whether given word(s) matches the next word in the input, and remove them if it does.
+     * @param {string} match The word(s) to compare against, separated by commas
+     * @return {boolean} Whether the word(s) match
      */
     function nextWord(match) {
-        const word = inputArray[0];
-        if (word === match) {
+        if (match.split(',').includes(inputArray[0])) {
             inputArray.shift();
+            return true;
         }
-        return word === match;
+        return false;
     }
 
     /**
