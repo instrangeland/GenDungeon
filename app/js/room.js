@@ -9,10 +9,13 @@
 class Room {
     /**
      * Creates a room.
+     * @param {number} y The y-coordinate
+     * @param {number} x The x-coordinate
      */
-    constructor() {
+    constructor(y, x) {
+        this.distance = Math.floor(Math.sqrt(x * x + y * y));
         this.monsters = [];
-        this.addMonster(monsterSpecies.ZOMBIE);
+        this.generateMonsters();
         this.description = this.generateTitle();
     }
 
@@ -84,14 +87,39 @@ class Room {
         for (const [index, monster] of this.monsters.entries()) {
             monsterDescriptions.push(`${(index + 1)}) ${monster.species} - ${monster.hp} HP`);
         }
+        if (monsterDescriptions.length === 0) {
+            monsterDescriptions.push('(This room is empty.)');
+        }
         return monsterDescriptions.join('\n');
     }
 
     /**
-     * Logs the description of the room and some other information
+     * Logs the description of the room and some other information.
      * @param player The current player
      */
     getInfo(player) {
-        return `* ${this.description} *\n${this.listMonsters()}`;
+        return `* ${this.description} *\n\n${this.listMonsters()}`;
+    }
+
+    /**
+     * Generates monsters in the room.
+     */
+    generateMonsters() {
+        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.75);
+        this.addMonsterChance(monsterTypes.SKELETON, 3, 0.75);
+    }
+
+    /**
+     * Adds a monster to the room if certain probability occur.
+     * @param {string} type type of monster
+     * @param {number} minDistance The minimum distance the room needs to be from the origin for the monster to spawn
+     * @param {number} maxChance The maximum chance of the monster spawning
+     */
+    addMonsterChance(type, minDistance, maxChance) {
+        if (getRandInt(0, this.distance) > minDistance - 1) {
+            if (Math.random() > maxChance) {
+                this.addMonster(type);
+            }
+        }
     }
 }

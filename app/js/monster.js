@@ -2,10 +2,28 @@
 
 'use strict';
 
-const monsterSpecies = {
-    ZOMBIE: 'Zombie',
-    SKELETON: 'Skeleton'
+const monsterTypes = {
+    ZOMBIE: {},
+    SKELETON: {}
 };
+
+monsterTypes.ZOMBIE = {
+    species: 'Zombie',
+    hp: 2,
+    strength: 2,
+    strengthVariance: 0,
+    attackAccuracy: 0.5,
+    aggression: 0.85
+}
+
+monsterTypes.SKELETON = {
+    species: 'Skeleton',
+    hp: 4,
+    strength: 3,
+    strengthVariance: 1,
+    attackAccuracy: 0.75,
+    aggression: 0.75
+}
 
 const monsterStates = {
     PASSIVE: 0,
@@ -19,29 +37,29 @@ const monsterStates = {
 class Monster {
     /**
      * Creates a monster.
-     * @param {string} species The species of the monster
+     * @param {Object} monster The species of the monster
      */
-    constructor(species) {
+    constructor(monster) {
         // What type of monster this is
-        this.species = species;
+        this.species = monster.species;
 
         // What state the monster is in
         this.state = monsterStates.PASSIVE;
 
         // How many hit points the monster has
-        this.hp = 2;
+        this.hp = monster.hp;
 
         // The average amount of damage an attack from this monster does
-        this.strength = 2;
+        this.strength = monster.strength;
 
         // How much damage the attack can vary by
-        this.strengthVariance = 1;
+        this.strengthVariance = monster.strengthVariance;
 
         // How often an attack hits
-        this.attackAccuracy = 0.85;
+        this.attackAccuracy = monster.attackAccuracy;
 
         // The chance for the monster to switch from passive to aggressive
-        this.aggression = 0.75;
+        this.aggression = monster.aggression;
     }
 
     /**

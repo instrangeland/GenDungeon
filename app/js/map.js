@@ -25,7 +25,7 @@ class GameMap {
             this[y] = {};
         }
         if (!this[y][x]) {
-            this[y][x] = new Room();
+            this[y][x] = new Room(y, x);
         }
         return this;
     }

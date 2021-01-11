@@ -44,7 +44,7 @@ body, #input-box {
 }
 
 .msg-combat, .msg-error, .msg-game, .msg-player, .msg-system {
-    margin-bottom: 16px
+    margin-bottom: 24px
 }
 
 .msg-combat {
