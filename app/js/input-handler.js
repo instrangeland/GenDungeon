@@ -27,21 +27,40 @@ function handleInput(input) {
     const player = gameData.player;
     const room = gameData.map[player.y][player.x];
 
-    nextWord('go'); // Remove 'go' if first word
+    nextWord('go,move,run,sprint,walk,dash,slide'); // Remove if first word
+    if (!remainingWords()) {
+        return 'Where do you want to go?';
+    }
 
-    if (nextWord('north,n,up')) {
+    if (nextWord('help,?,what')) {
+        return `Hello! You are playing a text adventure. You can type commands like "attack zombie" to do things.
+            Here are some useful commands to help you out:
+
+            north, south, east, west
+            attack [something]
+            take [something]
+            use [something]
+            
+            There are lots of other things you can do, try to experiment!`;
+    }
+
+    if (nextWord('info,me,myself,i,player,user,information,hp,stats,health')) {
+        return `You currently have ${player.hp} HP.`;
+    }
+
+    if (nextWord('north,n,northward,northern,up,upward,upwards')) {
         player.y++;
         return 'You move north.';
     }
-    if (nextWord('south,s,down')) {
+    if (nextWord('south,s,southward,southern,down,downward,downwards')) {
         player.y--;
         return 'You move south.';
     }
-    if (nextWord('east,e,right')) {
+    if (nextWord('east,e,eastward,eastern,right')) {
         player.x++;
         return 'You move east.';
     }
-    if (nextWord('west,w,left')) {
+    if (nextWord('west,w,westward,western,left')) {
         player.x--;
         return 'You move west.';
     }
@@ -50,7 +69,7 @@ function handleInput(input) {
         if (nextWord('around,here,room') || !remainingWords()) {
             return room.getInfo(player);
         }
-        if (nextWord('at,towards') && !remainingWords()) {
+        if (nextWord('at,toward,towards,for') && !remainingWords()) {
             return ['What do you want to look at?', '(Try: look at thing)'];
         }
         const thing = room.getMonster(remainingWords());
@@ -60,7 +79,7 @@ function handleInput(input) {
         return 'That doesn\'t exist here.';
     }
 
-    if (nextWord('attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack')) {
+    if (nextWord('attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate')) {
         if (!remainingWords()) {
             return ['What do you want to attack?', '(Try: attack thing)'];
         }
@@ -73,6 +92,22 @@ function handleInput(input) {
             return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, killing it.`;
         }
         return 'That doesn\'t exist here.';
+    }
+
+    if (nextWord('take,grab,get')) {
+        if (room.getMonster(remainingWords())) {
+            return 'You can\'t take that.';
+        }
+        return 'That doesn\'t exist here.';
+    }
+
+    if (nextWord('use,eat,drink,consume,taste')) {
+        return 'That you don\'t have that.';
+    }
+
+    if (nextWord('credit,credits,proceduralta,julian,author,about')) {
+        return `ProceduralTA is an open source text adventure.
+        https://github.com/jlachniet/ProceduralTA`;
     }
 
     const thing = room.getMonster(remainingWords());

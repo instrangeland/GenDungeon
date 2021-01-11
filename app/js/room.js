@@ -98,7 +98,9 @@ class Room {
      * @param player The current player
      */
     getInfo(player) {
-        return `* ${this.description} *\n\n${this.listMonsters()}`;
+        return `* ${this.description} *
+        
+        ${this.listMonsters()}`;
     }
 
     /**
