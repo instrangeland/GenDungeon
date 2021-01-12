@@ -13,7 +13,7 @@ class Room {
      * @param {number} x The x-coordinate
      */
     constructor(y, x) {
-        this.distance = Math.floor(Math.sqrt(x * x + y * y));
+        this.distance = Math.ceil(Math.sqrt(x * x + y * y));
         this.monsters = [];
         this.generateMonsters();
         this.description = this.generateTitle();
@@ -107,8 +107,12 @@ class Room {
      * Generates monsters in the room.
      */
     generateMonsters() {
-        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.75);
-        this.addMonsterChance(monsterTypes.SKELETON, 3, 0.75);
+        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.9);
+        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.85);
+        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.75);
+        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.85);
+        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.8);
+        this.addMonsterChance(monsterTypes.GHOST, 8, 0.6);
     }
 
     /**

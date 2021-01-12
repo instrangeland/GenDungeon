@@ -27,6 +27,7 @@ class Minimap {
      */
     update() {
         $("td")
+            .removeClass('danger')
             .removeClass('explored')
             .removeClass('origin')
             .removeClass('player');
@@ -40,6 +41,9 @@ class Minimap {
                         box.addClass('player');
                     } else if (y === 0 && x === 0) {
                         box.addClass('origin');
+                    } else if (room.monsters.length > 0) {
+                        console.log(y, x, room.monsters);
+                        box.addClass('danger');
                     } else {
                         box.addClass('explored');
                     }

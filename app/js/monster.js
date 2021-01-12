@@ -7,24 +7,6 @@ const monsterTypes = {
     SKELETON: {}
 };
 
-monsterTypes.ZOMBIE = {
-    species: 'Zombie',
-    hp: 2,
-    strength: 2,
-    strengthVariance: 0,
-    attackAccuracy: 0.5,
-    aggression: 0.85
-}
-
-monsterTypes.SKELETON = {
-    species: 'Skeleton',
-    hp: 4,
-    strength: 3,
-    strengthVariance: 1,
-    attackAccuracy: 0.75,
-    aggression: 0.75
-}
-
 const monsterStates = {
     PASSIVE: 0,
     ATTACKING: 1
@@ -98,4 +80,69 @@ class Monster {
         description.push(`It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`);
         return description.join(' ');
     }
+}
+
+/*
+monsterTypes. = {
+    species: '',
+    hp: ,
+    strength: ,
+    strengthVariance: ,
+    attackAccuracy: ,
+    aggression:
+}
+ */
+
+monsterTypes.ZOMBIE = {
+    species: 'Zombie',
+    hp: 2,
+    strength: 2,
+    strengthVariance: 0,
+    attackAccuracy: 0.5,
+    aggression: 0.85
+}
+
+monsterTypes.SKELETON = {
+    species: 'Skeleton',
+    hp: 4,
+    strength: 3,
+    strengthVariance: 1,
+    attackAccuracy: 0.75,
+    aggression: 0.75
+}
+
+monsterTypes.SPIDER = {
+    species: 'Spider',
+    hp: 3,
+    strength: 2,
+    strengthVariance: 0,
+    attackAccuracy: 0.95,
+    aggression: 0.95
+}
+
+monsterTypes.VAMPIRE = {
+    species: 'Vampire',
+    hp: 5,
+    strength: 3,
+    strengthVariance: 2,
+    attackAccuracy: 1,
+    aggression: 0.5
+}
+
+monsterTypes.GOBLIN = {
+    species: 'Goblin',
+    hp: 2,
+    strength: 2,
+    strengthVariance: 1,
+    attackAccuracy: 0.65,
+    aggression: 0.8
+}
+
+monsterTypes.GHOST = {
+    species: 'Ghost',
+    hp: 8,
+    strength: 3,
+    strengthVariance: 1,
+    attackAccuracy: 1,
+    aggression: 0.2
 }

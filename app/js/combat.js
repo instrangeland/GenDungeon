@@ -11,6 +11,7 @@
  */
 function playerAttacksMonster(player, monster, damage) {
     monster.hp -= damage;
+    monster.state = monsterStates.ATTACKING;
     return monster.hp > 0;
 }
 
