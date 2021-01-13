@@ -62,7 +62,7 @@ class Monster {
                     logMessage(`- The ${this.species} attacks you for ${damage} damage.`, logTypes.COMBAT);
                     logMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
-                    logMessage(`- The ${this.species} attacks you for ${damage} damage, killing you.`, logTypes.ERROR);
+                    logMessage(`- The ${this.species} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
                     return true;
                 }
             }

@@ -12,7 +12,7 @@ const gameData = {};
 
 const logTypes = {
     COMBAT: 'msg-combat',
-    ERROR: 'msg-error',
+    ALERT: 'msg-alert',
     GAME: 'msg-game',
     PLAYER: 'msg-player',
     SYSTEM: 'msg-system'

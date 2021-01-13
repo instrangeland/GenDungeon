@@ -23,6 +23,10 @@ body, #input-box {
     font-size: 16px
 }
 
+::selection {
+    background-color: #7be
+}
+
 #log {
     bottom: 48px;
     box-sizing: border-box;
@@ -39,20 +43,24 @@ body, #input-box {
     display: none;
 }
 
-::selection {
-    background-color: #7be
+.msg-alert, .msg-combat, .msg-game, .msg-player, .msg-system {
+    margin-bottom: 24px
 }
 
-.msg-combat, .msg-error, .msg-game, .msg-player, .msg-system {
-    margin-bottom: 24px
+.msg-alert, .msg-system {
+    font-style: italic;
+}
+
+.msg-player, #input-prefix, #input-box {
+    color: #aaa
+}
+
+.msg-alert {
+    color: #f56
 }
 
 .msg-combat {
     color: #78f
-}
-
-.msg-error {
-    color: #f56
 }
 
 .msg-game {
@@ -61,14 +69,6 @@ body, #input-box {
 
 .msg-system {
     color: #5af
-}
-
-.msg-error, .msg-system {
-    font-style: italic;
-}
-
-.msg-player, #input-prefix, #input-box {
-    color: #aaa
 }
 
 #input-prefix, #input-wrapper {
@@ -113,18 +113,18 @@ td {
     width: 8px
 }
 
-.explored {
+td.explored {
     background-color: #eee;
 }
 
-.origin {
+td.origin {
     background-color: #48e;
 }
 
-.player {
+td.player {
     background-color: #4e9;
 }
 
-.danger {
+td.danger {
     background-color: #e21;
 }
