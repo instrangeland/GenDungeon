@@ -19,10 +19,10 @@ function playerAttacksMonster(player, monster, damage) {
  * Compute a monster attacking a player.
  * @param {Player} player The player
  * @param {Monster} monster The monster
- * @param {number} damage The amount of damage to inflict
- * @return {boolean} Whether the player is still alive after the attack
+ * @return {{playerDied: boolean, damage: *}} Whether the player died, and how much damage was inflicted
  */
-function monsterAttacksPlayer(player, monster, damage) {
+function monsterAttacksPlayer(player, monster) {
+    const damage = monster.strength + getRandInt(-monster.strengthVariance, monster.strengthVariance);
     player.hp -= damage;
-    return player.hp > 0;
+    return {playerDied: player.hp > 0, damage: damage};
 }

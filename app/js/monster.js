@@ -57,12 +57,13 @@ class Monster {
             }
         } else {
             if (Math.random() < this.attackAccuracy) {
-                const damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
-                if (monsterAttacksPlayer(player, this, damage)) {
-                    logMessage(`- The ${this.species} attacks you for ${damage} damage.`, logTypes.COMBAT);
+                const attack = monsterAttacksPlayer(player, this);
+                console.log(attack);
+                if (attack.playerDied) {
+                    logMessage(`- The ${this.species} attacks you for ${attack.damage} damage.`, logTypes.COMBAT);
                     logMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
-                    logMessage(`- The ${this.species} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
+                    logMessage(`- The ${this.species} attacks you for ${attack.damage} damage, killing you.`, logTypes.ALERT);
                     return true;
                 }
             }

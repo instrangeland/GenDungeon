@@ -94,7 +94,7 @@ function newInput() {
             }
         }
     } else {
-        logMessage('Unknown command.', logTypes.ERROR);
+        logMessage('Unknown command.', logTypes.ALERT);
     }
 
     return false;
