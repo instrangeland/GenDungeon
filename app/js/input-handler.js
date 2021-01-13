@@ -15,7 +15,6 @@ l = Look
 /**
  * Handles user input
  * @param {string} input The user input
- * @return {string|string[]} The response to the input
  */
 function handleInput(input) {
     let inputArray = input.trim().toLowerCase().split(' ');
@@ -29,11 +28,12 @@ function handleInput(input) {
 
     nextWord('go,move,run,sprint,walk,dash,slide'); // Remove if first word
     if (!remainingWords()) {
-        return 'Where do you want to go?';
+        logMessage('Where do you want to go?', logTypes.GAME);
+        return;
     }
 
     if (nextWord('help,?,what')) {
-        return `Hello! You are playing a text adventure. You can type commands like "attack zombie" to do things.
+        logMessage(`Hello! You are playing a text adventure. You can type commands like "attack zombie" to do things.
             Here are some useful commands to help you out:
 
             north, south, east, west
@@ -41,81 +41,102 @@ function handleInput(input) {
             take [something]
             use [something]
             
-            There are lots of other things you can do, try to experiment!`;
+            There are lots of other things you can do, try to experiment!`, logTypes.GAME);
+        return;
     }
 
     if (nextWord('info,me,myself,i,player,user,information,hp,stats,health')) {
-        return `You currently have ${player.hp} HP.`;
+        logMessage(`You currently have ${player.hp} HP.`, logTypes.GAME);
+        return;
     }
 
     if (nextWord('north,n,northward,northern,up,upward,upwards')) {
         player.y++;
-        return 'You move north.';
+        logMessage('You move north.', logTypes.GAME);
+        return;
     }
     if (nextWord('south,s,southward,southern,down,downward,downwards')) {
         player.y--;
-        return 'You move south.';
+        logMessage('You move south.', logTypes.GAME);
+        return;
     }
     if (nextWord('east,e,eastward,eastern,right')) {
         player.x++;
-        return 'You move east.';
+        logMessage('You move east.', logTypes.GAME);
+        return;
     }
     if (nextWord('west,w,westward,western,left')) {
         player.x--;
-        return 'You move west.';
+        logMessage('You move west.', logTypes.GAME);
+        return;
     }
 
     if (nextWord('look,l,search,inspect,view,see,observe')) {
         if (nextWord('around,here,room') || !remainingWords()) {
-            return room.getInfo(player);
+            logMessage(room.getInfo(player), logTypes.GAME);
+            return;
         }
         if (nextWord('at,toward,towards,for') && !remainingWords()) {
-            return ['What do you want to look at?', '(Try: look at thing)'];
+            logMessage('What do you want to look at?', logTypes.GAME);
+            logMessage('(Try: look at thing)', logTypes.ALERT);
+            return;
         }
         const thing = room.getMonster(remainingWords());
         if (thing) {
-            return thing.getInfo();
+            logMessage(thing.getInfo(), logTypes.GAME);
+            return;
         }
-        return 'That doesn\'t exist here.';
+        logMessage('That doesn\'t exist here.', logTypes.GAME);
+        return;
     }
 
     if (nextWord('attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate')) {
         if (!remainingWords()) {
-            return ['What do you want to attack?', '(Try: attack thing)'];
+            logMessage('What do you want to attack?', logTypes.GAME);
+            logMessage('(Try: attack thing)', logTypes.ALERT);
+            return;
         }
         const monster = room.getMonster(remainingWords());
         if (monster) {
             if (playerAttacksMonster(player, monster, player.strength)) {
-                return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`;
+                logMessage(`You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.GAME);
+                return;
             }
             room.removeMonster(remainingWords());
-            return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, killing it.`;
+            logMessage(`You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.GAME);
+            return;
         }
-        return 'That doesn\'t exist here.';
+        logMessage('That doesn\'t exist here.', logTypes.GAME);
+        return;
     }
 
     if (nextWord('take,grab,get')) {
         if (room.getMonster(remainingWords())) {
-            return 'You can\'t take that.';
+            logMessage('You can\'t take that.', logTypes.GAME);
+            return;
         }
-        return 'That doesn\'t exist here.';
+        logMessage('That doesn\'t exist here.', logTypes.GAME);
+        return;
     }
 
     if (nextWord('use,eat,drink,consume,taste')) {
-        return 'That you don\'t have that.';
+        logMessage('That you don\'t have that.', logTypes.GAME);
+        return;
     }
 
     if (nextWord('credit,credits,proceduralta,julian,author,about')) {
-        return `ProceduralTA is an open source text adventure.
-        https://github.com/jlachniet/ProceduralTA`;
+        logMessage(`ProceduralTA is an open source text adventure.
+        https://github.com/jlachniet/ProceduralTA`, logTypes.GAME);
+        return;
     }
 
     const thing = room.getMonster(remainingWords());
     if (thing) {
-        return thing.getInfo();
+        logMessage(thing.getInfo(), logTypes.GAME);
+        return;
     }
 
-    return null;
+    logMessage('Unknown command.', logTypes.ALERT);
 
     /**
      * Checks whether given word(s) matches the next word in the input, and remove them if it does.

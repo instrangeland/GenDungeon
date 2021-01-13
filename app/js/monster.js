@@ -58,7 +58,6 @@ class Monster {
         } else {
             if (Math.random() < this.attackAccuracy) {
                 const attack = monsterAttacksPlayer(player, this);
-                console.log(attack);
                 if (attack.playerDied) {
                     logMessage(`- The ${this.species} attacks you for ${attack.damage} damage.`, logTypes.COMBAT);
                     logMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);

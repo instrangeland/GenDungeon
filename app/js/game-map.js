@@ -34,7 +34,7 @@ class GameMap {
      * Gets a specific room from the map.
      * @param {number} y The y-coordinate of the room
      * @param {number} x The x-coordinate of the room
-     * @return {null|Room} The room
+     * @return {Room|null} The room
      */
     getRoom(y, x) {
         if (!this[y]) {

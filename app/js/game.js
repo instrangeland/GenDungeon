@@ -61,40 +61,34 @@ function getRandInt(min, max) {
  */
 function newInput() {
     const input = inputBox.val();
-    const response = handleInput(input);
+
+    if (!input) {
+        return false;
+    }
+
+    logMessage('> ' + input, logTypes.PLAYER);
+
+    handleInput(input);
     inputBox.val('');
 
     const map = gameData.map;
     const player = gameData.player;
 
-    logMessage('> ' + input, logTypes.PLAYER);
+    if (!map.getRoom(player.y, player.x)) {
+        map.addRoom(player.y, player.x);
+        const room = gameData.map[player.y][player.x];
+        logMessage(room.getInfo(player), logTypes.GAME);
+    }
 
-    if (response) {
-        if (Array.isArray(response)) {
-            logMessage(response[0], logTypes.GAME);
-            logMessage(response[1], logTypes.SYSTEM);
-        } else {
-            logMessage(response, logTypes.GAME);
+    gameData.minimap.update();
+
+    for (const monster of gameData.map[gameData.player.y][gameData.player.x].monsters) {
+        if (monster.playerInteraction(gameData.player)) {
+            logMessage('--- GAME OVER ---', logTypes.SYSTEM);
+            inputBox.prop('disabled', true);
+            inputBox.attr('placeholder', 'Thanks for playing!');
+            return false;
         }
-
-        if (!map.getRoom(player.y, player.x)) {
-            map.addRoom(player.y, player.x);
-            const room = gameData.map[player.y][player.x];
-            logMessage(room.getInfo(player), logTypes.GAME);
-        }
-
-        gameData.minimap.update();
-
-        for (const monster of gameData.map[gameData.player.y][gameData.player.x].monsters) {
-            if (monster.playerInteraction(gameData.player)) {
-                logMessage('--- GAME OVER ---', logTypes.SYSTEM);
-                inputBox.prop('disabled', true);
-                inputBox.attr('placeholder', 'Thanks for playing!');
-                return false;
-            }
-        }
-    } else {
-        logMessage('Unknown command.', logTypes.ALERT);
     }
 
     return false;
