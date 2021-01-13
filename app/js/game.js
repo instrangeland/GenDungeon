@@ -11,8 +11,8 @@ const introMessage = 'You are in a room. Type "look" to look around!';
 const gameData = {};
 
 const logTypes = {
-    COMBAT: 'msg-combat',
     ALERT: 'msg-alert',
+    COMBAT: 'msg-combat',
     GAME: 'msg-game',
     PLAYER: 'msg-player',
     SYSTEM: 'msg-system'
