@@ -38,7 +38,7 @@ function equalsCI(str1, str2) {
 
 /**
  * Gets a random element from an array.
- * @param array The array to get the element from
+ * @param {Array} array The array to get the element from
  * @return {*} The random element
  */
 function getRandomElement(array) {
@@ -47,8 +47,8 @@ function getRandomElement(array) {
 
 /**
  * Gets a random integer from a range
- * @param min The minimum integer
- * @param max The maximum integer
+ * @param {number} min The minimum integer
+ * @param {number} max The maximum integer
  * @return {number} The random integer
  */
 function getRandInt(min, max) {

@@ -46,7 +46,7 @@ class Monster {
 
     /**
      * Creates an interaction between a player and a monster.
-     * @param player The player to interact with
+     * @param {Player} player The player to interact with
      * @return {boolean} Whether the interaction resulted in player death
      */
     playerInteraction(player) {
@@ -82,17 +82,6 @@ class Monster {
         return description.join(' ');
     }
 }
-
-/*
-monsterTypes. = {
-    species: '',
-    hp: ,
-    strength: ,
-    strengthVariance: ,
-    attackAccuracy: ,
-    aggression:
-}
- */
 
 monsterTypes.ZOMBIE = {
     species: 'Zombie',

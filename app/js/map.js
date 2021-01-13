@@ -18,7 +18,7 @@ class GameMap {
      * Adds a room to the map.
      * @param {number} y The y-coordinate of the room
      * @param {number} x The x-coordinate of the room
-     * @return The map
+     * @return {GameMap} The map
      */
     addRoom(y, x) {
         if (!this[y]) {
@@ -32,9 +32,9 @@ class GameMap {
 
     /**
      * Gets a specific room from the map.
-     * @param y {number} y The y-coordinate of the room
-     * @param x {number} x The x-coordinate of the room
-     * @return {null|*} The room
+     * @param {number} y The y-coordinate of the room
+     * @param {number} x The x-coordinate of the room
+     * @return {null|Room} The room
      */
     getRoom(y, x) {
         if (!this[y]) {

@@ -95,7 +95,7 @@ class Room {
 
     /**
      * Logs the description of the room and some other information.
-     * @param player The current player
+     * @param {Player} player The current player
      */
     getInfo(player) {
         return `* ${this.description} *
@@ -116,7 +116,7 @@ class Room {
     }
 
     /**
-     * Adds a monster to the room if certain probability occur.
+     * Adds a monster to the room if certain probabilities occur.
      * @param {string} type type of monster
      * @param {number} minDistance The minimum distance the room needs to be from the origin for the monster to spawn
      * @param {number} maxChance The maximum chance of the monster spawning
