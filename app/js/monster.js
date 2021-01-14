@@ -57,28 +57,18 @@ class Monster {
             }
         } else {
             if (Math.random() < this.attackAccuracy) {
-                const attack = monsterAttacksPlayer(player, this);
-                if (attack.playerDied) {
-                    logMessage(`- The ${this.species} attacks you for ${attack.damage} damage.`, logTypes.COMBAT);
+                const damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
+                player.hp -= damage;
+                if (player.hp > 0) {
+                    logMessage(`- The ${this.species} attacks you for ${damage} damage.`, logTypes.COMBAT);
                     logMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
-                    logMessage(`- The ${this.species} attacks you for ${attack.damage} damage, killing you.`, logTypes.ALERT);
+                    logMessage(`- The ${this.species} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    /**
-     * Gets a description of the monster and some other information.
-     * @return {string} A description of the monster
-     */
-    getInfo() {
-        const description = [];
-        description.push(`A ${this.species.toLowerCase()} with ${this.hp} HP.`);
-        description.push(`It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`);
-        return description.join(' ');
     }
 }
 

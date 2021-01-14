@@ -128,4 +128,37 @@ class Room {
             }
         }
     }
+
+    /**
+     * Gets the description of a monster if it exists.
+     * @param {string} species The species of the monster
+     * @return {string} The description
+     */
+    getMonsterInfo(species) {
+        const monster = this.getMonster(species);
+        if (monster) {
+            const description = [];
+            description.push(`A ${monster.species.toLowerCase()} with ${monster.hp} HP.`);
+            description.push(`It does an average of ${monster.strength} damage, and is about ${monster.attackAccuracy * 100}% accurate.`);
+            return description.join(' ');
+        } else {
+            return 'That doesn\'t exist here.';
+        }
+    }
+
+    playerAttacksMonster(species, player) {
+        const monster = this.getMonster(species);
+        if (monster) {
+            const damage = player.strength;
+            monster.hp -= damage;
+            if (monster.hp > 0) {
+                return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`;
+            } else {
+                this.removeMonster(species);
+                return `You attack the ${monster.species.toLowerCase()} for ${player.strength} damage, killing it.`;
+            }
+        } else {
+            return 'That doesn\'t exist here.';
+        }
+    }
 }
