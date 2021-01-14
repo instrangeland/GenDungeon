@@ -70,11 +70,22 @@ function handleInput(input) {
     })) return;
 
     const lookAliases = 'look,l,search,inspect,view,see,observe';
-    const lookAtAliases = 'at,towards,for';
+    const lookAtAliases = 'at,around,towards,for';
 
     /* look */
     if (command(lookAliases, inputArray, () => {
         logMessage(room.getInfo(player), logTypes.GAME);
+    })) return;
+
+    /* look around */
+    if (command(`${lookAliases} around`, inputArray, () => {
+        logMessage(room.getInfo(player), logTypes.GAME);
+    })) return;
+
+    /* look at room */
+    if (command(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
+        logMessage(room.getInfo(player), logTypes.GAME);
+        question = 'look';
     })) return;
 
     /* look at */
