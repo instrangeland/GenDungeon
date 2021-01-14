@@ -2,10 +2,10 @@
 
 'use strict';
 
-const minimapTable = $('#minimap');
-
 $(() => {
     for (let y = 4; y >= -4; y--) {
+        const minimapTable = $('#minimap');
+
         minimapTable.append(`<tr></tr>`);
         for (let x = -4; x <= 4; x++) {
             if (y === 0 && x === 0) {
@@ -23,7 +23,7 @@ $(() => {
  */
 class Minimap {
     /**
-     * Updates a minimap
+     * Updates a minimap.
      */
     update() {
         $("td")

@@ -5,9 +5,6 @@
 const inputBox = $('#input-box');
 const log = $('#log');
 
-const titleMessage = 'Welcome to ProceduralTA!';
-const introMessage = 'You are in a room. Type "look" to look around!';
-
 const gameData = {};
 
 const logTypes = {
@@ -17,14 +14,6 @@ const logTypes = {
     PLAYER: 'msg-player',
     SYSTEM: 'msg-system'
 };
-
-$(() => {
-    inputBox.trigger('focus');
-});
-
-$(window).keypress(() => {
-    inputBox.trigger('focus');
-});
 
 /**
  * Compares two strings while ignoring case.
@@ -54,6 +43,14 @@ function getRandomElement(array) {
 function getRandInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+$(() => {
+    inputBox.trigger('focus');
+});
+
+$(window).keypress(() => {
+    inputBox.trigger('focus');
+});
 
 /**
  * Gets input from the user, parses the input, and logs the input and response.
@@ -112,6 +109,9 @@ function logMessage(message, type) {
 }
 
 $(() => {
+    const titleMessage = 'Welcome to ProceduralTA!';
+    const introMessage = 'You are in a room. Try typing "look" to look around!';
+
     gameData.map = new GameMap();
     gameData.player = new Player();
     gameData.minimap = new Minimap();

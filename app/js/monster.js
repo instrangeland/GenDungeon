@@ -2,11 +2,6 @@
 
 'use strict';
 
-const monsterTypes = {
-    ZOMBIE: {},
-    SKELETON: {}
-};
-
 const monsterStates = {
     PASSIVE: 0,
     ATTACKING: 1
@@ -19,7 +14,7 @@ const monsterStates = {
 class Monster {
     /**
      * Creates a monster.
-     * @param {Object} monster The species of the monster
+     * @param {Object} monster The species object for the monster
      */
     constructor(monster) {
         // What type of monster this is
@@ -71,6 +66,7 @@ class Monster {
         return false;
     }
 }
+const monsterTypes = {};
 
 monsterTypes.ZOMBIE = {
     species: 'Zombie',

@@ -20,6 +20,18 @@ class Room {
     }
 
     /**
+     * Generates monsters in the room.
+     */
+    generateMonsters() {
+        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.9);
+        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.85);
+        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.75);
+        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.85);
+        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.8);
+        this.addMonsterChance(monsterTypes.GHOST, 8, 0.6);
+    }
+
+    /**
      * Generates a random room description
      * @return {string} The description
      */
@@ -51,7 +63,7 @@ class Room {
 
     /**
      * Gets a monster from a room given the species.
-     * @param {string} species The species of the monster to find
+     * @param {string} species The species of the monster to get
      * @returns {Monster} The monster
      */
     getMonster(species) {
@@ -94,7 +106,7 @@ class Room {
     }
 
     /**
-     * Logs the description of the room and some other information.
+     * Gets a description of the room and some other information.
      * @param {Player} player The current player
      */
     getInfo(player) {
@@ -104,35 +116,23 @@ class Room {
     }
 
     /**
-     * Generates monsters in the room.
-     */
-    generateMonsters() {
-        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.9);
-        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.85);
-        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.75);
-        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.85);
-        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.8);
-        this.addMonsterChance(monsterTypes.GHOST, 8, 0.6);
-    }
-
-    /**
      * Adds a monster to the room if certain probabilities occur.
-     * @param {string} type type of monster
+     * @param {string} species The species of the monster
      * @param {number} minDistance The minimum distance the room needs to be from the origin for the monster to spawn
      * @param {number} maxChance The maximum chance of the monster spawning
      */
-    addMonsterChance(type, minDistance, maxChance) {
+    addMonsterChance(species, minDistance, maxChance) {
         if (getRandInt(0, this.distance) > minDistance - 1) {
             if (Math.random() > maxChance) {
-                this.addMonster(type);
+                this.addMonster(species);
             }
         }
     }
 
     /**
-     * Gets the description of a monster if it exists.
+     * Gets the description of a monster if it exists, otherwise a message stating it doesn't.
      * @param {string} species The species of the monster
-     * @return {string} The description
+     * @return {string} The description or message
      */
     getMonsterInfo(species) {
         const monster = this.getMonster(species);
@@ -146,6 +146,12 @@ class Room {
         }
     }
 
+    /**
+     * Calculates the effects of a player attack a monster, and returns a description of what happened.
+     * @param {string} species The type of monster
+     * @param {Player} player The player
+     * @return {string} The message
+     */
     playerAttacksMonster(species, player) {
         const monster = this.getMonster(species);
         if (monster) {
