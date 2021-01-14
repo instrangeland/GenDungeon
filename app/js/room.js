@@ -123,7 +123,7 @@ class Room {
      */
     addMonsterChance(species, minDistance, maxChance) {
         if (getRandInt(0, this.distance) > minDistance - 1) {
-            if (Math.random() > maxChance) {
+            if (Math.random() < maxChance) {
                 this.addMonster(species);
             }
         }

@@ -11,6 +11,7 @@ const logTypes = {
     ALERT: 'msg-alert',
     COMBAT: 'msg-combat',
     GAME: 'msg-game',
+    MOVEMENT: 'msg-movement',
     PLAYER: 'msg-player',
     SYSTEM: 'msg-system'
 };

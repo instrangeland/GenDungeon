@@ -43,7 +43,7 @@ body, #input-box {
     display: none;
 }
 
-.msg-alert, .msg-combat, .msg-game, .msg-player, .msg-system {
+.msg-alert, .msg-combat, .msg-game, .msg-movement, .msg-player, .msg-system {
     margin-bottom: 24px
 }
 
@@ -65,6 +65,10 @@ body, #input-box {
 
 .msg-game {
     color: #ffd
+}
+
+.msg-movement {
+    color: #0b9;
 }
 
 .msg-system {
