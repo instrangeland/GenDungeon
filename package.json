@@ -11,7 +11,7 @@
     "start": "electron .",
     "test": "electron . test"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "dependencies": {
     "jquery": "^3.5.1"
   },
