@@ -2,6 +2,11 @@
 
 'use strict';
 
+try {
+    window.$ = window.require('jquery');
+} catch (err) {
+}
+
 const inputBox = $('#input-box');
 const log = $('#log');
 
@@ -49,7 +54,7 @@ $(() => {
     inputBox.trigger('focus');
 });
 
-$(window).keypress(() => {
+$(window).on('keydown', () => {
     inputBox.trigger('focus');
 });
 
