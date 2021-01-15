@@ -74,7 +74,7 @@ monsterTypes.ZOMBIE = {
     strength: 2,
     strengthVariance: 0,
     attackAccuracy: 0.5,
-    aggression: 0.85
+    aggression: 0.75
 }
 
 monsterTypes.SKELETON = {
@@ -83,7 +83,7 @@ monsterTypes.SKELETON = {
     strength: 3,
     strengthVariance: 1,
     attackAccuracy: 0.75,
-    aggression: 0.75
+    aggression: 0.65
 }
 
 monsterTypes.SPIDER = {
@@ -92,7 +92,7 @@ monsterTypes.SPIDER = {
     strength: 2,
     strengthVariance: 0,
     attackAccuracy: 0.95,
-    aggression: 0.95
+    aggression: 0.85
 }
 
 monsterTypes.VAMPIRE = {
@@ -101,7 +101,7 @@ monsterTypes.VAMPIRE = {
     strength: 3,
     strengthVariance: 2,
     attackAccuracy: 1,
-    aggression: 0.5
+    aggression: 0.4
 }
 
 monsterTypes.GOBLIN = {
@@ -110,7 +110,7 @@ monsterTypes.GOBLIN = {
     strength: 2,
     strengthVariance: 1,
     attackAccuracy: 0.65,
-    aggression: 0.8
+    aggression: 0.7
 }
 
 monsterTypes.GHOST = {
@@ -119,5 +119,5 @@ monsterTypes.GHOST = {
     strength: 3,
     strengthVariance: 1,
     attackAccuracy: 1,
-    aggression: 0.2
+    aggression: 0.3
 }

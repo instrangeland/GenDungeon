@@ -23,12 +23,12 @@ class Room {
      * Generates monsters in the room.
      */
     generateMonsters() {
-        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.9);
-        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.85);
-        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.75);
-        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.85);
-        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.8);
-        this.addMonsterChance(monsterTypes.GHOST, 8, 0.6);
+        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.8);
+        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.75);
+        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.65);
+        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.75);
+        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.7);
+        this.addMonsterChance(monsterTypes.GHOST, 8, 0.5);
     }
 
     /**
@@ -155,6 +155,7 @@ class Room {
     playerAttacksMonster(species, player) {
         const monster = this.getMonster(species);
         if (monster) {
+            monster.state = monsterStates.ATTACKING;
             const damage = player.strength;
             monster.hp -= damage;
             if (monster.hp > 0) {
