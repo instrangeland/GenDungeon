@@ -7,6 +7,7 @@ let question = '';
 /**
  * Handles user input
  * @param {string} input The user input
+ * @return {boolean} Whether the user took a turn with their command
  */
 function handleInput(input) {
     let inputArray = input.trim().toLowerCase().split(' ');
@@ -17,14 +18,14 @@ function handleInput(input) {
     inputArray = inputArray.filter(word => !'a,an,the'.split(',').includes(word));
     if (!inputArray.length) {
         logMessage('Unknown command.', logTypes.ALERT);
-        return;
+        return false;
     }
 
     /* go */
     inputArray = inputArray.filter(word => !'go,move,run,sprint,walk,dash,slide'.split(',').includes(word));
     if (!inputArray.length) {
         logMessage('Where do you want to go?', logTypes.GAME);
-        return;
+        return false;
     }
 
     /* help */
@@ -38,36 +39,36 @@ function handleInput(input) {
             use [something]
             
             There are lots of other things you can do, try to experiment!`, logTypes.GAME);
-    })) return;
+    })) return false;
 
     /* info */
     if (command('info,me,myself,i,player,user,information,hp,stats,health', inputArray, () => {
         logMessage(`You currently have ${player.hp} HP.`, logTypes.GAME);
-    })) return;
+    })) return false;
 
     /* north */
     if (command('north,n,northward,northern,up,upward,upwards', inputArray, () => {
         logMessage('You move north.', logTypes.MOVEMENT);
         player.y++;
-    })) return;
+    })) return true;
 
     /* south */
     if (command('south,s,southward,southern,down,downward,downwards', inputArray, () => {
         logMessage('You move south.', logTypes.MOVEMENT);
         player.y--;
-    })) return;
+    })) return true;
 
     /* east */
     if (command('east,e,eastward,eastern,right', inputArray, () => {
         logMessage('You move east.', logTypes.MOVEMENT);
         player.x++;
-    })) return;
+    })) return true;
 
     /* west */
     if (command('west,w,westward,western,left', inputArray, () => {
         logMessage('You move west.', logTypes.MOVEMENT);
         player.x--;
-    })) return;
+    })) return true;
 
     const lookAliases = 'look,l,search,inspect,view,see,observe';
     const lookAtAliases = 'at,around,towards,for';
@@ -75,35 +76,35 @@ function handleInput(input) {
     /* look */
     if (command(lookAliases, inputArray, () => {
         logMessage(room.getInfo(player), logTypes.GAME);
-    })) return;
+    })) return false;
 
     /* look around */
     if (command(`${lookAliases} around`, inputArray, () => {
         logMessage(room.getInfo(player), logTypes.GAME);
-    })) return;
+    })) return false;
 
     /* look at room */
     if (command(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
         logMessage(room.getInfo(player), logTypes.GAME);
         question = 'look';
-    })) return;
+    })) return false;
 
     /* look at */
     if (command(`${lookAliases} ${lookAtAliases}`, inputArray, () => {
         logMessage('What do you want to look at?', logTypes.GAME);
         logMessage('(Try: look at thing)', logTypes.ALERT);
         question = 'look';
-    })) return;
+    })) return false;
 
     /* look [#] */
     if (command(`${lookAliases} #`, inputArray, args => {
         logMessage(room.getMonsterInfo(args[0]), logTypes.GAME);
-    })) return;
+    })) return false;
 
     /* look at [#] */
     if (command(`${lookAliases} ${lookAtAliases} #`, inputArray, args => {
         logMessage(room.getMonsterInfo(args[0]), logTypes.GAME);
-    })) return;
+    })) return false;
 
     const attackAliases = 'attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate';
 
@@ -112,18 +113,18 @@ function handleInput(input) {
         logMessage('What do you want to attack?', logTypes.GAME);
         logMessage('(Try: attack thing)', logTypes.ALERT);
         question = 'attack';
-    })) return;
+    })) return false;
 
     /* attack [#] */
     if (command(`${attackAliases} #`, inputArray, args => {
         logMessage(room.playerAttacksMonster(args[0], player), logTypes.COMBAT);
-    })) return;
+    })) return true;
 
     /* credits */
     if (command('credit,credits,proceduralta,julian,author,about', inputArray, () => {
         logMessage(`ProceduralTA is an open source text adventure.
         https://github.com/jlachniet/ProceduralTA`, logTypes.GAME);
-    })) return;
+    })) return false;
 
     const inputJoined = inputArray.join(' ');
     const monster = room.getMonster(inputJoined);
@@ -134,6 +135,8 @@ function handleInput(input) {
         logMessage(room.getMonsterInfo(inputJoined), logTypes.GAME);
     } else if (question === 'attack') {
         logMessage(room.playerAttacksMonster(inputJoined, player), logTypes.COMBAT);
+        question = '';
+        return true;
     } else {
         if (monster) {
             logMessage(room.getMonsterInfo(inputJoined), logTypes.GAME);
@@ -143,4 +146,5 @@ function handleInput(input) {
     }
 
     question = '';
+    return false;
 }

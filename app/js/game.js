@@ -71,7 +71,7 @@ function newInput() {
 
     logMessage('> ' + input, logTypes.PLAYER);
 
-    handleInput(input);
+    const newTurn = handleInput(input);
     inputBox.val('');
 
     const map = gameData.map;
@@ -85,12 +85,14 @@ function newInput() {
 
     gameData.minimap.update();
 
-    for (const monster of gameData.map[gameData.player.y][gameData.player.x].monsters) {
-        if (monster.playerInteraction(gameData.player)) {
-            logMessage('--- GAME OVER ---', logTypes.SYSTEM);
-            inputBox.prop('disabled', true);
-            inputBox.attr('placeholder', 'Thanks for playing!');
-            return false;
+    if (newTurn) {
+        for (const monster of gameData.map[gameData.player.y][gameData.player.x].monsters) {
+            if (monster.playerInteraction(gameData.player)) {
+                logMessage('--- GAME OVER ---', logTypes.SYSTEM);
+                inputBox.prop('disabled', true);
+                inputBox.attr('placeholder', 'Thanks for playing!');
+                return false;
+            }
         }
     }
 
