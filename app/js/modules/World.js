@@ -1,13 +1,23 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import Room from './Room.js';
+import {Room} from './Room.js';
 
-export default class World {
+/**
+ * A world in which a game takes place.
+ * @module World
+ * @class
+ */
+export class World {
     constructor() {
         this.contents = {};
         this.addRoom(0, 0);
     }
 
+    /**
+     * Adds a room at a given coordinate pair.
+     * @param {number} y The y-coordinate
+     * @param {number} x The x-coordinate
+     */
     addRoom(y, x) {
         if (!this.contents[y]) {
             this.contents[y] = {};
@@ -17,6 +27,12 @@ export default class World {
         }
     }
 
+    /**
+     * Gets a room at a given coordinate pair.
+     * @param {number} y The y-coordinate
+     * @param {number} x The x-coordinate
+     * @return {undefined|Room} The room
+     */
     getRoom(y, x) {
         if (!this.contents[y]) {
             return undefined;

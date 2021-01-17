@@ -1,12 +1,17 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {logTypes} from './GameLog.js';
 import {gameData, logMessage} from '../ProceduralTA.js';
-import Verb from './Verb.js';
+import {logTypes} from './GameLog.js';
+import {Verb} from './Verb.js';
 
 let question = '';
 
-export default function InputHandler(input) {
+/**
+ * Handles given user input.
+ * @param {string} input The input to handle
+ * @return {boolean} Whether the input causes the player to use a turn
+ */
+export function InputHandler(input) {
     const player = gameData.player;
     const room = gameData.world.getRoom(player.y, player.x);
     let inputArray = input.split(' ');
@@ -71,17 +76,17 @@ export default function InputHandler(input) {
 
     // look
     if (Verb(lookAliases, inputArray, () => {
-        logMessage(room.getRoomInfo(player), logTypes.GAME);
+        logMessage(room.getRoomInfo(), logTypes.GAME);
     })) return false;
 
     // look around
     if (Verb(`${lookAliases} around`, inputArray, () => {
-        logMessage(room.getRoomInfo(player), logTypes.GAME);
+        logMessage(room.getRoomInfo(), logTypes.GAME);
     })) return false;
 
     // look at room
     if (Verb(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
-        logMessage(room.getRoomInfo(player), logTypes.GAME);
+        logMessage(room.getRoomInfo(), logTypes.GAME);
     })) return false;
 
     // look at

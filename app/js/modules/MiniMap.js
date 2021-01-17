@@ -2,7 +2,12 @@
 
 import {gameData} from "../ProceduralTA.js";
 
-export default class Minimap {
+/**
+ * A minimap in the corner of the game.
+ * @module MiniMap
+ * @class
+ */
+export class MiniMap {
     constructor() {
         for (let y = 4; y >= -4; y--) {
             const minimapTable = $('#minimap');
@@ -10,7 +15,7 @@ export default class Minimap {
             minimapTable.append(`<tr></tr>`);
             for (let x = -4; x <= 4; x++) {
                 if (y === 0 && x === 0) {
-                    minimapTable.children().last().append(`<td class="0_0 player"></td>`)
+                    minimapTable.children().last().append(`<td class="0_0 player"></td>`);
                 } else {
                     minimapTable.children().last().append(`<td class="${y}_${x}"></td>`);
                 }
@@ -18,6 +23,9 @@ export default class Minimap {
         }
     }
 
+    /**
+     * Updates the minimap.
+     */
     update() {
         $("td")
             .removeClass('danger')

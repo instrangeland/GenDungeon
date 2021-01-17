@@ -1,6 +1,11 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-export default class Thing {
+/**
+ * A thing in a room.
+ * @module Thing
+ * @class
+ */
+export class Thing {
     constructor() {
     }
 }

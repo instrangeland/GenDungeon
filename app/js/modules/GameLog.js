@@ -11,6 +11,11 @@ export const logTypes = {
     SYSTEM: 'msg-system'
 };
 
+/**
+ * A log in which game messages are shown.
+ * @module GameLog
+ * @class
+ */
 export class GameLog {
     constructor() {
         if (!gameData.isElectron) {
@@ -20,6 +25,11 @@ export class GameLog {
         this.addMessage('You are in a room. Try typing "look" to look around!', logTypes.GAME);
     }
 
+    /**
+     * Adds a message to the log.
+     * @param {string} messageContent The content of the message
+     * @param {string} messageType The type of the message
+     */
     addMessage(messageContent, messageType) {
         const logElement = $('#log');
         logElement.append(`<p class="${messageType}"></p>`);

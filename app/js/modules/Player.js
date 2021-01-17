@@ -1,6 +1,11 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-export default class Player {
+/**
+ * A playable character.
+ * @module Player
+ * @class
+ */
+export class Player {
     constructor() {
         this.x = 0;
         this.y = 0;
