@@ -13,8 +13,7 @@ function newWindow() {
         height: 600,
         icon: 'icon.png',
         webPreferences: {
-            contextIsolation: false,
-            nodeIntegration: true
+            contextIsolation: true
         }
     });
     if (process.argv.includes('test')) {

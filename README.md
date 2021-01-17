@@ -1,10 +1,10 @@
-![ProceduralTA Icon](readme-assets/logo.png)
+![ProceduralTA Icon](logo.png)
 
 # ProceduralTA
 
 A text adventure where you explore procedurally generated worlds.
 
-![ProceduralTA Gameplay Screenshot](readme-assets/screenshot.png)
+![ProceduralTA Gameplay Screenshot](screenshot.png)
 
 ## Installation
 
@@ -16,13 +16,13 @@ npm install
 
 ## Usage
 
-ProceduralTA can be run with
+ProceduralTA can be run with:
 
 ```
 npm start
 ```
 
-You can also run it with developer console enabled for debugging with
+You can also run it with the developer console enabled for debugging with:
 
 ```
 npm test
