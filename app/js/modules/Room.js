@@ -133,11 +133,11 @@ export class Room {
     }
 
     /**
-     * Removes a monster from the room.
-     * @param {string} monsterName The name of the monster.
+     * Removes a thing from the room.
+     * @param {string} thingName The name of the thing
      */
-    removeMonster(monsterName) {
-        this.contents.splice(this.contents.findIndex(monster => equalsCI(monster.name, monsterName)), 1);
+    removeThing(thingName) {
+        this.contents.splice(this.contents.findIndex(monster => equalsCI(monster.name, thingName)), 1);
     }
 
     /**
@@ -170,7 +170,7 @@ export class Room {
                 logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
                 return true;
             } else {
-                this.removeMonster(thing);
+                this.removeThing(thing);
                 logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
                 return true;
             }
@@ -192,6 +192,7 @@ export class Room {
         const food = this.getThing(thing);
         if (food instanceof Food) {
             player.hp += food.healing;
+            this.removeThing(thing);
             logMessage(`You take and eat the ${food.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
             return true;
         } else if (food) {
