@@ -166,24 +166,33 @@ export function InputHandler(input) {
 
     input = inputArray.join(' ');
 
+    // look -> [#]
     if (question === 'look') {
         logMessage(room.getThingInfo(input), logTypes.GAME);
         question = '';
         return false;
+    }
 
-    } else if (question === 'attack') {
+    // attack -> [#]
+    if (question === 'attack') {
+        question = '';
         return room.attackThing(player, input).success;
+    }
 
-    } else if (question === 'take') {
+    // take -> [#]
+    if (question === 'take') {
+        question = '';
         return room.takeThing(player, input).success
+    }
 
-    } else {
-        if (room.getThing(input)) {
-            logMessage(room.getThingInfo(input), logTypes.GAME);
-            question = '';
-            return false;
-        }
-        logMessage('Unknown command.', logTypes.ALERT);
+    // [#]
+    if (room.getThing(input)) {
+        logMessage(room.getThingInfo(input), logTypes.GAME);
+        question = '';
         return false;
     }
+
+    logMessage('Unknown command.', logTypes.ALERT);
+    return false;
+
 }
