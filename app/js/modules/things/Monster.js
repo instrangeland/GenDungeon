@@ -1,7 +1,7 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandInt, logMessage} from "../ProceduralTA.js";
-import {logTypes} from './GameLog.js';
+import {getRandInt, logMessage} from "../../ProceduralTA.js";
+import {logTypes} from '../GameLog.js';
 import {Thing} from './Thing.js';
 
 export const monsterStates = {

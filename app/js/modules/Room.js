@@ -1,7 +1,8 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandomElement, getRandInt} from "../ProceduralTA.js";
-import {Monster, monsterTypes, monsterStates} from "./Monster.js";
+import {getRandInt, getRandomElement} from "../ProceduralTA.js";
+import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
+import {Food} from "./things/Food.js";
 
 /**
  * Compares whether two strings are equal, ignoring case.
@@ -25,7 +26,11 @@ export class Room {
         this.description = this.generateDescription();
         this.distance = Math.sqrt(x ** 2 + y ** 2);
         this.contents = [];
+
         this.generateMonsters();
+        if (Math.random() > 0.8) {
+            this.contents.push(new Food());
+        }
     }
 
     /**
@@ -75,9 +80,14 @@ export class Room {
      * @return {string} The description
      */
     getRoomInfo() {
+        if (this.contents.length) {
+            return `* ${this.description} *
+        
+            ${this.listThings()}`;
+        }
         return `* ${this.description} *
         
-        ${this.listThings()}`;
+        (This room is empty)`
     }
 
     /**
@@ -144,24 +154,59 @@ export class Room {
     }
 
     /**
-     * Calculates the effects of a player attacking a monster.
+     * Calculates the effects of a player attacking something.
      * @param {Player} player The player
-     * @param {string} monsterName The name of the monster
-     * @return {string} A description of the outcome of the attack.
+     * @param {string} thing The thing being attacked
+     * @return {string} A description of the outcome of the attack
      */
-    attackMonster(player, monsterName) {
-        const monster = this.getThing(monsterName);
+    attackThing(player, thing) {
+        const monster = this.getThing(thing);
+        const response = {};
         if (monster instanceof Monster) {
             monster.state = monsterStates.ATTACKING;
             const damage = player.strength;
             monster.hp -= damage;
             if (monster.hp > 0) {
-                return `You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`;
+                response.description = `You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`;
+                response.success = true;
+                return response;
             } else {
-                this.removeMonster(monsterName);
-                return `You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`;
+                this.removeMonster(thing);
+                response.description = `You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`;
+                response.success = true;
+                return response;
             }
+        } else if (monster) {
+            response.description = 'You can\'t attack that.';
+            response.success = false;
+            return response;
         }
-        return 'That doesn\'t exist here.';
+        response.description = 'That doesn\'t exist here.';
+        response.success = false;
+        return response;
+    }
+
+    /**
+     * Calculates the effects of a player taking thing.
+     * @param {Player} player The player
+     * @param {string} thing The thing being taken
+     * @return {string} A description of the outcome of the take action
+     */
+    takeThing(player, thing) {
+        const food = this.getThing(thing);
+        const response = {};
+        if (food instanceof Food) {
+            player.hp += food.healing;
+            response.description = `You take and eat the ${food.name.toLowerCase()}, increasing your health to ${player.hp} HP.`;
+            response.success = true;
+            return response;
+        } else if (food) {
+            response.description = 'You can\'t take that.';
+            response.success = false;
+            return response;
+        }
+        response.description = 'That doesn\'t exist here.';
+        response.success = false;
+        return response;
     }
 }

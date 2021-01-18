@@ -5,26 +5,30 @@
  * @param match {string} The verb to check against
  * @param test {string[]} The test input
  * @param callback {function} The callback function
- * @return {boolean} Whether the test input matched
+ * @return {Verb} Information about the verb
  */
 export function Verb(match, test, callback) {
     const matchArray = match.split(' ');
+    const response = {};
 
     if (matchArray.length !== test.length) {
-        return false;
+        response.matched = false;
+        return response;
     }
 
     const args = [];
     for (const [index, testWord] of test.entries()) {
         const matchWords = matchArray[index].split(',');
         if (!matchWords.includes(testWord) && !matchWords.includes('#')) {
-            return false;
+            response.matched = false;
+            return response;
         }
         if (matchWords.includes('#')) {
             args.push(testWord);
         }
     }
 
-    callback(args);
-    return true;
+    response.matched = true;
+    response.usedTurn = callback(args);
+    return response;
 }

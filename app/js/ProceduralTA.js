@@ -3,7 +3,7 @@
 import {GameLog, logTypes} from './modules/GameLog.js';
 import {InputHandler} from './modules/InputHandler.js';
 import {MiniMap} from './modules/MiniMap.js';
-import {Monster} from "./modules/Monster.js";
+import {Monster} from "./modules/things/Monster.js";
 import {Player} from './modules/Player.js';
 import {World} from './modules/World.js';
 
@@ -46,7 +46,9 @@ export function getRandInt(min, max) {
 
 $('body').on('keydown', event => {
     const inputBox = $('#input-box');
-    inputBox.focus();
+    if (!event.ctrlKey) {
+        inputBox.focus();
+    }
 
     if (event.keyCode === 13) {
         const input = inputBox.val().trim().toLowerCase();
