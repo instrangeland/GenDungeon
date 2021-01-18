@@ -63,6 +63,10 @@ p {
     color: #0b9;
 }
 
+.msg-success {
+    color: #4a4;
+}
+
 .msg-system {
     color: #5af;
 }

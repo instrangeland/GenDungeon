@@ -1,6 +1,7 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandInt, getRandomElement} from "../ProceduralTA.js";
+import {getRandInt, getRandomElement, logMessage} from "../ProceduralTA.js";
+import {logTypes} from "./GameLog.js";
 import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
 import {Food} from "./things/Food.js";
 
@@ -157,56 +158,47 @@ export class Room {
      * Calculates the effects of a player attacking something.
      * @param {Player} player The player
      * @param {string} thing The thing being attacked
-     * @return {string} A description of the outcome of the attack
+     * @return {boolean} Whether the attack succeeded
      */
     attackThing(player, thing) {
         const monster = this.getThing(thing);
-        const response = {};
         if (monster instanceof Monster) {
             monster.state = monsterStates.ATTACKING;
             const damage = player.strength;
             monster.hp -= damage;
             if (monster.hp > 0) {
-                response.description = `You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`;
-                response.success = true;
-                return response;
+                logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
+                return true;
             } else {
                 this.removeMonster(thing);
-                response.description = `You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`;
-                response.success = true;
-                return response;
+                logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
+                return true;
             }
         } else if (monster) {
-            response.description = 'You can\'t attack that.';
-            response.success = false;
-            return response;
+            logMessage('You can\'t attack that.', logTypes.ALERT);
+            return false;
         }
-        response.description = 'That doesn\'t exist here.';
-        response.success = false;
-        return response;
+        logMessage('That doesn\'t exist here.', logTypes.ALERT);
+        return false;
     }
 
     /**
      * Calculates the effects of a player taking thing.
      * @param {Player} player The player
      * @param {string} thing The thing being taken
-     * @return {string} A description of the outcome of the take action
+     * @return {boolean} Whether the thing was taken
      */
     takeThing(player, thing) {
         const food = this.getThing(thing);
-        const response = {};
         if (food instanceof Food) {
             player.hp += food.healing;
-            response.description = `You take and eat the ${food.name.toLowerCase()}, increasing your health to ${player.hp} HP.`;
-            response.success = true;
-            return response;
+            logMessage(`You take and eat the ${food.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
+            return true;
         } else if (food) {
-            response.description = 'You can\'t take that.';
-            response.success = false;
-            return response;
+            logMessage('You can\'t take that.', logTypes.ALERT);
+            return false;
         }
-        response.description = 'That doesn\'t exist here.';
-        response.success = false;
-        return response;
+        logMessage('That doesn\'t exist here.', logTypes.ALERT);
+        return false;
     }
 }

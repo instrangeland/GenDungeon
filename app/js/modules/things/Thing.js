@@ -6,6 +6,23 @@
  * @class
  */
 export class Thing {
-    constructor() {
+    constructor(name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets a description of the food.
+     * @return {string}
+     */
+    getDescription() {
+        return `A ${this.name.toLowerCase()}.`;
+    }
+
+    /**
+     * Gets a short formatted description of the food for use in "look".
+     * @return {string}
+     */
+    getShortDescription() {
+        return this.name;
     }
 }

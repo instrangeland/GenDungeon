@@ -19,9 +19,9 @@ export function InputHandler(input) {
 
     const articles = 'a,an,the';
     const goAliases = 'go,move,run,sprint,walk,dash,slide';
-    const helpAliases = 'help,what,?';
+    const helpAliases = 'help,?,what';
     const creditsAliases = 'credit,credits,proceduralta,julian,author,about';
-    const infoAliases = 'info,me,myself,i,player,user,information,hp,stats,health';
+    const infoAliases = 'info,i,me,myself,player,user,information,hp,stats,health';
     const northAliases = 'north,n,northward,northern,up,upward,upwards';
     const southAliases = 'south,s,southward,southern,down,downward,downwards';
     const eastAliases = 'east,e,eastward,eastern,right';
@@ -29,7 +29,7 @@ export function InputHandler(input) {
     const lookAliases = 'look,l,search,inspect,view,see,observe';
     const lookAtAliases = 'at,around,towards,for';
     const attackAliases = 'attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate';
-    const takeAliases = 'take,get,steal,grab,pick';
+    const takeAliases = 'take,t,get,steal,grab,pick';
 
     /* verb = new Verb('hello', inputArray, () => {
         logMessage('world', logTypes.GAME);
@@ -143,9 +143,7 @@ export function InputHandler(input) {
 
     // attack [#]
     verb = new Verb(`${attackAliases} #`, inputArray, args => {
-        let attackResponse = room.attackThing(player, args[0]);
-        logMessage(attackResponse.description, logTypes.COMBAT);
-        return attackResponse.success;
+        return room.attackThing(player, args[0]).success;
     });
     if (verb.matched) {
         return verb.usedTurn;
@@ -160,9 +158,7 @@ export function InputHandler(input) {
 
     // take [#]
     verb = new Verb(`${takeAliases} #`, inputArray, args => {
-        let takeResponse = room.takeThing(player, args[0]);
-        logMessage(takeResponse.description, logTypes.GAME);
-        return takeResponse.success;
+        return room.takeThing(player, args[0]).success;
     });
     if (verb.matched) {
         return verb.usedTurn;
@@ -176,16 +172,10 @@ export function InputHandler(input) {
         return false;
 
     } else if (question === 'attack') {
-        let attackResponse = room.attackThing(player, input);
-        logMessage(attackResponse.description, logTypes.COMBAT);
-        question = '';
-        return attackResponse.success;
+        return room.attackThing(player, input).success;
 
     } else if (question === 'take') {
-        let takeResponse = room.takeThing(player, input);
-        logMessage(takeResponse.description, logTypes.COMBAT);
-        question = '';
-        return takeResponse.success;
+        return room.takeThing(player, input).success
 
     } else {
         if (room.getThing(input)) {

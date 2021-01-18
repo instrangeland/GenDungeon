@@ -28,20 +28,4 @@ export class Food extends Thing {
 
         return getRandomElement(foods);
     }
-
-    /**
-     * Gets a description of the food.
-     * @return {string}
-     */
-    getDescription() {
-        return `A ${this.name.toLowerCase()}.`;
-    }
-
-    /**
-     * Gets a short formatted description of the food for use in "look".
-     * @return {string}
-     */
-    getShortDescription() {
-        return this.name;
-    }
 }

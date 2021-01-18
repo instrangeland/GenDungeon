@@ -8,6 +8,7 @@ export const logTypes = {
     GAME: 'msg-game',
     MOVEMENT: 'msg-movement',
     PLAYER: 'msg-player',
+    SUCCESS: 'msg-success',
     SYSTEM: 'msg-system'
 };
 
