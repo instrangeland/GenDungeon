@@ -154,7 +154,7 @@ export class Room {
             pathsDescription = 'You can go in every direction from here.';
         }
 
-        if (this.contents.length) {
+        if (this.listThings()) {
             return `* ${this.description} *
             ${pathsDescription}
         
