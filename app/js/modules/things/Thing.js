@@ -11,7 +11,7 @@ export class Thing {
     }
 
     /**
-     * Gets a description of the food.
+     * Gets a description of the thing.
      * @return {string}
      */
     getDescription() {
@@ -19,7 +19,7 @@ export class Thing {
     }
 
     /**
-     * Gets a short formatted description of the food for use in "look".
+     * Gets a short formatted description of the thing for use in "look".
      * @return {string}
      */
     getShortDescription() {
