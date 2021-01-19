@@ -4,6 +4,7 @@ import {gameData, getRandInt, getRandomElement, logMessage} from "../ProceduralT
 import {logTypes} from "./GameLog.js";
 import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
 import {Food} from "./things/Food.js";
+import {Thing} from "./things/Thing.js";
 
 /**
  * Compares whether two strings are equal, ignoring case.
@@ -48,6 +49,14 @@ export class Room {
         if (Math.random() > 0.8) {
             this.contents.push(new Food());
         }
+
+        this.contents.push(new Thing('wall'));
+        this.contents.push(new Thing('floor'));
+        this.contents.push(new Thing('ceiling'));
+        this.contents.push(new Thing('door'));
+        this.contents.push(new Thing('path'));
+        this.contents.push(new Thing('pathway'));
+        this.contents.push(new Thing('monster'));
     }
 
     /**

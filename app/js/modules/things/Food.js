@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandomElement, getRandInt} from "../../ProceduralTA.js";
+import {getRandInt, getRandomElement} from "../../ProceduralTA.js";
 import {Thing} from './Thing.js';
 
 /**
