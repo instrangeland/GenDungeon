@@ -47,10 +47,18 @@ export class Room {
             'A mysterious',
             'An eerie',
             'An unnerving',
+            'A pristine',
+            'A dirty',
             'A slanted',
             'A round',
             'A curved',
-            'A pristine'
+            'A square',
+            'A rectangular',
+            'A semicircular',
+            'A strange',
+            'A weird',
+            'A symmetrical',
+            'A tall'
         ];
 
         const nouns = [
@@ -58,7 +66,8 @@ export class Room {
             'passageway',
             'corridor',
             'tunnel',
-            'chamber'
+            'chamber',
+            'entranceway'
         ];
 
         return `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
