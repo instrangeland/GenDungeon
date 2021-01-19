@@ -19,6 +19,8 @@ export const logTypes = {
  */
 export class GameLog {
     constructor() {
+        this.logElement = $('#log');
+        this.logElement.empty();
         if (!gameData.isElectron) {
             this.addMessage('ProceduralTA is best played offline. Some features may not work in a browser.', logTypes.ALERT);
         }
@@ -32,10 +34,9 @@ export class GameLog {
      * @param {string} messageType The type of the message
      */
     addMessage(messageContent, messageType) {
-        const logElement = $('#log');
-        logElement.append(`<p class="${messageType}"></p>`);
+        this.logElement.append(`<p class="${messageType}"></p>`);
 
-        const messageElement = logElement.children().last();
+        const messageElement = this.logElement.children().last();
 
         for (const char of messageContent) {
             if (char === '\n') {
@@ -45,6 +46,6 @@ export class GameLog {
             }
         }
 
-        logElement.scrollTop(logElement.prop('scrollHeight'));
+        this.logElement.scrollTop(this.logElement.prop('scrollHeight'));
     }
 }

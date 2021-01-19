@@ -16,7 +16,7 @@ body {
 
 body, #input-box {
     background: #222;
-    font: 16px "Press Start 2P";
+    font: 16px "Press Start 2P", monospace;
 }
 
 ::selection {
