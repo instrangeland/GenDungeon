@@ -35,7 +35,10 @@ export class World {
      */
     getRoom(y, x) {
         if (!this.contents[y]) {
-            return undefined;
+            this.addRoom(y, x);
+        }
+        if (!this.contents[y][x]) {
+            this.addRoom(y, x);
         }
         return this.contents[y][x];
     }

@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandInt, getRandomElement, logMessage} from "../ProceduralTA.js";
+import {gameData, getRandInt, getRandomElement, logMessage} from "../ProceduralTA.js";
 import {logTypes} from "./GameLog.js";
 import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
 import {Food} from "./things/Food.js";
@@ -24,6 +24,19 @@ function equalsCI(str1, str2) {
  */
 export class Room {
     constructor(y, x) {
+        this.y = y;
+        this.x = x;
+
+        this.isOrigin = y === 0 && x === 0;
+
+        if (this.isOrigin) {
+            this.isActive = true;
+        } else {
+            this.isActive = noise.simplex2(y / 2 + 471, x / 2 + 471) > -0.15;
+        }
+
+        this.isExplored = this.isOrigin;
+
         this.description = this.generateDescription();
         this.distance = Math.sqrt(x ** 2 + y ** 2);
         this.contents = [];
@@ -90,12 +103,53 @@ export class Room {
      * @return {string} The description
      */
     getRoomInfo() {
+        this.isExplored = true;
+        const world = gameData.world;
+        const pathList = [];
+
+        if (world.getRoom(this.y + 1, this.x).isActive) {
+            pathList.push('north');
+        } else {
+            world.getRoom(this.y + 1, this.x).isExplored = true;
+        }
+
+        if (world.getRoom(this.y - 1, this.x).isActive) {
+            pathList.push('south');
+        } else {
+            world.getRoom(this.y - 1, this.x).isExplored = true;
+        }
+
+        if (world.getRoom(this.y, this.x + 1).isActive) {
+            pathList.push('east');
+        } else {
+            world.getRoom(this.y, this.x + 1).isExplored = true;
+        }
+
+        if (world.getRoom(this.y, this.x - 1).isActive) {
+            pathList.push('west');
+        } else {
+            world.getRoom(this.y, this.x - 1).isExplored = true;
+        }
+
+        let pathsDescription;
+        if (pathList.length === 1) {
+            pathsDescription = `You can go ${pathList[0]} from here.`;
+        } else if (pathList.length === 2) {
+            pathsDescription = `You can go ${pathList[0]} and ${pathList[1]} from here.`;
+        } else if (pathList.length === 3) {
+            pathsDescription = `You can go ${pathList[0]}, ${pathList[1]}, and ${pathList[2]} from here.`;
+        } else {
+            pathsDescription = 'You can go in every direction from here.';
+        }
+
         if (this.contents.length) {
             return `* ${this.description} *
+            ${pathsDescription}
         
             ${this.listThings()}`;
         }
         return `* ${this.description} *
+        ${pathsDescription}
         
         (This room is empty)`
     }

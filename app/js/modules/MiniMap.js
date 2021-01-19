@@ -9,11 +9,13 @@ import {gameData} from "../ProceduralTA.js";
  */
 export class MiniMap {
     constructor() {
-        for (let y = 4; y >= -4; y--) {
+        this.dimension = 4;
+
+        for (let y = this.dimension; y >= -this.dimension; y--) {
             const minimapTable = $('#minimap');
 
             minimapTable.append(`<tr></tr>`);
-            for (let x = -4; x <= 4; x++) {
+            for (let x = -this.dimension; x <= this.dimension; x++) {
                 if (y === 0 && x === 0) {
                     minimapTable.children().last().append(`<td class="0_0 player"></td>`);
                 } else {
@@ -31,17 +33,20 @@ export class MiniMap {
             .removeClass('danger')
             .removeClass('explored')
             .removeClass('origin')
-            .removeClass('player');
+            .removeClass('player')
+            .removeClass('void');
 
-        for (let y = gameData.player.y - 4; y <= gameData.player.y + 4; y++) {
-            for (let x = gameData.player.x - 4; x <= gameData.player.x + 4; x++) {
+        for (let y = gameData.player.y - this.dimension; y <= gameData.player.y + this.dimension; y++) {
+            for (let x = gameData.player.x - this.dimension; x <= gameData.player.x + this.dimension; x++) {
                 const room = gameData.world.getRoom(y, x);
                 const box = $(`.${y - gameData.player.y}_${x - gameData.player.x}`);
-                if (room) {
+                if (room.isExplored) {
                     if (y === gameData.player.y && x === gameData.player.x) {
                         box.addClass('player');
                     } else if (y === 0 && x === 0) {
                         box.addClass('origin');
+                    } else if (!room.isActive) {
+                        box.addClass('void');
                     } else if (room.contents.length > 0) {
                         box.addClass('danger');
                     } else {

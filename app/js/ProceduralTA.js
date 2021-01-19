@@ -61,8 +61,7 @@ $('body').on('keydown', event => {
             const y = gameData.player.y;
             const x = gameData.player.x;
 
-            if (!gameData.world.getRoom(y, x)) {
-                gameData.world.addRoom(y, x);
+            if (!gameData.world.getRoom(y, x).isExplored) {
                 gameData.gameLog.addMessage(gameData.world.getRoom(y, x).getRoomInfo(), logTypes.GAME);
             }
 

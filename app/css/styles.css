@@ -128,3 +128,7 @@ td.player {
 td.danger {
     background: #e21;
 }
+
+td.void {
+    background: #111;
+}

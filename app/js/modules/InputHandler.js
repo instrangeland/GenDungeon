@@ -78,29 +78,34 @@ export function InputHandler(input) {
         logMessage(`You currently have ${player.hp} HP.`, logTypes.GAME);
     }).matched) return false;
 
-    // north
-    if (Verb(northAliases, inputArray, () => {
-        logMessage('You move north.', logTypes.MOVEMENT);
-        player.y++;
-    }).matched) return true;
 
-    // south
-    if (Verb(southAliases, inputArray, () => {
-        logMessage('You move south.', logTypes.MOVEMENT);
-        player.y--;
-    }).matched) return true;
+    verb = new Verb(northAliases, inputArray, () => {
+        return player.move(1, 0, 'north');
+    });
+    if (verb.matched) {
+        return verb.usedTurn;
+    }
 
-    // east
-    if (Verb(eastAliases, inputArray, () => {
-        logMessage('You move east.', logTypes.MOVEMENT);
-        player.x++;
-    }).matched) return true;
+    verb = new Verb(southAliases, inputArray, () => {
+        return player.move(-1, 0, 'south');
+    });
+    if (verb.matched) {
+        return verb;
+    }
 
-    // west
-    if (Verb(westAliases, inputArray, () => {
-        logMessage('You move west.', logTypes.MOVEMENT);
-        player.x--;
-    }).matched) return true;
+    verb = new Verb(eastAliases, inputArray, () => {
+        return player.move(0, 1, 'east');
+    });
+    if (verb.matched) {
+        return verb.usedTurn;
+    }
+
+    verb = new Verb(westAliases, inputArray, () => {
+        return player.move(0, -1, 'west');
+    });
+    if (verb.matched) {
+        return verb.usedTurn;
+    }
 
     // look
     if (Verb(lookAliases, inputArray, () => {
@@ -143,7 +148,7 @@ export function InputHandler(input) {
 
     // attack [#]
     verb = new Verb(`${attackAliases} #`, inputArray, args => {
-        return room.attackThing(player, args[0]).success;
+        return room.attackThing(player, args[0]);
     });
     if (verb.matched) {
         return verb.usedTurn;
@@ -176,13 +181,13 @@ export function InputHandler(input) {
     // attack -> [#]
     if (question === 'attack') {
         question = '';
-        return room.attackThing(player, input).success;
+        return room.attackThing(player, input);
     }
 
     // take -> [#]
     if (question === 'take') {
         question = '';
-        return room.takeThing(player, input).success
+        return room.takeThing(player, input);
     }
 
     // [#]
