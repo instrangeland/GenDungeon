@@ -4,6 +4,12 @@
 
 const {app, BrowserWindow} = require('electron');
 
+const client = require('discord-rich-presence')('801220293041455104');
+
+client.updatePresence({
+    instance: true,
+});
+
 /**
  * Creates a new game window
  */

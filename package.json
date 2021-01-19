@@ -9,6 +9,7 @@
     "test": "electron . test"
   },
   "dependencies": {
+    "discord-rich-presence": "0.0.8",
     "jquery": "^3.5.1"
   },
   "devDependencies": {
