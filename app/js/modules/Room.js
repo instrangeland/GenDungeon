@@ -27,15 +27,14 @@ export class Room {
         this.y = y;
         this.x = x;
 
-        this.isOrigin = y === 0 && x === 0;
-
-        if (this.isOrigin) {
+        if (-2 < this.y &&
+            2 > this.y &&
+            -2 < this.x &&
+            2 > this.x) {
             this.isActive = true;
         } else {
             this.isActive = noise.simplex2(y / 2 + 471, x / 2 + 471) > -0.15;
         }
-
-        this.isExplored = this.isOrigin;
 
         this.description = this.generateDescription();
         this.distance = Math.sqrt(x ** 2 + y ** 2);

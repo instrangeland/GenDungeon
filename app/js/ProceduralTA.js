@@ -16,6 +16,8 @@ gameData.miniMap = new MiniMap();
 gameData.player = new Player();
 gameData.world = new World();
 
+noise.seed(Math.random());
+
 /**
  * Adds a message to the main log.
  * @param {string} messageContent The content of the message
