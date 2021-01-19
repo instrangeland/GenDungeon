@@ -27,6 +27,10 @@ export class Room {
         this.y = y;
         this.x = x;
 
+        if (this.y === 0 && this.x === 0) {
+            this.isExplored = true;
+        }
+
         if (-2 < this.y &&
             2 > this.y &&
             -2 < this.x &&
@@ -234,6 +238,7 @@ export class Room {
             } else {
                 this.removeThing(thing);
                 logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
+                gameData.score++;
                 return true;
             }
         } else if (monster) {

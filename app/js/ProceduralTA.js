@@ -15,6 +15,7 @@ gameData.gameLog = new GameLog();
 gameData.miniMap = new MiniMap();
 gameData.player = new Player();
 gameData.world = new World();
+gameData.score = 0;
 
 noise.seed(Math.random());
 
@@ -72,6 +73,7 @@ $('body').on('keydown', event => {
                     if (thing instanceof Monster) {
                         if (thing.playerInteraction(gameData.player)) {
                             logMessage('--- GAME OVER ---', logTypes.SYSTEM);
+                            logMessage(`Score: ${gameData.score}`, logTypes.SUCCESS);
                             inputBox.prop('disabled', true);
                             inputBox.attr('placeholder', 'Thanks for playing!');
                         }
