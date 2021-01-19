@@ -14,6 +14,9 @@ export class Player {
         this.y = 0;
         this.hp = 10;
         this.strength = 2;
+
+        this.previousY = null;
+        this.previousX = null;
     }
 
     /**
@@ -25,6 +28,8 @@ export class Player {
      */
     move(yOffset, xOffset, directionName) {
         if (gameData.world.getRoom(this.y + yOffset, this.x + xOffset).isActive) {
+            this.previousY = this.y;
+            this.previousX = this.x;
             this.y += yOffset;
             this.x += xOffset;
             logMessage(`You go ${directionName}.`, logTypes.MOVEMENT);
@@ -32,5 +37,22 @@ export class Player {
         }
         logMessage(`You can't go ${directionName}, there's a wall there.`, logTypes.ALERT);
         return false;
+    }
+
+    /**
+     * Tries to move the player to the previous location.
+     * @return {boolean} Whether the player moved
+     */
+    moveBack() {
+        if (this.previousX === null) {
+            logMessage('You can\'t go back right now.', logTypes.ALERT);
+            return false;
+        }
+        this.y = this.previousY;
+        this.x = this.previousX;
+        this.previousY = null;
+        this.previousX = null;
+        logMessage('You go back to the previous room.', logTypes.MOVEMENT);
+        return true;
     }
 }

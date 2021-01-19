@@ -22,6 +22,7 @@ export function InputHandler(input) {
     const helpAliases = 'help,?,what';
     const creditsAliases = 'credit,credits,proceduralta,julian,author,about';
     const infoAliases = 'info,i,me,myself,player,user,information,hp,stats,health';
+    const backAliases = 'back,b,backwards,previous';
     const northAliases = 'north,n,northward,northern,up,upward,upwards';
     const southAliases = 'south,s,southward,southern,down,downward,downwards';
     const eastAliases = 'east,e,eastward,eastern,right';
@@ -78,6 +79,12 @@ export function InputHandler(input) {
         logMessage(`You currently have ${player.hp} HP.`, logTypes.GAME);
     }).matched) return false;
 
+    verb = new Verb(backAliases, inputArray, () => {
+        return player.moveBack();
+    });
+    if (verb.matched) {
+        return verb.usedTurn;
+    }
 
     verb = new Verb(northAliases, inputArray, () => {
         return player.move(1, 0, 'north');
