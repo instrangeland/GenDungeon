@@ -163,7 +163,7 @@ export function InputHandler(input) {
 
     // take [#]
     verb = new Verb(`${takeAliases} #`, inputArray, args => {
-        return room.takeThing(player, args[0]).success;
+        return room.takeThing(player, args[0]);
     });
     if (verb.matched) {
         return verb.usedTurn;
