@@ -171,7 +171,9 @@ export class Room {
      * @return {string}
      */
     listThings() {
-        return this.contents.map(
+        return this.contents.filter(
+            thing => thing instanceof Monster || thing instanceof Food
+        ).map(
             (thing, index) => `${(index + 1)}) ${thing.getShortDescription()}`
         ).join('\n');
     }
