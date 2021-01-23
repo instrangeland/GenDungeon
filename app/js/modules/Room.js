@@ -1,11 +1,11 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData, getRandInt, getRandomElement, logMessage, seed} from "../ProceduralTA.js";
-import {logTypes} from "./GameLog.js";
-import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
-import {Food} from "./things/Food.js";
-import {Thing} from "./things/Thing.js";
-import rpc from "./RPC.js";
+import {gameData, getRandInt, getRandomElement, logMessage, seed} from '../ProceduralTA.js';
+import {logTypes} from './GameLog.js';
+import {Monster, monsterStates, monsterTypes} from './things/Monster.js';
+import {Food} from './things/Food.js';
+import {Thing} from './things/Thing.js';
+import rpc from './RPC.js';
 
 /**
  * Compares whether two strings are equal, ignoring case.

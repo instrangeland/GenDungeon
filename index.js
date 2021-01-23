@@ -24,18 +24,17 @@ ipcMain.on('loadGame', () => {
     fs.readFile(savePath, 'utf-8', (error, data) => {
         window.webContents.send('receivedGameSave', data);
     });
-})
+});
 
 ipcMain.on('resetGame', () => {
     fs.unlink(savePath, () => {});
-})
+});
 
 ipcMain.on('drpc', (event, content) => {
     client.updatePresence({
         instance: true,
         state: content
     });
-    console.log('updated')
 });
 
 /**

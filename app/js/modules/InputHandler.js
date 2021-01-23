@@ -66,7 +66,6 @@ export function InputHandler(input) {
             north, south, east, west
             attack [something]
             take [something]
-            use [something]
             
             There are lots of other things you can do, try to experiment!`, logTypes.GAME);
     }).matched) return false;

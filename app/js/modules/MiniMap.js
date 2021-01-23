@@ -1,8 +1,8 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData} from "../ProceduralTA.js";
-import {Monster} from "./things/Monster.js";
-import {Food} from "./things/Food.js";
+import {gameData} from '../ProceduralTA.js';
+import {Monster} from './things/Monster.js';
+import {Food} from './things/Food.js';
 
 /**
  * A minimap in the corner of the game.
@@ -31,7 +31,7 @@ export class MiniMap {
      * Updates the minimap.
      */
     update() {
-        $("td")
+        $('td')
             .removeClass('danger')
             .removeClass('explored')
             .removeClass('origin')

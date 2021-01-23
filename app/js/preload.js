@@ -11,4 +11,4 @@ contextBridge.exposeInMainWorld('api', {
             callback(args);
         })
     }
-})
+});

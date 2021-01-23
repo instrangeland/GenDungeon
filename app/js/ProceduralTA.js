@@ -3,10 +3,10 @@
 import {GameLog, logTypes} from './modules/GameLog.js';
 import {InputHandler} from './modules/InputHandler.js';
 import {MiniMap} from './modules/MiniMap.js';
-import {Monster} from "./modules/things/Monster.js";
+import {Monster} from './modules/things/Monster.js';
 import {Player} from './modules/Player.js';
 import {World} from './modules/World.js';
-import rpc from "./modules/RPC.js";
+import rpc from './modules/RPC.js';
 
 let receivedSave;
 
