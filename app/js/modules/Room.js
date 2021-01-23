@@ -5,6 +5,7 @@ import {logTypes} from "./GameLog.js";
 import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
 import {Food} from "./things/Food.js";
 import {Thing} from "./things/Thing.js";
+import rpc from "./RPC.js";
 
 /**
  * Compares whether two strings are equal, ignoring case.
@@ -244,10 +245,12 @@ export class Room {
             const damage = player.strength;
             monster.hp -= damage;
             if (monster.hp > 0) {
+                rpc.updateAttack(monster.name.toLowerCase());
                 logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
                 return true;
             } else {
                 this.removeThing(thing);
+                rpc.updateKilled(monster.name.toLowerCase());
                 logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
                 gameData.score++;
                 return true;
@@ -270,6 +273,7 @@ export class Room {
         const food = this.getThing(thing);
         if (food instanceof Food) {
             player.hp += food.healing;
+            rpc.updateTake(food.name);
             this.removeThing(thing);
             logMessage(`You take and eat the ${food.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
             return true;

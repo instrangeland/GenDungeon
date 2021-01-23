@@ -2,6 +2,7 @@
 
 import {gameData, logMessage} from "../ProceduralTA.js";
 import {logTypes} from "./GameLog.js";
+import rpc from "./RPC.js";
 
 /**
  * A playable character.
@@ -32,6 +33,7 @@ export class Player {
             this.previousX = this.x;
             this.y += yOffset;
             this.x += xOffset;
+            rpc.updateRoom(gameData.world.getRoom(this.y, this.x).description);
             logMessage(`You go ${directionName}.`, logTypes.MOVEMENT);
             return true;
         }

@@ -6,6 +6,7 @@ import {MiniMap} from './modules/MiniMap.js';
 import {Monster} from "./modules/things/Monster.js";
 import {Player} from './modules/Player.js';
 import {World} from './modules/World.js';
+import rpc from "./modules/RPC.js";
 
 let receivedSave;
 
@@ -136,6 +137,7 @@ function newInput(input) {
         for (const thing of gameData.world.getRoom(y, x).contents) {
             if (thing instanceof Monster) {
                 if (thing.playerInteraction(gameData.player)) {
+                    rpc.updateDead();
                     logMessage('--- GAME OVER ---', logTypes.SYSTEM);
                     logMessage(`Score: ${gameData.score}`, logTypes.SUCCESS);
                     logMessage('(Press R to restart)', logTypes.SYSTEM);

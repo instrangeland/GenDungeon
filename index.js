@@ -30,6 +30,14 @@ ipcMain.on('resetGame', () => {
     fs.unlink(savePath, () => {});
 })
 
+ipcMain.on('drpc', (event, content) => {
+    client.updatePresence({
+        instance: true,
+        state: content
+    });
+    console.log('updated')
+});
+
 /**
  * Creates a new game window
  */
