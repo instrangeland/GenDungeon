@@ -1,5 +1,7 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
+import {gameData} from '../ProceduralTA.js';
+
 /**
  * A handler for Discord Rich Presence state changes.
  * @module RPC
@@ -11,7 +13,9 @@ export default class RPC {
      * @param roomDescription A description of the room
      */
     static updateRoom(roomDescription) {
-        window.api.send('drpc', `Exploring ${roomDescription.toLowerCase()}.`);
+        if (gameData.isElectron) {
+            window.api.send('drpc', `Exploring ${roomDescription.toLowerCase()}.`);
+        }
     }
 
     /**
@@ -19,7 +23,9 @@ export default class RPC {
      * @param monsterName The name of the monster
      */
     static updateAttack(monsterName) {
-        window.api.send('drpc', `Attacking a ${monsterName.toLowerCase()}.`);
+        if (gameData.isElectron) {
+            window.api.send('drpc', `Attacking a ${monsterName.toLowerCase()}.`);
+        }
     }
 
     /**
@@ -27,7 +33,9 @@ export default class RPC {
      * @param monsterName The name of the monster
      */
     static updateKilled(monsterName) {
-        window.api.send('drpc', `Killing a ${monsterName.toLowerCase()}.`);
+        if (gameData.isElectron) {
+            window.api.send('drpc', `Killing a ${monsterName.toLowerCase()}.`);
+        }
     }
 
     /**
@@ -35,13 +43,17 @@ export default class RPC {
      * @param thingName The name of the thing
      */
     static updateTake(thingName) {
-        window.api.send('drpc', `Taking a ${thingName.toLowerCase()}.`);
+        if (gameData.isElectron) {
+            window.api.send('drpc', `Taking a ${thingName.toLowerCase()}.`);
+        }
     }
 
     /**
      * Update the status to show the player dying.
      */
     static updateDead() {
-        window.api.send('drpc', 'Dead. 😢');
+        if (gameData.isElectron) {
+            window.api.send('drpc', 'Dead. 😢');
+        }
     }
 }
