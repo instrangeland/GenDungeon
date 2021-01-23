@@ -79,7 +79,7 @@ export function InputHandler(input) {
 
     // info
     if (Verb(infoAliases, inputArray, () => {
-        logMessage(`You currently have ${player.hp} HP.`, logTypes.GAME);
+        logMessage(`You currently have ${player.hp} HP, and are strength ${player.strength}.`, logTypes.GAME);
     }).matched) return false;
 
     // back

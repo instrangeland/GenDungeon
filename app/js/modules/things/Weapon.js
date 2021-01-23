@@ -4,29 +4,28 @@ import {getRandInt, getRandomElement} from '../../ProceduralTA.js';
 import {Thing} from './Thing.js';
 
 /**
- * A piece of food in a room.
- * @module Food
+ * A weapon in a room.
+ * @module Armor
  * @class
  */
-export class Food extends Thing {
+export class Weapon extends Thing {
     constructor() {
         super();
         this.name = this.generateName();
         this.isListed = true;
-        this.healing = getRandInt(1, 4);
+        this.strengthBoost = getRandInt(1, 3);
     }
 
     /**
-     * Generates a random food name.
+     * Generates a random weapon name.
      * @return {string}
      */
     generateName() {
-        const foods = [
-            'Apple',
-            'Orange',
-            'Banana'
+        const weapons = [
+            'Sword',
+            'Bow'
         ];
 
-        return getRandomElement(foods);
+        return getRandomElement(weapons);
     }
 }

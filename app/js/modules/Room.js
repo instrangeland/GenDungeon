@@ -4,6 +4,7 @@ import {gameData, getRandInt, getRandomElement, logMessage, seed} from '../Proce
 import {logTypes} from './GameLog.js';
 import {Monster, monsterStates, monsterTypes} from './things/Monster.js';
 import {Food} from './things/Food.js';
+import {Weapon} from './things/Weapon.js';
 import {Thing} from './things/Thing.js';
 import rpc from './RPC.js';
 
@@ -47,8 +48,11 @@ export class Room {
         this.contents = [];
 
         this.generateMonsters();
-        if (seed.quick() > 0.8) {
+        if (seed.quick() > 0.7) {
             this.contents.push(new Food());
+        }
+        if (seed.quick() > 0.85) {
+            this.contents.push(new Weapon());
         }
 
         this.contents.push(new Thing('wall'));
@@ -173,7 +177,7 @@ export class Room {
      */
     listThings() {
         return this.contents.filter(
-            thing => thing instanceof Monster || thing instanceof Food
+            thing => thing.isListed
         ).map(
             (thing, index) => `${(index + 1)}) ${thing.getShortDescription()}`
         ).join('\n');
@@ -270,14 +274,20 @@ export class Room {
      * @return {boolean} Whether the thing was taken
      */
     takeThing(player, thing) {
-        const food = this.getThing(thing);
-        if (food instanceof Food) {
-            player.hp += food.healing;
-            rpc.updateTake(food.name);
+        const thingObject = this.getThing(thing);
+        if (thingObject instanceof Food) {
+            player.hp += thingObject.healing;
+            rpc.updateTake(thingObject.name);
             this.removeThing(thing);
-            logMessage(`You take and eat the ${food.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
+            logMessage(`You take and eat the ${thingObject.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
             return true;
-        } else if (food) {
+        } else if (thingObject instanceof Weapon) {
+            player.strength += thingObject.strengthBoost;
+            rpc.updateTake(thingObject.name);
+            this.removeThing(thing);
+            logMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your strength to ${player.strength}.`, logTypes.SUCCESS);
+            return true;
+        } else if (thingObject) {
             logMessage('You can\'t take that.', logTypes.ALERT);
             return false;
         }

@@ -18,6 +18,7 @@ export class Monster extends Thing {
     constructor(monster) {
         super();
         Object.assign(this, monster);
+        this.isListed = true;
         this.state = monsterStates.PASSIVE;
     }
 
