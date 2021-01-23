@@ -24,6 +24,13 @@ export class GameLog {
     }
 
     /**
+     * Adds a horizontal rule to the log.
+     */
+    addDivider() {
+        this.logElement.append('<hr>');
+    }
+
+    /**
      * Adds a message to the log.
      * @param {string} messageContent The content of the message
      * @param {string} messageType The type of the message

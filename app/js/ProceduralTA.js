@@ -133,6 +133,7 @@ $('body').on('keydown', event => {
 function newInput(input) {
     const inputBox = $('#input-box');
 
+    gameData.gameLog.addDivider();
     gameData.gameLog.addMessage('> ' + input, logTypes.PLAYER);
     scrollEntry = gameSave.history.length;
 
