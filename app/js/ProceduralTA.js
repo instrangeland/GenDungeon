@@ -92,7 +92,7 @@ $('body').on('keydown', event => {
         inputBox.focus();
     }
 
-    if (awaitingRestartKey) {
+    if (event.keyCode === 82 && awaitingRestartKey) {
         if (!gameData.isElectron) {
             localStorage.clear();
         } else {
@@ -102,6 +102,7 @@ $('body').on('keydown', event => {
     }
 
     if (event.keyCode === 13) {
+
         const input = inputBox.val().trim().toLowerCase();
         inputBox.val('');
 
@@ -137,7 +138,7 @@ function newInput(input) {
                 if (thing.playerInteraction(gameData.player)) {
                     logMessage('--- GAME OVER ---', logTypes.SYSTEM);
                     logMessage(`Score: ${gameData.score}`, logTypes.SUCCESS);
-                    logMessage('(Press any key to restart)', logTypes.SYSTEM);
+                    logMessage('(Press R to restart)', logTypes.SYSTEM);
                     awaitingRestartKey = true;
                     inputBox.prop('disabled', true);
                     inputBox.attr('placeholder', 'Thanks for playing!');
