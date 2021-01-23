@@ -12,6 +12,8 @@ let receivedSave;
 export let seed;
 let gameSave = {};
 
+let awaitingRestartKey = false;
+
 export const gameData = {};
 gameData.isElectron = navigator.userAgent.indexOf('Electron') > -1;
 
@@ -90,6 +92,15 @@ $('body').on('keydown', event => {
         inputBox.focus();
     }
 
+    if (awaitingRestartKey) {
+        if (!gameData.isElectron) {
+            localStorage.clear();
+        } else {
+            window.api.send('resetGame');
+        }
+        location.reload();
+    }
+
     if (event.keyCode === 13) {
         const input = inputBox.val().trim().toLowerCase();
         inputBox.val('');
@@ -126,6 +137,8 @@ function newInput(input) {
                 if (thing.playerInteraction(gameData.player)) {
                     logMessage('--- GAME OVER ---', logTypes.SYSTEM);
                     logMessage(`Score: ${gameData.score}`, logTypes.SUCCESS);
+                    logMessage('(Press any key to restart)', logTypes.SYSTEM);
+                    awaitingRestartKey = true;
                     inputBox.prop('disabled', true);
                     inputBox.attr('placeholder', 'Thanks for playing!');
                 }
