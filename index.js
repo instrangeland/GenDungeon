@@ -26,6 +26,10 @@ ipcMain.on('loadGame', () => {
     });
 })
 
+ipcMain.on('resetGame', () => {
+    fs.unlink(savePath, () => {});
+})
+
 /**
  * Creates a new game window
  */

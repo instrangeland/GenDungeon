@@ -1,6 +1,8 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
 import {gameData} from "../ProceduralTA.js";
+import {Monster} from "./things/Monster.js";
+import {Food} from "./things/Food.js";
 
 /**
  * A minimap in the corner of the game.
@@ -47,7 +49,9 @@ export class MiniMap {
                         box.addClass('origin');
                     } else if (!room.isActive) {
                         box.addClass('void');
-                    } else if (room.contents.length > 0) {
+                    } else if (room.contents.filter(
+                        thing => thing instanceof Monster || thing instanceof Food
+                    ).length > 0) {
                         box.addClass('danger');
                     } else {
                         box.addClass('explored');

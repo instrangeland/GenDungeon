@@ -19,6 +19,7 @@ export function InputHandler(input) {
 
     const articles = 'a,an,the';
     const goAliases = 'go,move,run,sprint,walk,dash,slide';
+    const restartAliases = 'restart,reset,newgame';
     const helpAliases = 'help,?,what';
     const creditsAliases = 'credit,credits,proceduralta,julian,author,about';
     const infoAliases = 'info,i,me,myself,player,user,information,hp,stats,health';
@@ -31,13 +32,6 @@ export function InputHandler(input) {
     const lookAtAliases = 'at,around,towards,for';
     const attackAliases = 'attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate';
     const takeAliases = 'take,t,get,steal,grab,pick';
-
-    /* verb = new Verb('hello', inputArray, () => {
-        logMessage('world', logTypes.GAME);
-        return false;
-    }); if (verb.matched) {
-        return verb.usedTurn;
-    } */
 
     // the
     inputArray = inputArray.filter(word => !articles.split(',').includes(word));
@@ -52,6 +46,16 @@ export function InputHandler(input) {
         logMessage('Where do you want to go?', logTypes.GAME);
         return false;
     }
+
+    // restart
+    if (Verb(restartAliases, inputArray, () => {
+        if (!gameData.isElectron) {
+            localStorage.clear();
+        } else {
+            window.api.send('resetGame');
+        }
+        location.reload();
+    }).matched) return false;
 
     // help
     if (Verb(helpAliases, inputArray, () => {
