@@ -224,6 +224,11 @@ export class Room {
      * @param {string} thingName The name of the thing
      */
     removeThing(thingName) {
+        if (Number.isInteger(parseFloat(thingName))) {
+            this.contents.splice(this.contents.filter(
+                thing => thing.isListed
+            )[thingName - 1], 1);
+        }
         this.contents.splice(this.contents.findIndex(monster => equalsCI(monster.name, thingName)), 1);
     }
 
