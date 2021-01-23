@@ -2,24 +2,41 @@
 
 'use strict';
 
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
+const fs = require('fs');
+const path = require('path');
 
 const client = require('discord-rich-presence')('801220293041455104');
 
 client.updatePresence({
-    instance: true,
+    instance: true
 });
+
+let window;
+
+const savePath = path.join(app.getPath('userData'), 'save.pta');
+
+ipcMain.on('saveGame', (event, gameData) => {
+    fs.writeFile(savePath, gameData, () => {});
+});
+
+ipcMain.on('loadGame', () => {
+    fs.readFile(savePath, 'utf-8', (error, data) => {
+        window.webContents.send('receivedGameSave', data);
+    });
+})
 
 /**
  * Creates a new game window
  */
 function newWindow() {
-    const window = new BrowserWindow({
+    window = new BrowserWindow({
         width: 1000,
         height: 600,
         icon: 'icon.png',
         webPreferences: {
-            contextIsolation: true
+            contextIsolation: true,
+            preload: path.join(__dirname, "app/js/preload.js")
         }
     });
     if (process.argv.includes('test')) {

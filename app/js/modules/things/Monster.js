@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandInt, logMessage} from "../../ProceduralTA.js";
+import {getRandInt, logMessage, seed} from "../../ProceduralTA.js";
 import {logTypes} from '../GameLog.js';
 import {Thing} from './Thing.js';
 
@@ -44,12 +44,12 @@ export class Monster extends Thing {
      */
     playerInteraction(player) {
         if (this.state === monsterStates.PASSIVE) {
-            if (Math.random() < this['aggression']) {
+            if (seed.quick() < this['aggression']) {
                 this.state = monsterStates.ATTACKING;
                 logMessage(`- The ${this['name']} sees you.`, logTypes.COMBAT);
             }
         } else {
-            if (Math.random() < this['attackAccuracy']) {
+            if (seed.quick() < this['attackAccuracy']) {
                 const damage = this['strength'] + getRandInt(-this['strengthVariance'], this['strengthVariance']);
                 player.hp -= damage;
                 if (player.hp > 0) {

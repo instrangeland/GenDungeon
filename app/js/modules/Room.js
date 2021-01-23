@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData, getRandInt, getRandomElement, logMessage} from "../ProceduralTA.js";
+import {gameData, getRandInt, getRandomElement, logMessage, seed} from "../ProceduralTA.js";
 import {logTypes} from "./GameLog.js";
 import {Monster, monsterStates, monsterTypes} from "./things/Monster.js";
 import {Food} from "./things/Food.js";
@@ -46,7 +46,7 @@ export class Room {
         this.contents = [];
 
         this.generateMonsters();
-        if (Math.random() > 0.8) {
+        if (seed.quick() > 0.8) {
             this.contents.push(new Food());
         }
 
@@ -225,7 +225,7 @@ export class Room {
      */
     addMonsterChance(monster, minDistance, maxChance) {
         if (getRandInt(0, this.distance) > minDistance - 1) {
-            if (Math.random() < maxChance) {
+            if (seed.quick() < maxChance) {
                 this.addMonster(monster);
             }
         }

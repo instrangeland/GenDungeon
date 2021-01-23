@@ -7,17 +7,49 @@ import {Monster} from "./modules/things/Monster.js";
 import {Player} from './modules/Player.js';
 import {World} from './modules/World.js';
 
+let receivedSave;
+
+window.api.send('loadGame');
+
+window.api.receive('receivedGameSave', data => {
+    receivedSave = data
+})
+
+export let seed;
+export let gameSave = {};
 export const gameData = {};
 
-gameData.isElectron = navigator.userAgent.indexOf('Electron') > -1;
+$(() => {
+    if (receivedSave) {
+        gameSave = JSON.parse(atob(receivedSave));
+        seed = new Math.seedrandom(gameSave.seed);
 
-gameData.gameLog = new GameLog();
-gameData.miniMap = new MiniMap();
-gameData.player = new Player();
-gameData.world = new World();
-gameData.score = 0;
+        initGameData();
 
-noise.seed(Math.random());
+        for (const input of gameSave.history) {
+            newInput(input);
+        }
+    } else {
+        gameSave.seed = Math.random();
+        gameSave.history = [];
+
+        seed = new Math.seedrandom(gameSave.seed);
+
+        initGameData();
+    }
+});
+
+function initGameData() {
+    noise.seed(seed.quick());
+
+    gameData.isElectron = navigator.userAgent.indexOf('Electron') > -1;
+
+    gameData.gameLog = new GameLog();
+    gameData.miniMap = new MiniMap();
+    gameData.player = new Player();
+    gameData.world = new World();
+    gameData.score = 0;
+}
 
 /**
  * Adds a message to the main log.
@@ -34,7 +66,7 @@ export function logMessage(messageContent, messageType) {
  * @return {*} The element
  */
 export function getRandomElement(array) {
-    return array[Math.floor(Math.random() * array.length)];
+    return array[Math.floor(seed.quick() * array.length)];
 }
 
 /**
@@ -44,7 +76,7 @@ export function getRandomElement(array) {
  * @return {number} The random integer
  */
 export function getRandInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    return Math.floor(seed.quick() * (max - min + 1) + min);
 }
 
 $('body').on('keydown', event => {
@@ -58,32 +90,41 @@ $('body').on('keydown', event => {
         inputBox.val('');
 
         if (input) {
-            gameData.gameLog.addMessage('> ' + input, logTypes.PLAYER);
-
-            const isNewTurn = InputHandler(input);
-            const y = gameData.player.y;
-            const x = gameData.player.x;
-
-            if (!gameData.world.getRoom(y, x).isExplored) {
-                gameData.gameLog.addMessage(gameData.world.getRoom(y, x).getRoomInfo(), logTypes.GAME);
-            }
-
-            if (isNewTurn) {
-                for (const thing of gameData.world.getRoom(y, x).contents) {
-                    if (thing instanceof Monster) {
-                        if (thing.playerInteraction(gameData.player)) {
-                            logMessage('--- GAME OVER ---', logTypes.SYSTEM);
-                            logMessage(`Score: ${gameData.score}`, logTypes.SUCCESS);
-                            inputBox.prop('disabled', true);
-                            inputBox.attr('placeholder', 'Thanks for playing!');
-                        }
-                    }
-                }
-            }
-
-            gameData.miniMap.update();
-
-            console.log(gameData);
+            gameSave.history.push(input);
+            // noinspection JSUnresolvedVariable
+            window.api.send('saveGame', btoa(JSON.stringify(gameSave)));
+            newInput(input);
         }
     }
 });
+
+function newInput(input) {
+    const inputBox = $('#input-box');
+
+    gameData.gameLog.addMessage('> ' + input, logTypes.PLAYER);
+
+    const isNewTurn = InputHandler(input);
+    const y = gameData.player.y;
+    const x = gameData.player.x;
+
+    if (!gameData.world.getRoom(y, x).isExplored) {
+        gameData.gameLog.addMessage(gameData.world.getRoom(y, x).getRoomInfo(), logTypes.GAME);
+    }
+
+    if (isNewTurn) {
+        for (const thing of gameData.world.getRoom(y, x).contents) {
+            if (thing instanceof Monster) {
+                if (thing.playerInteraction(gameData.player)) {
+                    logMessage('--- GAME OVER ---', logTypes.SYSTEM);
+                    logMessage(`Score: ${gameData.score}`, logTypes.SUCCESS);
+                    inputBox.prop('disabled', true);
+                    inputBox.attr('placeholder', 'Thanks for playing!');
+                }
+            }
+        }
+    }
+
+    gameData.miniMap.update();
+
+    console.log(gameData);
+}
