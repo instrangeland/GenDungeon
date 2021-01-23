@@ -14,6 +14,7 @@ export let seed;
 let gameSave = {};
 
 let awaitingRestartKey = false;
+let scrollEntry = 0;
 
 export const gameData = {};
 gameData.isElectron = navigator.userAgent.indexOf('Electron') > -1;
@@ -93,6 +94,15 @@ $('body').on('keydown', event => {
         inputBox.focus();
     }
 
+    if (event.keyCode === 38 && scrollEntry > 0) {
+        scrollEntry--;
+        inputBox.val(gameSave.history[scrollEntry]);
+    }
+    if (event.keyCode === 40 && scrollEntry < gameSave.history.length) {
+        scrollEntry++;
+        inputBox.val(gameSave.history[scrollEntry]);
+    }
+
     if (event.keyCode === 82 && awaitingRestartKey) {
         if (!gameData.isElectron) {
             localStorage.clear();
@@ -124,6 +134,7 @@ function newInput(input) {
     const inputBox = $('#input-box');
 
     gameData.gameLog.addMessage('> ' + input, logTypes.PLAYER);
+    scrollEntry = gameSave.history.length;
 
     const isNewTurn = InputHandler(input);
     const y = gameData.player.y;
