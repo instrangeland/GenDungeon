@@ -189,6 +189,11 @@ export class Room {
      * @return {Thing|undefined} The thing
      */
     getThing(thingName) {
+        if (Number.isInteger(parseFloat(thingName))) {
+            return this.contents.filter(
+                thing => thing.isListed
+            )[thingName - 1];
+        }
         return this.contents.find(
             thing => equalsCI(thing.name, thingName)
         );
