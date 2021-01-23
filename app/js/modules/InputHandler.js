@@ -83,6 +83,7 @@ export function InputHandler(input) {
         logMessage(`You currently have ${player.hp} HP.`, logTypes.GAME);
     }).matched) return false;
 
+    // back
     verb = new Verb(backAliases, inputArray, () => {
         return player.moveBack();
     });
@@ -90,6 +91,7 @@ export function InputHandler(input) {
         return verb.usedTurn;
     }
 
+    // north
     verb = new Verb(northAliases, inputArray, () => {
         return player.move(1, 0, 'north');
     });
@@ -97,13 +99,15 @@ export function InputHandler(input) {
         return verb.usedTurn;
     }
 
+    // south
     verb = new Verb(southAliases, inputArray, () => {
         return player.move(-1, 0, 'south');
     });
     if (verb.matched) {
-        return verb;
+        return verb.usedTurn;
     }
 
+    // east
     verb = new Verb(eastAliases, inputArray, () => {
         return player.move(0, 1, 'east');
     });
@@ -111,6 +115,7 @@ export function InputHandler(input) {
         return verb.usedTurn;
     }
 
+    // west
     verb = new Verb(westAliases, inputArray, () => {
         return player.move(0, -1, 'west');
     });
