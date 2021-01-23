@@ -4,6 +4,7 @@
   "license": "GPL-3.0",
   "name": "proceduralta",
   "version": "0.1.5",
+
   "scripts": {
     "start": "electron .",
     "test": "electron . test"
@@ -20,7 +21,7 @@
     "appId": "com.jlachniet.proceduralta",
     "productName": "ProceduralTA",
     "copyright": "Licensed under GNU General Public License v3.0",
-    "artifactName": "proceduralta-setup-${version}.${ext}",
+    "artifactName": "proceduralta-setup-${version}a.${ext}",
     "win": {
       "target": "nsis"
     }
