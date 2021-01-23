@@ -28,10 +28,10 @@ export function InputHandler(input) {
     const southAliases = 'south,s,southward,southern,down,downward,downwards';
     const eastAliases = 'east,e,eastward,eastern,right';
     const westAliases = 'west,w,westward,western,left';
-    const lookAliases = 'look,l,search,inspect,view,see,observe';
+    const lookAliases = 'look,l,search,inspect,view,see,observe,ls,dir';
     const lookAtAliases = 'at,around,towards,for';
     const attackAliases = 'attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate';
-    const takeAliases = 'take,t,get,steal,grab,pick';
+    const takeAliases = 'take,t,get,steal,grab,pick,collect';
 
     // the
     inputArray = inputArray.filter(word => !articles.split(',').includes(word));
