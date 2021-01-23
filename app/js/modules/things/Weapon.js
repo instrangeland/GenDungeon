@@ -13,7 +13,7 @@ export class Weapon extends Thing {
         super();
         this.name = this.generateName();
         this.isListed = true;
-        this.strengthBoost = getRandInt(1, 3);
+        this.strengthBoost = getRandInt(1, 2) - 0.5;
     }
 
     /**

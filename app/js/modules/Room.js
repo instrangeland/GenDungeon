@@ -48,10 +48,10 @@ export class Room {
         this.contents = [];
 
         this.generateMonsters();
-        if (seed.quick() > 0.7) {
+        if (seed.quick() > 0.8) {
             this.contents.push(new Food());
         }
-        if (seed.quick() > 0.85) {
+        if (seed.quick() > 0.9) {
             this.contents.push(new Weapon());
         }
 
@@ -107,12 +107,12 @@ export class Room {
      * Adds monsters to the room.
      */
     generateMonsters() {
-        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.8);
-        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.75);
-        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.65);
-        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.75);
-        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.7);
-        this.addMonsterChance(monsterTypes.GHOST, 8, 0.5);
+        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.85);
+        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.8);
+        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.7);
+        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.8);
+        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.75);
+        this.addMonsterChance(monsterTypes.GHOST, 8, 0.55);
     }
 
     /**
