@@ -3,7 +3,7 @@
   "description": "A text adventure where you explore procedurally generally worlds.",
   "license": "GPL-3.0",
   "name": "proceduralta",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "scripts": {
     "start": "electron .",
     "test": "electron . test"
