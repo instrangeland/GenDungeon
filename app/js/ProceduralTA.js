@@ -9,17 +9,24 @@ import {World} from './modules/World.js';
 
 let receivedSave;
 
-window.api.send('loadGame');
-
-window.api.receive('receivedGameSave', data => {
-    receivedSave = data
-})
-
 export let seed;
-export let gameSave = {};
+let gameSave = {};
+
 export const gameData = {};
+gameData.isElectron = navigator.userAgent.indexOf('Electron') > -1;
+
+if (gameData.isElectron) {
+    window.api.send('loadGame');
+
+    window.api.receive('receivedGameSave', data => {
+        receivedSave = data
+    })
+}
 
 $(() => {
+    if (!gameData.isElectron) {
+        receivedSave = localStorage.getItem('save')
+    }
     if (receivedSave) {
         gameSave = JSON.parse(atob(receivedSave));
         seed = new Math.seedrandom(gameSave.seed);
@@ -41,8 +48,6 @@ $(() => {
 
 function initGameData() {
     noise.seed(seed.quick());
-
-    gameData.isElectron = navigator.userAgent.indexOf('Electron') > -1;
 
     gameData.gameLog = new GameLog();
     gameData.miniMap = new MiniMap();
@@ -92,7 +97,11 @@ $('body').on('keydown', event => {
         if (input) {
             gameSave.history.push(input);
             // noinspection JSUnresolvedVariable
-            window.api.send('saveGame', btoa(JSON.stringify(gameSave)));
+            if (gameData.isElectron) {
+                window.api.send('saveGame', btoa(JSON.stringify(gameSave)));
+            } else {
+                localStorage.setItem('save', btoa(JSON.stringify(gameSave)));
+            }
             newInput(input);
         }
     }

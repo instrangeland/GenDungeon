@@ -1,7 +1,5 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData} from '../ProceduralTA.js';
-
 export const logTypes = {
     ALERT: 'msg-alert',
     COMBAT: 'msg-combat',
@@ -21,9 +19,6 @@ export class GameLog {
     constructor() {
         this.logElement = $('#log');
         this.logElement.empty();
-        if (!gameData.isElectron) {
-            this.addMessage('ProceduralTA is best played offline. Some features may not work in a browser.', logTypes.ALERT);
-        }
         this.addMessage('Welcome to ProceduralTA!', logTypes.SYSTEM);
         this.addMessage('You are in a room. Try typing "look" to look around!', logTypes.GAME);
     }
