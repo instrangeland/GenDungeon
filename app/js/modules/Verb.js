@@ -1,34 +1,34 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
 /**
- * Checks whether a given input matches a string, and runs a callback if it does.
- * @param match {string} The verb to check against
- * @param test {string[]} The test input
- * @param callback {function} The callback function
- * @return {Verb} Information about the verb
+ * A handler for verbs used by the input parser.
  */
-export function Verb(match, test, callback) {
-    const matchArray = match.split(' ');
-    const response = {};
+export default class Verb {
+    /**
+     * Checks whether a given input matches a string, and runs a callback if it does.
+     * @param match {string} The verb to check against
+     * @param test {string[]} The test input
+     * @param callback {function} The callback function
+     * @return {Verb} Information about the verb
+     */
+    static check(match, test, callback) {
+        const matchArray = match.split(' ');
+        const args = [];
 
-    if (matchArray.length !== test.length) {
-        response.matched = false;
-        return response;
-    }
-
-    const args = [];
-    for (const [index, testWord] of test.entries()) {
-        const matchWords = matchArray[index].split(',');
-        if (!matchWords.includes(testWord) && !matchWords.includes('#')) {
-            response.matched = false;
-            return response;
+        if (matchArray.length !== test.length) {
+            return {matched: false};
         }
-        if (matchWords.includes('#')) {
-            args.push(testWord);
-        }
-    }
 
-    response.matched = true;
-    response.usedTurn = callback(args);
-    return response;
+        for (const [index, testWord] of test.entries()) {
+            const matchWords = matchArray[index].split(',');
+            if (!matchWords.includes(testWord) && !matchWords.includes('#')) {
+                return {matched: false};
+            }
+            if (matchWords.includes('#')) {
+                args.push(testWord);
+            }
+        }
+
+        return {matched: true, usedTurn: callback(args)};
+    }
 }

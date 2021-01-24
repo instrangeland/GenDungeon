@@ -162,6 +162,4 @@ function newInput(input) {
     }
 
     gameData.miniMap.update();
-
-    console.log(gameData);
 }

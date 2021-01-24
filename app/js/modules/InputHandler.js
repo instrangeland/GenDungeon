@@ -2,7 +2,7 @@
 
 import {gameData, logMessage} from '../ProceduralTA.js';
 import {logTypes} from './GameLog.js';
-import {Verb} from './Verb.js';
+import Verb from './Verb.js';
 
 let question;
 
@@ -48,7 +48,7 @@ export function InputHandler(input) {
     }
 
     // restart
-    if (Verb(restartAliases, inputArray, () => {
+    if (Verb.check(restartAliases, inputArray, () => {
         if (!gameData.isElectron) {
             localStorage.clear();
         } else {
@@ -58,7 +58,7 @@ export function InputHandler(input) {
     }).matched) return false;
 
     // help
-    if (Verb(helpAliases, inputArray, () => {
+    if (Verb.check(helpAliases, inputArray, () => {
         logMessage(`Hello! You are playing a text adventure. You can type commands like "attack zombie" to do things.
         
             Here are some useful commands to help you out:
@@ -71,19 +71,19 @@ export function InputHandler(input) {
     }).matched) return false;
 
     // credits
-    if (Verb(creditsAliases, inputArray, () => {
+    if (Verb.check(creditsAliases, inputArray, () => {
         logMessage(`ProceduralTA is an open source text adventure.
         
         https://github.com/jlachniet/ProceduralTA`, logTypes.GAME);
     }).matched) return false;
 
     // info
-    if (Verb(infoAliases, inputArray, () => {
+    if (Verb.check(infoAliases, inputArray, () => {
         logMessage(`You currently have ${player.hp} HP, and are strength ${player.strength}.`, logTypes.GAME);
     }).matched) return false;
 
     // back
-    verb = new Verb(backAliases, inputArray, () => {
+    verb = Verb.check(backAliases, inputArray, () => {
         return player.moveBack();
     });
     if (verb.matched) {
@@ -91,7 +91,7 @@ export function InputHandler(input) {
     }
 
     // north
-    verb = new Verb(northAliases, inputArray, () => {
+    verb = Verb.check(northAliases, inputArray, () => {
         return player.move(1, 0, 'north');
     });
     if (verb.matched) {
@@ -99,7 +99,7 @@ export function InputHandler(input) {
     }
 
     // south
-    verb = new Verb(southAliases, inputArray, () => {
+    verb = Verb.check(southAliases, inputArray, () => {
         return player.move(-1, 0, 'south');
     });
     if (verb.matched) {
@@ -107,7 +107,7 @@ export function InputHandler(input) {
     }
 
     // east
-    verb = new Verb(eastAliases, inputArray, () => {
+    verb = Verb.check(eastAliases, inputArray, () => {
         return player.move(0, 1, 'east');
     });
     if (verb.matched) {
@@ -115,7 +115,7 @@ export function InputHandler(input) {
     }
 
     // west
-    verb = new Verb(westAliases, inputArray, () => {
+    verb = Verb.check(westAliases, inputArray, () => {
         return player.move(0, -1, 'west');
     });
     if (verb.matched) {
@@ -123,46 +123,46 @@ export function InputHandler(input) {
     }
 
     // look
-    if (Verb(lookAliases, inputArray, () => {
+    if (Verb.check(lookAliases, inputArray, () => {
         logMessage(room.getRoomInfo(), logTypes.GAME);
     }).matched) return false;
 
     // look around
-    if (Verb(`${lookAliases} around`, inputArray, () => {
+    if (Verb.check(`${lookAliases} around`, inputArray, () => {
         logMessage(room.getRoomInfo(), logTypes.GAME);
     }).matched) return false;
 
     // look at room
-    if (Verb(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
+    if (Verb.check(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
         logMessage(room.getRoomInfo(), logTypes.GAME);
     }).matched) return false;
 
     // look at
-    if (Verb(`${lookAliases} ${lookAtAliases}`, inputArray, () => {
+    if (Verb.check(`${lookAliases} ${lookAtAliases}`, inputArray, () => {
         logMessage('What do you want to look at?', logTypes.GAME);
         logMessage('(Try: look at thing)', logTypes.ALERT);
         question = 'look';
     }).matched) return false;
 
     // look [#]
-    if (Verb(`${lookAliases} #`, inputArray, args => {
+    if (Verb.check(`${lookAliases} #`, inputArray, args => {
         logMessage(room.getThingInfo(args[0]), logTypes.GAME);
     }).matched) return false;
 
     // look at [#]
-    if (Verb(`${lookAliases} ${lookAtAliases} #`, inputArray, args => {
+    if (Verb.check(`${lookAliases} ${lookAtAliases} #`, inputArray, args => {
         logMessage(room.getThingInfo(args[0]), logTypes.GAME);
     }).matched) return false;
 
     // attack
-    if (Verb(attackAliases, inputArray, () => {
+    if (Verb.check(attackAliases, inputArray, () => {
         logMessage('What do you want to attack?', logTypes.GAME);
         logMessage('(Try: attack thing)', logTypes.ALERT);
         question = 'attack';
     }).matched) return false;
 
     // attack [#]
-    verb = new Verb(`${attackAliases} #`, inputArray, args => {
+    verb = Verb.check(`${attackAliases} #`, inputArray, args => {
         return room.attackThing(player, args[0]);
     });
     if (verb.matched) {
@@ -170,14 +170,14 @@ export function InputHandler(input) {
     }
 
     // take
-    if (Verb(takeAliases, inputArray, () => {
+    if (Verb.check(takeAliases, inputArray, () => {
         logMessage('What do you want to take?', logTypes.GAME);
         logMessage('(Try: take thing)', logTypes.ALERT);
         question = 'take';
     }).matched) return false;
 
     // take [#]
-    verb = new Verb(`${takeAliases} #`, inputArray, args => {
+    verb = Verb.check(`${takeAliases} #`, inputArray, args => {
         return room.takeThing(player, args[0]);
     });
     if (verb.matched) {
