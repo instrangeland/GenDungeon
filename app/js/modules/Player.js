@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData, logMessage} from '../ProceduralTA.js';
+import {gameData, logMessage} from '../app.js';
 import {logTypes} from './GameLog.js';
 import rpc from './RPC.js';
 

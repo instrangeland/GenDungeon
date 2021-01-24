@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData, logMessage} from '../ProceduralTA.js';
+import {gameData, logMessage} from '../app.js';
 import {logTypes} from './GameLog.js';
 import Verb from './Verb.js';
 
@@ -55,6 +55,7 @@ export function InputHandler(input) {
             window.api.send('resetGame');
         }
         location.reload();
+        logMessage('Restarting...', logTypes.SYSTEM);
     }).matched) return false;
 
     // help

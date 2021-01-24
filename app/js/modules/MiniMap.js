@@ -1,6 +1,6 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData} from '../ProceduralTA.js';
+import {gameData} from '../app.js';
 
 /**
  * A minimap in the corner of the game.
