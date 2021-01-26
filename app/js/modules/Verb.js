@@ -16,19 +16,26 @@ export default class Verb {
         const args = [];
 
         if (matchArray.length !== test.length) {
-            return {matched: false};
+            return {
+                matched: false
+            };
         }
 
         for (const [index, testWord] of test.entries()) {
             const matchWords = matchArray[index].split(',');
             if (!matchWords.includes(testWord) && !matchWords.includes('#')) {
-                return {matched: false};
+                return {
+                    matched: false
+                };
             }
             if (matchWords.includes('#')) {
                 args.push(testWord);
             }
         }
 
-        return {matched: true, usedTurn: callback(args)};
+        return {
+            matched: true,
+            usedTurn: callback(args)
+        };
     }
 }

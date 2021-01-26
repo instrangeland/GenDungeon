@@ -11,7 +11,7 @@ export default class Thing {
 
     /**
      * Gets a description of the thing.
-     * @return {string}
+     * @return {string} The description
      */
     getDescription() {
         return `A ${this.name.toLowerCase()}.`;
@@ -19,7 +19,7 @@ export default class Thing {
 
     /**
      * Gets a short formatted description of the thing for use in "look".
-     * @return {string}
+     * @return {string} The short description
      */
     getShortDescription() {
         return this.name;

@@ -12,11 +12,16 @@ import World from './modules/World.js';
 export const isElectron = navigator.userAgent.indexOf('Electron') > -1;
 const inputBox = $('#input-box');
 
+const keyCodes = {
+    ENTER: 13,
+    UP_ARROW: 38,
+    DOWN_ARROW: 40
+};
+
 /**
  * The main class for the game.
  */
 export default class game {
-
     /**
      * Begins the game logic, will be called after the save is loaded.
      * @param {number} seed The seed of the game
@@ -49,28 +54,17 @@ export default class game {
      */
     static keyPress(event) {
         if (!event.ctrlKey) {
-
-            // CONTROL KEY
-
             inputBox.focus();
         }
-
-        if (event.keyCode === 38 && this.scrollEntry > 0) {
-
-            // UP ARROW
-
+        if (event.keyCode === keyCodes.UP_ARROW && this.scrollEntry > 0) {
             this.scrollEntry--;
             inputBox.val(gameSave.history[this.scrollEntry]);
-        } else if (event.keyCode === 40 && scrollEntry < gameSave.history.length) {
 
-            // DOWN ARROW
-
+        } else if (event.keyCode === keyCodes.DOWN_ARROW && this.scrollEntry < gameSave.history.length) {
             this.scrollEntry++;
             inputBox.val(gameSave.history[this.scrollEntry]);
-        } else if (event.keyCode === 13) {
 
-            // ENTER KEY
-
+        } else if (event.keyCode === keyCodes.ENTER) {
             const input = inputBox.val().trim().toLowerCase();
             inputBox.val('');
 

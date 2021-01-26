@@ -10,13 +10,13 @@ export default class Weapon extends Thing {
     constructor() {
         super();
         this.name = this.generateName();
-        this.isListed = true;
+        this.isVisible = true;
         this.strengthBoost = getRandInt(1, 2) - 0.5;
     }
 
     /**
      * Generates a random weapon name.
-     * @return {string}
+     * @return {string} The weapon name
      */
     generateName() {
         const weapons = [

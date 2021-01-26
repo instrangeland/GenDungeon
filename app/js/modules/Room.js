@@ -1,10 +1,10 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
-;
+
 import Food from './things/Food.js';
 import game, {getRandomElement, getRandInt} from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
-import Monster, {monsterStates, monsterTypes} from './things/Monster.js'
-import rpc from './RPC.js';
+import Monster, {monsterStates, monsterTypes} from './things/Monster.js';
+import RPC from './RPC.js';
 import Thing from './things/Thing.js';
 import Weapon from './things/Weapon.js';
 
@@ -166,7 +166,7 @@ export default class Room {
         return `* ${this.description} *
         ${pathsDescription}
         
-        (This room is empty)`
+        (This room is empty)`;
     }
 
     /**
@@ -175,7 +175,7 @@ export default class Room {
      */
     listThings() {
         return this.contents.filter(
-            thing => thing.isListed
+            thing => thing.isVisible
         ).map(
             (thing, index) => `${(index + 1)}) ${thing.getShortDescription()}`
         ).join('\n');
@@ -257,16 +257,15 @@ export default class Room {
             const damage = player.strength;
             monster.hp -= damage;
             if (monster.hp > 0) {
-                rpc.updateAttack(monster.name.toLowerCase());
+                RPC.updateAttack(monster.name.toLowerCase());
                 GameLog.addMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
-                return true;
             } else {
                 this.removeThing(thing);
-                rpc.updateKilled(monster.name.toLowerCase());
+                RPC.updateKilled(monster.name.toLowerCase());
                 GameLog.addMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
                 game.score++;
-                return true;
             }
+            return true;
         } else if (monster) {
             GameLog.addMessage('You can\'t attack that.', logTypes.ALERT);
             return false;
@@ -285,13 +284,13 @@ export default class Room {
         const thingObject = this.getThing(thing);
         if (thingObject instanceof Food) {
             player.hp += thingObject.healing;
-            rpc.updateTake(thingObject.name);
+            RPC.updateTake(thingObject.name);
             this.removeThing(thing);
             GameLog.addMessage(`You take and eat the ${thingObject.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
             return true;
         } else if (thingObject instanceof Weapon) {
             player.strength += thingObject.strengthBoost;
-            rpc.updateTake(thingObject.name);
+            RPC.updateTake(thingObject.name);
             this.removeThing(thing);
             GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your strength to ${player.strength}.`, logTypes.SUCCESS);
             return true;

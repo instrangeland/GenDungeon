@@ -9,6 +9,6 @@ contextBridge.exposeInMainWorld('api', {
     receive: (channel, callback) => {
         ipcRenderer.on(channel, (event, args) => {
             callback(args);
-        })
+        });
     }
 });

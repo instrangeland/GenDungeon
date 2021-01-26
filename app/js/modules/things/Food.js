@@ -10,13 +10,13 @@ export default class Food extends Thing {
     constructor() {
         super();
         this.name = this.generateName();
-        this.isListed = true;
+        this.isVisible = true;
         this.healing = getRandInt(1, 4);
     }
 
     /**
      * Generates a random food name.
-     * @return {string}
+     * @return {string} The name of the food
      */
     generateName() {
         const foods = [

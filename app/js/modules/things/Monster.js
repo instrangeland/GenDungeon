@@ -11,29 +11,30 @@ export const monsterStates = {
 
 /**
  * A monster in a room.
+ * @param {Object} The monster's stats
  */
 export default class Monster extends Thing {
     constructor(monster) {
         super();
         Object.assign(this, monster);
-        this.isListed = true;
+        this.isVisible = true;
         this.state = monsterStates.PASSIVE;
     }
 
     /**
      * Gets a description of the monster.
-     * @return {string}
+     * @return {string} The description
      */
     getDescription() {
-        return `A ${this['name'].toLowerCase()} with ${this['hp']} HP. It does an average of ${this['strength']} damage, and is about ${this['attackAccuracy'] * 100}% accurate.`;
+        return `A ${this.name.toLowerCase()} with ${this.hp} HP. It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`;
     }
 
     /**
      * Gets a short formatted description of the monster for use in "look".
-     * @return {string}
+     * @return {string} The short description
      */
     getShortDescription() {
-        return `${this['name']} - ${this['hp']} HP`;
+        return `${this.name} - ${this.hp} HP`;
     }
 
     /**
@@ -43,19 +44,19 @@ export default class Monster extends Thing {
      */
     playerInteraction(player) {
         if (this.state === monsterStates.PASSIVE) {
-            if (game.seed.quick() < this['aggression']) {
+            if (game.seed.quick() < this.aggression) {
                 this.state = monsterStates.ATTACKING;
-                GameLog.addMessage(`- The ${this['name']} sees you.`, logTypes.COMBAT);
+                GameLog.addMessage(`- The ${this.name} sees you.`, logTypes.COMBAT);
             }
         } else {
-            if (game.seed.quick() < this['attackAccuracy']) {
-                const damage = this['strength'] + getRandInt(-this['strengthVariance'], this['strengthVariance']);
+            if (game.seed.quick() < this.attackAccuracy) {
+                const damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
                 player.hp -= damage;
                 if (player.hp > 0) {
-                    GameLog.addMessage(`- The ${this['name']} attacks you for ${damage} damage.`, logTypes.COMBAT);
+                    GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage.`, logTypes.COMBAT);
                     GameLog.addMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
-                    GameLog.addMessage(`- The ${this['name']} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
+                    GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
                     return true;
                 }
             }
