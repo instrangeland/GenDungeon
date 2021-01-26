@@ -1,7 +1,7 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {getRandInt, logMessage, seed} from '../../app.js';
-import {logTypes} from '../GameLog.js';
+import game, {getRandInt} from '../../game.js';
+import {GameLog, logTypes} from '../GameLog.js';
 import {Thing} from './Thing.js';
 
 export const monsterStates = {
@@ -14,7 +14,7 @@ export const monsterStates = {
  * @module Monster
  * @class
  */
-export class Monster extends Thing {
+export default class Monster extends Thing {
     constructor(monster) {
         super();
         Object.assign(this, monster);
@@ -45,19 +45,19 @@ export class Monster extends Thing {
      */
     playerInteraction(player) {
         if (this.state === monsterStates.PASSIVE) {
-            if (seed.quick() < this['aggression']) {
+            if (game.seed.quick() < this['aggression']) {
                 this.state = monsterStates.ATTACKING;
-                logMessage(`- The ${this['name']} sees you.`, logTypes.COMBAT);
+                GameLog.addMessage(`- The ${this['name']} sees you.`, logTypes.COMBAT);
             }
         } else {
-            if (seed.quick() < this['attackAccuracy']) {
+            if (game.seed.quick() < this['attackAccuracy']) {
                 const damage = this['strength'] + getRandInt(-this['strengthVariance'], this['strengthVariance']);
                 player.hp -= damage;
                 if (player.hp > 0) {
-                    logMessage(`- The ${this['name']} attacks you for ${damage} damage.`, logTypes.COMBAT);
-                    logMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
+                    GameLog.addMessage(`- The ${this['name']} attacks you for ${damage} damage.`, logTypes.COMBAT);
+                    GameLog.addMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
-                    logMessage(`- The ${this['name']} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
+                    GameLog.addMessage(`- The ${this['name']} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
                     return true;
                 }
             }

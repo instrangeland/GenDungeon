@@ -1,7 +1,7 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData, logMessage} from '../app.js';
-import {logTypes} from './GameLog.js';
+import game, {isElectron} from '../game.js';
+import {GameLog, logTypes} from './GameLog.js';
 import Verb from './Verb.js';
 
 let question;
@@ -11,11 +11,11 @@ let question;
  * @param {string} input The input to handle
  * @return {boolean} Whether the input causes the player to use a turn
  */
-export function InputHandler(input) {
+export default function InputHandler(input) {
     let inputArray = input.split(' ');
     let verb;
-    const player = gameData.player;
-    const room = gameData.world.getRoom(player.y, player.x);
+    const player = game.player;
+    const room = game.world.getRoom(player.y, player.x);
 
     const articles = 'a,an,the';
     const goAliases = 'go,move,run,sprint,walk,dash,slide';
@@ -36,31 +36,32 @@ export function InputHandler(input) {
     // the
     inputArray = inputArray.filter(word => !articles.split(',').includes(word));
     if (!inputArray.length) {
-        logMessage('Unknown command.', logTypes.ALERT);
+        GameLog.addMessage('Unknown command.', logTypes.ALERT);
         return false;
     }
 
     // go
     inputArray = inputArray.filter(word => !goAliases.split(',').includes(word));
     if (!inputArray.length) {
-        logMessage('Where do you want to go?', logTypes.GAME);
+        GameLog.addMessage('Where do you want to go?', logTypes.GAME);
         return false;
     }
 
     // restart
+    // FIX THIS
     if (Verb.check(restartAliases, inputArray, () => {
-        if (!gameData.isElectron) {
+        if (!isElectron) {
             localStorage.clear();
         } else {
             window.api.send('resetGame');
         }
         location.reload();
-        logMessage('Restarting...', logTypes.SYSTEM);
+        GameLog.addMessage('Restarting...', logTypes.SYSTEM);
     }).matched) return false;
 
     // help
     if (Verb.check(helpAliases, inputArray, () => {
-        logMessage(`Hello! You are playing a text adventure. You can type commands like "attack zombie" to do things.
+        GameLog.addMessage(`Hello! You are playing a text adventure. You can type commands like "attack zombie" to do things.
         
             Here are some useful commands to help you out:
             
@@ -73,14 +74,14 @@ export function InputHandler(input) {
 
     // credits
     if (Verb.check(creditsAliases, inputArray, () => {
-        logMessage(`ProceduralTA is an open source text adventure.
+        GameLog.addMessage(`ProceduralTA is an open source text adventure.
         
         https://github.com/jlachniet/ProceduralTA`, logTypes.GAME);
     }).matched) return false;
 
     // info
     if (Verb.check(infoAliases, inputArray, () => {
-        logMessage(`You currently have ${player.hp} HP, and are strength ${player.strength}.`, logTypes.GAME);
+        GameLog.addMessage(`You currently have ${player.hp} HP, and are strength ${player.strength}.`, logTypes.GAME);
     }).matched) return false;
 
     // back
@@ -125,40 +126,40 @@ export function InputHandler(input) {
 
     // look
     if (Verb.check(lookAliases, inputArray, () => {
-        logMessage(room.getRoomInfo(), logTypes.GAME);
+        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
     }).matched) return false;
 
     // look around
     if (Verb.check(`${lookAliases} around`, inputArray, () => {
-        logMessage(room.getRoomInfo(), logTypes.GAME);
+        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
     }).matched) return false;
 
     // look at room
     if (Verb.check(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
-        logMessage(room.getRoomInfo(), logTypes.GAME);
+        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
     }).matched) return false;
 
     // look at
     if (Verb.check(`${lookAliases} ${lookAtAliases}`, inputArray, () => {
-        logMessage('What do you want to look at?', logTypes.GAME);
-        logMessage('(Try: look at thing)', logTypes.ALERT);
+        GameLog.addMessage('What do you want to look at?', logTypes.GAME);
+        GameLog.addMessage('(Try: look at thing)', logTypes.ALERT);
         question = 'look';
     }).matched) return false;
 
     // look [#]
     if (Verb.check(`${lookAliases} #`, inputArray, args => {
-        logMessage(room.getThingInfo(args[0]), logTypes.GAME);
+        GameLog.addMessage(room.getThingInfo(args[0]), logTypes.GAME);
     }).matched) return false;
 
     // look at [#]
     if (Verb.check(`${lookAliases} ${lookAtAliases} #`, inputArray, args => {
-        logMessage(room.getThingInfo(args[0]), logTypes.GAME);
+        GameLog.addMessage(room.getThingInfo(args[0]), logTypes.GAME);
     }).matched) return false;
 
     // attack
     if (Verb.check(attackAliases, inputArray, () => {
-        logMessage('What do you want to attack?', logTypes.GAME);
-        logMessage('(Try: attack thing)', logTypes.ALERT);
+        GameLog.addMessage('What do you want to attack?', logTypes.GAME);
+        GameLog.addMessage('(Try: attack thing)', logTypes.ALERT);
         question = 'attack';
     }).matched) return false;
 
@@ -172,8 +173,8 @@ export function InputHandler(input) {
 
     // take
     if (Verb.check(takeAliases, inputArray, () => {
-        logMessage('What do you want to take?', logTypes.GAME);
-        logMessage('(Try: take thing)', logTypes.ALERT);
+        GameLog.addMessage('What do you want to take?', logTypes.GAME);
+        GameLog.addMessage('(Try: take thing)', logTypes.ALERT);
         question = 'take';
     }).matched) return false;
 
@@ -189,7 +190,7 @@ export function InputHandler(input) {
 
     // look -> [#]
     if (question === 'look') {
-        logMessage(room.getThingInfo(input), logTypes.GAME);
+        GameLog.addMessage(room.getThingInfo(input), logTypes.GAME);
         question = '';
         return false;
     }
@@ -208,12 +209,12 @@ export function InputHandler(input) {
 
     // [#]
     if (room.getThing(input)) {
-        logMessage(room.getThingInfo(input), logTypes.GAME);
+        GameLog.addMessage(room.getThingInfo(input), logTypes.GAME);
         question = '';
         return false;
     }
 
-    logMessage('Unknown command.', logTypes.ALERT);
+    GameLog.addMessage('Unknown command.', logTypes.ALERT);
     return false;
 
 }

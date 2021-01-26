@@ -6,6 +6,7 @@ export const logTypes = {
     GAME: 'msg-game',
     MOVEMENT: 'msg-movement',
     PLAYER: 'msg-player',
+    RESTART: 'msg-restart',
     SUCCESS: 'msg-success',
     SYSTEM: 'msg-system'
 };
@@ -16,7 +17,7 @@ export const logTypes = {
  * @class
  */
 export class GameLog {
-    constructor() {
+    static init() {
         this.logElement = $('#log');
         this.logElement.empty();
         this.addMessage('Welcome to ProceduralTA!', logTypes.SYSTEM);
@@ -26,7 +27,7 @@ export class GameLog {
     /**
      * Adds a horizontal rule to the log.
      */
-    addDivider() {
+    static addDivider() {
         this.logElement.append('<hr>');
     }
 
@@ -35,7 +36,7 @@ export class GameLog {
      * @param {string} messageContent The content of the message
      * @param {string} messageType The type of the message
      */
-    addMessage(messageContent, messageType) {
+    static addMessage(messageContent, messageType) {
         this.logElement.append(`<p class="${messageType}"></p>`);
 
         const messageElement = this.logElement.children().last();

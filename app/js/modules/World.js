@@ -7,7 +7,7 @@ import {Room} from './Room.js';
  * @module World
  * @class
  */
-export class World {
+export default class World {
     constructor() {
         this.contents = {};
         this.addRoom(0, 0);

@@ -1,14 +1,14 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData} from '../app.js';
+import game from '../game.js';
 
 /**
  * A minimap in the corner of the game.
  * @module MiniMap
  * @class
  */
-export class MiniMap {
-    constructor() {
+export default class MiniMap {
+    static init() {
         this.dimension = 4;
 
         for (let y = this.dimension; y >= -this.dimension; y--) {
@@ -28,7 +28,7 @@ export class MiniMap {
     /**
      * Updates the minimap.
      */
-    update() {
+    static update() {
         $('td')
             .removeClass('danger')
             .removeClass('explored')
@@ -36,12 +36,12 @@ export class MiniMap {
             .removeClass('player')
             .removeClass('void');
 
-        for (let y = gameData.player.y - this.dimension; y <= gameData.player.y + this.dimension; y++) {
-            for (let x = gameData.player.x - this.dimension; x <= gameData.player.x + this.dimension; x++) {
-                const room = gameData.world.getRoom(y, x);
-                const box = $(`.${y - gameData.player.y}_${x - gameData.player.x}`);
+        for (let y = game.player.y - this.dimension; y <= game.player.y + this.dimension; y++) {
+            for (let x = game.player.x - this.dimension; x <= game.player.x + this.dimension; x++) {
+                const room = game.world.getRoom(y, x);
+                const box = $(`.${y - game.player.y}_${x - game.player.x}`);
                 if (room.isExplored) {
-                    if (y === gameData.player.y && x === gameData.player.x) {
+                    if (y === game.player.y && x === game.player.x) {
                         box.addClass('player');
                     } else if (y === 0 && x === 0) {
                         box.addClass('origin');

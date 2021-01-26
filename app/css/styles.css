@@ -76,6 +76,18 @@ hr {
     color: #5af;
 }
 
+.msg-restart {
+    color: #f64;
+    border: 1px solid white;
+    border-radius: 2px;
+    padding: 4px;
+    text-align: center;
+}
+
+.msg-restart:hover {
+    cursor: pointer;
+}
+
 #input-prefix, #input-wrapper {
     bottom: 16px;
     position: absolute;

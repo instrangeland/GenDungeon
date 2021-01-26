@@ -1,8 +1,8 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {gameData, getRandInt, getRandomElement, logMessage, seed} from '../app.js';
-import {logTypes} from './GameLog.js';
-import {Monster, monsterStates, monsterTypes} from './things/Monster.js';
+import game, {getRandomElement, getRandInt} from '../game.js';
+import {GameLog, logTypes} from './GameLog.js';
+import Monster, {monsterStates, monsterTypes} from './things/Monster.js';
 import {Food} from './things/Food.js';
 import {Weapon} from './things/Weapon.js';
 import {Thing} from './things/Thing.js';
@@ -48,10 +48,10 @@ export class Room {
         this.contents = [];
 
         this.generateMonsters();
-        if (seed.quick() > 0.8) {
+        if (game.seed.quick() > 0.8) {
             this.contents.push(new Food());
         }
-        if (seed.quick() > 0.9) {
+        if (game.seed.quick() > 0.9) {
             this.contents.push(new Weapon());
         }
 
@@ -121,7 +121,7 @@ export class Room {
      */
     getRoomInfo() {
         this.isExplored = true;
-        const world = gameData.world;
+        const world = game.world;
         const pathList = [];
 
         if (world.getRoom(this.y + 1, this.x).isActive) {
@@ -240,7 +240,7 @@ export class Room {
      */
     addMonsterChance(monster, minDistance, maxChance) {
         if (getRandInt(0, this.distance) > minDistance - 1) {
-            if (seed.quick() < maxChance) {
+            if (game.seed.quick() < maxChance) {
                 this.addMonster(monster);
             }
         }
@@ -260,20 +260,20 @@ export class Room {
             monster.hp -= damage;
             if (monster.hp > 0) {
                 rpc.updateAttack(monster.name.toLowerCase());
-                logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
+                GameLog.addMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
                 return true;
             } else {
                 this.removeThing(thing);
                 rpc.updateKilled(monster.name.toLowerCase());
-                logMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
-                gameData.score++;
+                GameLog.addMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
+                game.score++;
                 return true;
             }
         } else if (monster) {
-            logMessage('You can\'t attack that.', logTypes.ALERT);
+            GameLog.addMessage('You can\'t attack that.', logTypes.ALERT);
             return false;
         }
-        logMessage('That doesn\'t exist here.', logTypes.ALERT);
+        GameLog.addMessage('That doesn\'t exist here.', logTypes.ALERT);
         return false;
     }
 
@@ -289,19 +289,19 @@ export class Room {
             player.hp += thingObject.healing;
             rpc.updateTake(thingObject.name);
             this.removeThing(thing);
-            logMessage(`You take and eat the ${thingObject.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
+            GameLog.addMessage(`You take and eat the ${thingObject.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
             return true;
         } else if (thingObject instanceof Weapon) {
             player.strength += thingObject.strengthBoost;
             rpc.updateTake(thingObject.name);
             this.removeThing(thing);
-            logMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your strength to ${player.strength}.`, logTypes.SUCCESS);
+            GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your strength to ${player.strength}.`, logTypes.SUCCESS);
             return true;
         } else if (thingObject) {
-            logMessage('You can\'t take that.', logTypes.ALERT);
+            GameLog.addMessage('You can\'t take that.', logTypes.ALERT);
             return false;
         }
-        logMessage('That doesn\'t exist here.', logTypes.ALERT);
+        GameLog.addMessage('That doesn\'t exist here.', logTypes.ALERT);
         return false;
     }
 }
