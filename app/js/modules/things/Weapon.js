@@ -1,14 +1,12 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
 import {getRandInt, getRandomElement} from '../../game.js';
-import {Thing} from './Thing.js';
+import Thing from './Thing.js';
 
 /**
  * A weapon in a room.
- * @module Armor
- * @class
  */
-export class Weapon extends Thing {
+export default class Weapon extends Thing {
     constructor() {
         super();
         this.name = this.generateName();

@@ -2,13 +2,11 @@
 
 /**
  * A thing in a room.
- * @module Thing
- * @class
  */
-export class Thing {
+export default class Thing {
     constructor(name) {
         this.name = name;
-        this.isListed = false;
+        this.isVisible = false;
     }
 
     /**

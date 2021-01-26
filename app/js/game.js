@@ -13,11 +13,15 @@ export const isElectron = navigator.userAgent.indexOf('Electron') > -1;
 const inputBox = $('#input-box');
 
 /**
- * The main class for the game
- * @module game
- * @class
+ * The main class for the game.
  */
 export default class game {
+
+    /**
+     * Begins the game logic, will be called after the save is loaded.
+     * @param {number} seed The seed of the game
+     * @param {string[]} history An array containing all user input
+     */
     static startGame(seed, history) {
         this.seed = new Math.seedrandom(seed);
 
@@ -39,6 +43,10 @@ export default class game {
         }
     }
 
+    /**
+     * Handles a given keydown event.
+     * @param {Object} event The event
+     */
     static keyPress(event) {
         if (!event.ctrlKey) {
 
@@ -74,11 +82,18 @@ export default class game {
         }
     }
 
+    /**
+     * Resets the game save and reloads the game.
+     */
     static reset() {
         gameSave.reset();
         location.reload();
     }
 
+    /**
+     * Takes an input and computes it effects.
+     * @param {string} input The input
+     */
     static newInput(input) {
         GameLog.addDivider();
         GameLog.addMessage('> ' + input, logTypes.PLAYER);
@@ -123,7 +138,7 @@ $('body').on('keydown', event => {
 
 /**
  * Gets a random element from a given array.
- * @param {Array} array The array
+ * @param {any[]} array The array
  * @return {*} The element
  */
 export function getRandomElement(array) {

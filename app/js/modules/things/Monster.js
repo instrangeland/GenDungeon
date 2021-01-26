@@ -2,7 +2,7 @@
 
 import game, {getRandInt} from '../../game.js';
 import {GameLog, logTypes} from '../GameLog.js';
-import {Thing} from './Thing.js';
+import Thing from './Thing.js';
 
 export const monsterStates = {
     PASSIVE: 0,
@@ -11,8 +11,6 @@ export const monsterStates = {
 
 /**
  * A monster in a room.
- * @module Monster
- * @class
  */
 export default class Monster extends Thing {
     constructor(monster) {

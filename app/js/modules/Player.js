@@ -6,8 +6,6 @@ import RPC from './RPC.js';
 
 /**
  * A playable character.
- * @module Player
- * @class
  */
 export default class Player {
     constructor() {

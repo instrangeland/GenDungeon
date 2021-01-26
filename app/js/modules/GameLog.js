@@ -13,8 +13,6 @@ export const logTypes = {
 
 /**
  * A log in which game messages are shown.
- * @module GameLog
- * @class
  */
 export class GameLog {
     static init() {

@@ -1,12 +1,12 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
-
+;
+import Food from './things/Food.js';
 import game, {getRandomElement, getRandInt} from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
-import Monster, {monsterStates, monsterTypes} from './things/Monster.js';
-import {Food} from './things/Food.js';
-import {Weapon} from './things/Weapon.js';
-import {Thing} from './things/Thing.js';
+import Monster, {monsterStates, monsterTypes} from './things/Monster.js'
 import rpc from './RPC.js';
+import Thing from './things/Thing.js';
+import Weapon from './things/Weapon.js';
 
 /**
  * Compares whether two strings are equal, ignoring case.
@@ -22,10 +22,8 @@ function equalsCI(str1, str2) {
  * A room in a world.
  * @param y {number} The y-coordinate
  * @param x {number} The x-coordinate
- * @module Room
- * @class
  */
-export class Room {
+export default class Room {
     constructor(y, x) {
         this.y = y;
         this.x = x;

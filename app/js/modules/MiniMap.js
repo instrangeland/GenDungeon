@@ -4,8 +4,6 @@ import game from '../game.js';
 
 /**
  * A minimap in the corner of the game.
- * @module MiniMap
- * @class
  */
 export default class MiniMap {
     static init() {

@@ -1,11 +1,9 @@
 // ProceduralTA is licensed under GNU General Public License v3.0.
 
-import {Room} from './Room.js';
+import Room from './Room.js';
 
 /**
  * A world in which a game takes place.
- * @module World
- * @class
  */
 export default class World {
     constructor() {

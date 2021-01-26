@@ -4,8 +4,6 @@ import game, {isElectron} from '../game.js';
 
 /**
  * Code related to saving and loading a game save.
- * @module GameSave
- * @class
  */
 export default class GameSave {
     constructor() {

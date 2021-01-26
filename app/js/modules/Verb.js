@@ -6,9 +6,9 @@
 export default class Verb {
     /**
      * Checks whether a given input matches a string, and runs a callback if it does.
-     * @param match {string} The verb to check against
-     * @param test {string[]} The test input
-     * @param callback {function} The callback function
+     * @param {string} match The verb to check against
+     * @param {string[]} test The test input
+     * @param {Function} callback The callback function
      * @return {Verb} Information about the verb
      */
     static check(match, test, callback) {
