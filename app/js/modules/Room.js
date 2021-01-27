@@ -2,10 +2,6 @@
  * GenDungeon is licensed under GNU General Public License v3.0.
  */
 
-/*
- * GenDungeon is licensed under GNU General Public License v3.0.
- */
-
 import Food from './things/Food.js';
 import game, {getRandomElement, getRandInt} from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
