@@ -1,14 +1,14 @@
-![ProceduralTA Icon](logo.png)
+![GenDungeon Icon](logo.png)
 
-# ProceduralTA
+# GenDungeon
 
 A text adventure where you explore procedurally generated worlds.
 
-![ProceduralTA Gameplay Screenshot](screenshot.png)
+![GenDungeon Gameplay Screenshot](screenshot.png)
 
 ## Installation
 
-ProceduralTA is built with Electron using node.js and npm.
+GenDungeon is built with Electron using node.js and npm.
 
 ```
 npm install
@@ -16,7 +16,7 @@ npm install
 
 ## Usage
 
-ProceduralTA can be run with:
+GenDungeon can be run with:
 
 ```
 npm start
@@ -37,4 +37,4 @@ electron-builder build
 
 ## License
 
-ProceduralTA is licensed under [GNU General Public License v3.0.](LICENSE)
+GenDungeon is licensed under [GNU General Public License v3.0.](LICENSE)
