@@ -1,4 +1,6 @@
-// ProceduralTA is licensed under GNU General Public License v3.0.
+/*
+ * GenDungeon is licensed under GNU General Public License v3.0.
+ */
 
 'use strict';
 
@@ -53,7 +55,7 @@ function newWindow() {
     if (process.argv.includes('test')) {
         window.openDevTools();
     }
-    window.setTitle('ProceduralTA');
+    window.setTitle('GenDungeon');
     window.removeMenu();
     window.loadFile('app/index.html').then();
 }

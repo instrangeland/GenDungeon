@@ -1,4 +1,6 @@
-// ProceduralTA is licensed under GNU General Public License v3.0.
+/*
+ * GenDungeon is licensed under GNU General Public License v3.0.
+ */
 
 import {isElectron} from '../game.js';
 

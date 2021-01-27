@@ -1,12 +1,12 @@
 {
-  "name": "proceduralta",
+  "name": "gendungeon",
   "version": "0.2.0",
   "description": "A text adventure where you explore procedurally generally worlds.",
   "author": "Julian Lachniet",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jlachniet/ProceduralTA.git"
+    "url": "https://github.com/jlachniet/GenDungeon.git"
   },
   "scripts": {
     "start": "electron .",
@@ -22,10 +22,10 @@
     "electron-builder": "^22.9.1"
   },
   "build": {
-    "appId": "com.jlachniet.proceduralta",
-    "productName": "ProceduralTA",
+    "appId": "com.jlachniet.gendungeon",
+    "productName": "GenDungeon",
     "copyright": "Licensed under GNU General Public License v3.0",
-    "artifactName": "proceduralta-setup-${version}a.${ext}",
+    "artifactName": "gendungeon-setup-${version}a.${ext}",
     "win": {
       "target": "nsis"
     }

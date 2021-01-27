@@ -1,4 +1,6 @@
-// ProceduralTA is licensed under GNU General Public License v3.0.
+/*
+ * GenDungeon is licensed under GNU General Public License v3.0.
+ */
 
 import game, {isElectron} from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
@@ -21,7 +23,7 @@ export default function InputHandler(input) {
     const goAliases = 'go,move,run,sprint,walk,dash,slide';
     const restartAliases = 'restart,reset,newgame';
     const helpAliases = 'help,?,what';
-    const creditsAliases = 'credit,credits,proceduralta,julian,author,about';
+    const creditsAliases = 'credit,credits,gendungeon,julian,author,about';
     const infoAliases = 'info,i,me,myself,player,user,information,hp,stats,health';
     const backAliases = 'back,b,backwards,previous';
     const northAliases = 'north,n,northward,northern,up,upward,upwards';
@@ -74,9 +76,9 @@ export default function InputHandler(input) {
 
     // credits
     if (Verb.check(creditsAliases, inputArray, () => {
-        GameLog.addMessage(`ProceduralTA is an open source text adventure.
+        GameLog.addMessage(`GenDungeon is an open source text adventure.
         
-        https://github.com/jlachniet/ProceduralTA`, logTypes.GAME);
+        https://github.com/jlachniet/GenDungeon`, logTypes.GAME);
     }).matched) return false;
 
     // info

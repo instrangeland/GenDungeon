@@ -1,4 +1,6 @@
-// ProceduralTA is licensed under GNU General Public License v3.0.
+/*
+ * GenDungeon is licensed under GNU General Public License v3.0.
+ */
 
 export const logTypes = {
     ALERT: 'msg-alert',
@@ -18,7 +20,7 @@ export class GameLog {
     static init() {
         this.logElement = $('#log');
         this.logElement.empty();
-        this.addMessage('Welcome to ProceduralTA!', logTypes.SYSTEM);
+        this.addMessage('Welcome to GenDungeon!', logTypes.SYSTEM);
         this.addMessage('You are in a room. Try typing "look" to look around!', logTypes.GAME);
     }
 
