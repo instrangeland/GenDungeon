@@ -14,6 +14,9 @@ let question;
  * @return {boolean} Whether the input causes the player to use a turn
  */
 export default function InputHandler(input) {
+    let questionCopy = question;
+    question = '';
+
     let inputArray = input.split(' ');
     let verb;
     const player = game.player;
@@ -190,28 +193,24 @@ export default function InputHandler(input) {
     input = inputArray.join(' ');
 
     // look -> [#]
-    if (question === 'look') {
+    if (questionCopy === 'look') {
         GameLog.addMessage(room.getThingInfo(input), logTypes.GAME);
-        question = '';
         return false;
     }
 
     // attack -> [#]
-    if (question === 'attack') {
-        question = '';
+    if (questionCopy === 'attack') {
         return room.attackThing(player, input);
     }
 
     // take -> [#]
-    if (question === 'take') {
-        question = '';
+    if (questionCopy === 'take') {
         return room.takeThing(player, input);
     }
 
     // [#]
     if (room.getThing(input)) {
         GameLog.addMessage(room.getThingInfo(input), logTypes.GAME);
-        question = '';
         return false;
     }
 
