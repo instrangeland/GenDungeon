@@ -50,7 +50,6 @@ export default function InputHandler(input) {
     }
 
     // restart
-    // FIX THIS
     if (Verb.check(restartAliases, inputArray, () => {
         if (!isElectron) {
             localStorage.clear();
