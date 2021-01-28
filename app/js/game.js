@@ -67,7 +67,7 @@ export default class game {
             inputBox.val(gameSave.history[this.scrollEntry]);
 
         } else if (event.keyCode === keyCodes.ENTER) {
-            const input = inputBox.val().trim().toLowerCase();
+            const input = inputBox.val().trim();
             inputBox.val('');
 
             if (input) {
@@ -95,7 +95,7 @@ export default class game {
         GameLog.addMessage('> ' + input, logTypes.PLAYER);
         this.scrollEntry = gameSave.history.length;
 
-        const isNewTurn = InputHandler(input);
+        const isNewTurn = InputHandler(input.toLowerCase());
         const y = game.player.y;
         const x = game.player.x;
 
