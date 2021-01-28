@@ -15,7 +15,7 @@ export default class Player {
         this.y = 0;
         this.hp = 10;
         this.strength = 2;
-
+        this.dead = false;
         this.previousY = null;
         this.previousX = null;
     }

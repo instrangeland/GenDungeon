@@ -58,7 +58,9 @@ export default class Monster extends Thing {
                     GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage.`, logTypes.COMBAT);
                     GameLog.addMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
-                    GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
+                    if (!player.dead) {
+                        GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
+                    }
                     return true;
                 }
             }
