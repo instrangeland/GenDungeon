@@ -2,7 +2,7 @@
  * GenDungeon is licensed under GNU General Public License v3.0.
  */
 
-import game, {isElectron} from '../game.js';
+import game, {isElectron, gameVersion} from '../game.js';
 
 /**
  * Code related to saving and loading a game save.
@@ -11,15 +11,16 @@ export default class GameSave {
     constructor() {
         this.seed = Math.random();
         this.history = [];
+        this.gameVersion = gameVersion;
 
         if (isElectron) {
             window.api.send('loadGame');
             window.api.receive('receivedGameSave', (response) => {
-                this.loadElectron(response);
+                this.load(response);
                 game.startGame(this.seed, this.history);
             });
         } else {
-            this.loadLocalStorage();
+            this.load(localStorage.getItem('save'));
             game.startGame(this.seed, this.history);
         }
     }
@@ -31,6 +32,7 @@ export default class GameSave {
         const exportData = btoa(escape(JSON.stringify({
             seed: this.seed,
             history: this.history,
+            gameVersion: this.gameVersion
         })));
 
         if (isElectron) {
@@ -41,26 +43,22 @@ export default class GameSave {
     }
 
     /**
-     * Loads a given game save from a response from an electron API call.
-     * @param {string} response The response from the API call
+     * Loads a given game save from a response
+     * @param {string} response The response
      */
-    loadElectron(response) {
+    load(response) {
         if (response) {
             this.seed = JSON.parse(unescape(atob(response))).seed;
             this.history = JSON.parse(unescape(atob(response))).history;
-        } else {
-            this.save();
-        }
-    }
+            this.gameVersion = JSON.parse(unescape(atob(response))).gameVersion;
 
-    /**
-     * Attempts to load a game save from localStorage.
-     */
-    loadLocalStorage() {
-        const response = localStorage.getItem('save');
-        if (response) {
-            this.seed = JSON.parse(unescape(atob(response))).seed;
-            this.history = JSON.parse(unescape(atob(response))).history;
+            if (this.gameVersion < gameVersion) {
+                this.reset();
+
+                this.seed = Math.random();
+                this.history = [];
+                this.gameVersion = gameVersion;
+            }
         } else {
             this.save();
         }

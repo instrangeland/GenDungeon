@@ -11,6 +11,8 @@ import Player from './modules/Player.js';
 import RPC from './modules/RPC.js';
 import World from './modules/World.js';
 
+export const gameVersion = 212801; // Date of the version being released in reverse (e.g. 03/14/15 -> 151403)
+
 export const isElectron = navigator.userAgent.indexOf('Electron') > -1;
 const inputBox = $('#input-box');
 
