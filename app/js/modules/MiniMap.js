@@ -3,6 +3,7 @@
  */
 
 import game from '../game.js';
+import Monster from "./things/Monster.js";
 
 /**
  * A minimap in the corner of the game.
@@ -47,9 +48,7 @@ export default class MiniMap {
                         box.addClass('origin');
                     } else if (!room.isActive) {
                         box.addClass('void');
-                    } else if (room.contents.filter(
-                        thing => thing.isListed
-                    ).length > 0) {
+                    } else if (room.contents.filter(thing => thing instanceof Monster).length > 0) {
                         box.addClass('danger');
                     } else {
                         box.addClass('explored');
