@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="GenDungeon Source" pattern="((file:index.js||file[GenDungeon]:app/js/modules//*||file:app/index.html)&amp;&amp;!file[GenDungeon]:app/js/lib//*||file:app/css/styles.css)&amp;&amp;!file[GenDungeon]:app/css/ttf//*&amp;&amp;!file[GenDungeon]:.idea//*" />
+</component>
