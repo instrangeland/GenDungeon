@@ -191,7 +191,7 @@ export default class Room {
     getThing(thingName) {
         if (Number.isInteger(parseFloat(thingName))) {
             return this.contents.filter(
-                thing => thing.isListed
+                thing => thing.isVisible
             )[thingName - 1];
         }
         return this.contents.find(
