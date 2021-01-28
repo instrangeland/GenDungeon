@@ -17,21 +17,23 @@ export default class Verb {
         const matchArray = match.split(' ');
         const args = [];
 
-        if (matchArray.length !== test.length) {
+        if (matchArray.length > test.length) {
             return {
                 matched: false
             };
         }
 
         for (const [index, testWord] of test.entries()) {
-            const matchWords = matchArray[index].split(',');
-            if (!matchWords.includes(testWord) && !matchWords.includes('#')) {
-                return {
-                    matched: false
-                };
-            }
-            if (matchWords.includes('#')) {
-                args.push(testWord);
+            if (index < matchArray.length) {
+                const matchWords = matchArray[index].split(',');
+                if (!matchWords.includes(testWord) && !matchWords.includes('#')) {
+                    return {
+                        matched: false
+                    };
+                }
+                if (matchWords.includes('#')) {
+                    args.push(testWord);
+                }
             }
         }
 
