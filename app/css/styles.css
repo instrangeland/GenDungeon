@@ -148,6 +148,10 @@ td.danger {
     background: #e21;
 }
 
+td.collectable {
+    background: #db2;
+}
+
 td.void {
     background: #111;
 }

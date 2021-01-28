@@ -4,6 +4,8 @@
 
 import game from '../game.js';
 import Monster from "./things/Monster.js";
+import Food from "./things/Food.js";
+import Weapon from "./things/Weapon.js";
 
 /**
  * A minimap in the corner of the game.
@@ -33,6 +35,7 @@ export default class MiniMap {
         $('td')
             .removeClass('danger')
             .removeClass('explored')
+            .removeClass('collectable')
             .removeClass('origin')
             .removeClass('player')
             .removeClass('void');
@@ -50,6 +53,8 @@ export default class MiniMap {
                         box.addClass('void');
                     } else if (room.contents.filter(thing => thing instanceof Monster).length > 0) {
                         box.addClass('danger');
+                    } else if (room.contents.filter(thing => thing instanceof Food || thing instanceof Weapon).length > 0) {
+                        box.addClass('collectable');
                     } else {
                         box.addClass('explored');
                     }
