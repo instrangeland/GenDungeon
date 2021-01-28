@@ -204,7 +204,7 @@ export default function InputHandler(input) {
 
 
     /* - OBJECT INTERACTION - */
-    const takeAliases = 'take,t,get,steal,grab,pick,collect,use,eat';
+    const takeAliases = 'take,t,get,steal,grab,pick,collect,use,eat,consume';
 
 
     // take

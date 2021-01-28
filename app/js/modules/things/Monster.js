@@ -28,7 +28,7 @@ export default class Monster extends Thing {
      * @return {string} The description
      */
     getDescription() {
-        return `A ${this.name.toLowerCase()} with ${this.hp} HP. It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`;
+        return `${Monster.getArticle(this.name)} ${this.name.toLowerCase()} with ${this.hp} HP. It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`;
     }
 
     /**

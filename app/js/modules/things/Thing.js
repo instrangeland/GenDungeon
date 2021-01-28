@@ -11,12 +11,17 @@ export default class Thing {
         this.isVisible = false;
     }
 
+    static getArticle(word) {
+        let article = window.indefiniteArticle(word);
+        return article.charAt(0).toUpperCase() + article.slice(1);
+    }
+
     /**
      * Gets a description of the thing.
      * @return {string} The description
      */
     getDescription() {
-        return `A ${this.name.toLowerCase()}.`;
+        return `${Thing.getArticle(this.name)} ${this.name.toLowerCase()}.`;
     }
 
     /**
