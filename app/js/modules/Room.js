@@ -3,7 +3,7 @@
  */
 
 import Food from './things/Food.js';
-import game, {getRandomElement, getRandInt} from '../game.js';
+import game, {getRandInt, getRandomElement} from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
 import Monster, {monsterStates, monsterTypes} from './things/Monster.js';
 import RPC from './RPC.js';
@@ -226,9 +226,12 @@ export default class Room {
      */
     removeThing(thingName) {
         if (Number.isInteger(parseFloat(thingName))) {
-            this.contents.splice(this.contents.filter(
+            let thing = this.contents.filter(
                 thing => thing.isVisible
-            )[thingName - 1], 1);
+            )[thingName - 1];
+            if (thing) {
+                thingName = thing.name
+            }
         }
         this.contents.splice(this.contents.findIndex(monster => equalsCI(monster.name, thingName)), 1);
     }
