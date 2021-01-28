@@ -227,7 +227,7 @@ export default class Room {
     removeThing(thingName) {
         if (Number.isInteger(parseFloat(thingName))) {
             this.contents.splice(this.contents.filter(
-                thing => thing.isListed
+                thing => thing.isVisible
             )[thingName - 1], 1);
         }
         this.contents.splice(this.contents.findIndex(monster => equalsCI(monster.name, thingName)), 1);
