@@ -7,6 +7,74 @@
     src: url("ttf/PressStart2P-Regular.ttf");
 }
 
+:root {
+    --background: #222;
+    --selected-text: #7be;
+    --divider: #888;
+    --input-placeholder: #888;
+    --restart-box-border: #eee;
+}
+
+.msg-player, #input-prefix, #input-box {
+    color: #aaa;
+}
+
+.msg-alert {
+    color: #e34;
+}
+
+.msg-combat {
+    color: #7af;
+}
+
+.msg-game {
+    color: #ffe;
+}
+
+.msg-movement {
+    color: #d80;
+}
+
+.msg-success {
+    color: #4a4;
+}
+
+.msg-system {
+    color: #5af;
+}
+
+.msg-restart {
+    color: #c34;
+}
+
+td {
+    background: #666;
+}
+
+td.explored {
+    background: #eee;
+}
+
+td.origin {
+    background: #48e;
+}
+
+td.player {
+    background: #4e9;
+}
+
+td.danger {
+    background: #e21;
+}
+
+td.collectable {
+    background: #fd2;
+}
+
+td.void {
+    background: black;
+}
+
 html {
     box-shadow: inset 0 0 16px 4px rgba(0, 0, 0, 0.25);
     height: 100%;
@@ -17,12 +85,12 @@ body {
 }
 
 body, #input-box {
-    background: #222;
+    background: var(--background);
     font: 16px "Press Start 2P", monospace;
 }
 
 ::selection {
-    background: #7be;
+    background: var(--selected-text);
 }
 
 #log {
@@ -46,41 +114,12 @@ p, hr {
 }
 
 hr {
-    background: #888;
-    border: 1px solid #888;
-}
-
-.msg-player, #input-prefix, #input-box {
-    color: #aaa;
-}
-
-.msg-alert {
-    color: #f56;
-}
-
-.msg-combat {
-    color: #78f;
-}
-
-.msg-game {
-    color: #ffd;
-}
-
-.msg-movement {
-    color: #0b9;
-}
-
-.msg-success {
-    color: #4a4;
-}
-
-.msg-system {
-    color: #5af;
+    background: var(--divider);
+    border: 1px solid var(--divider);
 }
 
 .msg-restart {
-    color: #f64;
-    border: 1px solid white;
+    border: 1px solid var(--restart-box-border);
     border-radius: 2px;
     padding: 4px;
     text-align: center;
@@ -115,7 +154,7 @@ hr {
 }
 
 ::placeholder {
-    color: #666;
+    color: var(--input-placeholder);
 }
 
 #minimap {
@@ -126,32 +165,7 @@ hr {
 }
 
 td {
-    background: #555;
     height: 8px;
     padding: 0;
     width: 8px;
-}
-
-td.explored {
-    background: #eee;
-}
-
-td.origin {
-    background: #48e;
-}
-
-td.player {
-    background: #4e9;
-}
-
-td.danger {
-    background: #e21;
-}
-
-td.collectable {
-    background: #db2;
-}
-
-td.void {
-    background: #111;
 }

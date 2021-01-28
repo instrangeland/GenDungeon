@@ -87,7 +87,6 @@ export default function InputHandler(input) {
             window.api.send('resetGame');
         }
         location.reload();
-        GameLog.addMessage('Restarting...', logTypes.SYSTEM);
     }).matched) return false;
 
 

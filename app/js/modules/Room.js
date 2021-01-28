@@ -163,6 +163,7 @@ export default class Room {
             return `* ${this.description} *
             ${pathsDescription}
         
+            This room contains:
             ${this.listThings()}`;
         }
         return `* ${this.description} *
