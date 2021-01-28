@@ -22,21 +22,11 @@ export default function InputHandler(input) {
     const player = game.player;
     const room = game.world.getRoom(player.y, player.x);
 
+
+    /* - ACCESSORY WORDS - */
     const articles = 'a,an,the';
     const goAliases = 'go,move,run,sprint,walk,dash,slide';
-    const restartAliases = 'restart,reset,newgame';
-    const helpAliases = 'help,?,what';
-    const creditsAliases = 'credit,credits,gendungeon,julian,author,about';
-    const infoAliases = 'info,i,me,myself,player,user,information,hp,stats,health';
-    const backAliases = 'back,b,backwards,previous';
-    const northAliases = 'north,n,northward,northern,up,upward,upwards';
-    const southAliases = 'south,s,southward,southern,down,downward,downwards';
-    const eastAliases = 'east,e,eastward,eastern,right';
-    const westAliases = 'west,w,westward,western,left';
-    const lookAliases = 'look,l,search,inspect,view,see,observe,ls,dir';
-    const lookAtAliases = 'at,around,towards,for';
-    const attackAliases = 'attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate';
-    const takeAliases = 'take,t,get,steal,grab,pick,collect';
+
 
     // the
     inputArray = inputArray.filter(word => !articles.split(',').includes(word));
@@ -52,16 +42,12 @@ export default function InputHandler(input) {
         return false;
     }
 
-    // restart
-    if (Verb.check(restartAliases, inputArray, () => {
-        if (!isElectron) {
-            localStorage.clear();
-        } else {
-            window.api.send('resetGame');
-        }
-        location.reload();
-        GameLog.addMessage('Restarting...', logTypes.SYSTEM);
-    }).matched) return false;
+
+    /* - STATIC VERBS - */
+    const helpAliases = 'help,?,what';
+    const creditsAliases = 'credit,credits,gendungeon,julian,author,about';
+    const jumpAliases = 'jump,bounce,spring';
+
 
     // help
     if (Verb.check(helpAliases, inputArray, () => {
@@ -83,10 +69,79 @@ export default function InputHandler(input) {
         https://github.com/jlachniet/GenDungeon`, logTypes.GAME);
     }).matched) return false;
 
+    // jump
+    if (Verb.check(jumpAliases, inputArray, () => {
+        GameLog.addMessage('You jump in the air, and fall back down.', logTypes.GAME);
+    }).matched) return false;
+
+
+    /* - META - */
+    const restartAliases = 'restart,reset,newgame';
+
+
+    // restart
+    if (Verb.check(restartAliases, inputArray, () => {
+        if (!isElectron) {
+            localStorage.clear();
+        } else {
+            window.api.send('resetGame');
+        }
+        location.reload();
+        GameLog.addMessage('Restarting...', logTypes.SYSTEM);
+    }).matched) return false;
+
+
+    /* - INFO - */
+    const infoAliases = 'info,i,me,myself,player,user,information,hp,stats,health';
+    const lookAliases = 'look,l,search,inspect,view,see,observe,ls,dir';
+    const lookAtAliases = 'at,around,towards,for';
+
+
     // info
     if (Verb.check(infoAliases, inputArray, () => {
         GameLog.addMessage(`You currently have ${player.hp} HP, and are strength ${player.strength}.`, logTypes.GAME);
     }).matched) return false;
+
+    // look
+    if (Verb.check(lookAliases, inputArray, () => {
+        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
+    }).matched) return false;
+
+    // look around
+    if (Verb.check(`${lookAliases} around`, inputArray, () => {
+        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
+    }).matched) return false;
+
+    // look at room
+    if (Verb.check(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
+        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
+    }).matched) return false;
+
+    // look at
+    if (Verb.check(`${lookAliases} ${lookAtAliases}`, inputArray, () => {
+        GameLog.addMessage('What do you want to look at?', logTypes.GAME);
+        GameLog.addMessage('(Try: look at thing)', logTypes.ALERT);
+        question = 'look';
+    }).matched) return false;
+
+    // look [#]
+    if (Verb.check(`${lookAliases} #`, inputArray, args => {
+        GameLog.addMessage(room.getThingInfo(args[0]), logTypes.GAME);
+    }).matched) return false;
+
+    // look at [#]
+    if (Verb.check(`${lookAliases} ${lookAtAliases} #`, inputArray, args => {
+        GameLog.addMessage(room.getThingInfo(args[0]), logTypes.GAME);
+    }).matched) return false;
+
+
+    /* - MOVEMENT - */
+    const backAliases = 'back,b,backwards,previous';
+    const northAliases = 'north,n,northward,northern,up,upward,upwards';
+    const southAliases = 'south,s,southward,southern,down,downward,downwards';
+    const eastAliases = 'east,e,eastward,eastern,right';
+    const westAliases = 'west,w,westward,western,left';
+
 
     // back
     verb = Verb.check(backAliases, inputArray, () => {
@@ -128,37 +183,10 @@ export default function InputHandler(input) {
         return verb.usedTurn;
     }
 
-    // look
-    if (Verb.check(lookAliases, inputArray, () => {
-        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
-    }).matched) return false;
 
-    // look around
-    if (Verb.check(`${lookAliases} around`, inputArray, () => {
-        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
-    }).matched) return false;
+    /* - COMBAT - */
+    const attackAliases = 'attack,h,hit,punch,kick,whack,yeet,hurt,damage,smack,kill,murder,slaughter,slap,bite,shoot,stab,pwn,destroy,obliterate';
 
-    // look at room
-    if (Verb.check(`${lookAliases} ${lookAtAliases} room,here`, inputArray, () => {
-        GameLog.addMessage(room.getRoomInfo(), logTypes.GAME);
-    }).matched) return false;
-
-    // look at
-    if (Verb.check(`${lookAliases} ${lookAtAliases}`, inputArray, () => {
-        GameLog.addMessage('What do you want to look at?', logTypes.GAME);
-        GameLog.addMessage('(Try: look at thing)', logTypes.ALERT);
-        question = 'look';
-    }).matched) return false;
-
-    // look [#]
-    if (Verb.check(`${lookAliases} #`, inputArray, args => {
-        GameLog.addMessage(room.getThingInfo(args[0]), logTypes.GAME);
-    }).matched) return false;
-
-    // look at [#]
-    if (Verb.check(`${lookAliases} ${lookAtAliases} #`, inputArray, args => {
-        GameLog.addMessage(room.getThingInfo(args[0]), logTypes.GAME);
-    }).matched) return false;
 
     // attack
     if (Verb.check(attackAliases, inputArray, () => {
@@ -175,6 +203,11 @@ export default function InputHandler(input) {
         return verb.usedTurn;
     }
 
+
+    /* - OBJECT INTERACTION - */
+    const takeAliases = 'take,t,get,steal,grab,pick,collect,use,eat';
+
+
     // take
     if (Verb.check(takeAliases, inputArray, () => {
         GameLog.addMessage('What do you want to take?', logTypes.GAME);
@@ -189,6 +222,10 @@ export default function InputHandler(input) {
     if (verb.matched) {
         return verb.usedTurn;
     }
+
+
+    /* - QUESTIONS - */
+
 
     input = inputArray.join(' ');
 
@@ -213,6 +250,10 @@ export default function InputHandler(input) {
         GameLog.addMessage(room.getThingInfo(input), logTypes.GAME);
         return false;
     }
+
+
+    /* - ANYTHING ELSE - */
+
 
     GameLog.addMessage('Unknown command.', logTypes.ALERT);
     return false;
