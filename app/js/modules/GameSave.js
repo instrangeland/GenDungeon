@@ -28,10 +28,10 @@ export default class GameSave {
      * Saves the current GameSave data to a file or localStorage
      */
     save() {
-        const exportData = btoa(JSON.stringify({
+        const exportData = btoa(JSON.stringify(unescape({
             seed: this.seed,
             history: this.history,
-        }));
+        })));
 
         if (isElectron) {
             window.api.send('saveGame', exportData);
@@ -46,8 +46,8 @@ export default class GameSave {
      */
     loadElectron(response) {
         if (response) {
-            this.seed = JSON.parse(atob(response)).seed;
-            this.history = JSON.parse(atob(response)).history;
+            this.seed = JSON.parse(atob(escape(response))).seed;
+            this.history = JSON.parse(atob(escape(response))).history;
         } else {
             this.save();
         }
@@ -59,8 +59,8 @@ export default class GameSave {
     loadLocalStorage() {
         const response = localStorage.getItem('save');
         if (response) {
-            this.seed = JSON.parse(atob(response)).seed;
-            this.history = JSON.parse(atob(response)).history;
+            this.seed = JSON.parse(atob(escape(response))).seed;
+            this.history = JSON.parse(atob(escape(response))).history;
         } else {
             this.save();
         }
