@@ -117,6 +117,7 @@ export default class game {
                         $('.msg-restart').on('click', () => {
                             game.reset();
                         });
+                        return;
                     }
                 }
             }
