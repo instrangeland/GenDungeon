@@ -46,8 +46,8 @@ p, hr {
 }
 
 hr {
+    background: #888;
     border: 1px solid #888;
-    width: 50%;
 }
 
 .msg-player, #input-prefix, #input-box {
