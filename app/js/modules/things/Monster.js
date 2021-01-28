@@ -55,7 +55,7 @@ export default class Monster extends Thing {
                 const damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
                 player.hp -= damage;
                 if (player.hp > 0) {
-                    GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage.`, logTypes.COMBAT);
+                    GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage.`, logTypes.ALERT);
                     GameLog.addMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
                 } else {
                     GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
