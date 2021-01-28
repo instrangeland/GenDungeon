@@ -106,8 +106,7 @@ export default class game {
         if (isNewTurn) {
             for (const thing of game.world.getRoom(y, x).contents) {
                 if (thing instanceof Monster) {
-                    if (thing.playerInteraction(game.player) && !game.player.dead) {
-                        game.player.dead = true;
+                    if (thing.playerInteraction(game.player)) {
                         RPC.updateDead();
                         GameLog.addMessage('--- GAME OVER ---', logTypes.SYSTEM);
                         GameLog.addMessage(`Score: ${game.score}`, logTypes.SUCCESS);
@@ -118,6 +117,7 @@ export default class game {
                         $('.msg-restart').on('click', () => {
                             game.reset();
                         });
+                        return;
                     }
                 }
             }
