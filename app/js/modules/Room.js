@@ -50,7 +50,7 @@ export default class Room {
             2 > this.x) {
             this.isActive = true;
         } else {
-            this.isActive = noise.simplex2(y / 2 + 471, x / 2 + 471) > -0.15;
+            this.isActive = noise.simplex2(y / 2 + 471 * game.seed.quick(), x / 2 + 471 * game.seed.quick()) > -0.15;
         }
 
         this.description = this.generateDescription();
