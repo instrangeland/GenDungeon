@@ -227,7 +227,7 @@ export default class Room {
      * @param {Object} monster The monster
      */
     addMonster(monster) {
-        this.contents.push(new Monster(monster));
+        this.contents.push(new Monster(monster, this.distance));
     }
 
     /**

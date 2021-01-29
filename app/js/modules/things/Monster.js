@@ -15,11 +15,14 @@ export const monsterStates = {
 /**
  * A monster in a room.
  * @param {Object} The monster's stats
+ * @param {number} The distance of the containing room
  */
 export default class Monster extends Thing {
-    constructor(monster) {
+    constructor(monster, distance) {
         super();
         Object.assign(this, monster);
+        this.strength = Math.floor(this.strength * distance * 0.3);
+        this.hp = Math.floor(this.hp * distance * 0.5);
         this.isVisible = true;
         this.state = monsterStates.PASSIVE;
     }
