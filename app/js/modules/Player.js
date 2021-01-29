@@ -4,7 +4,7 @@
 
 import game from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
-import RPC from './RPC.js';
+import DiscordRP from './DiscordRP.js';
 import Armor, {ARMORS, hasArmorBeenGenerated} from './things/Armor.js';
 import {ARMOR_CHANCE} from "./Values.js";
 
@@ -55,7 +55,7 @@ export default class Player {
             this.previousX = this.x;
             this.y += yOffset;
             this.x += xOffset;
-            RPC.updateRoom(game.world.getRoom(this.y, this.x).description);
+            DiscordRP.updateRoom(game.world.getRoom(this.y, this.x).description);
             GameLog.addMessage(`You go ${directionName}.`, logTypes.MOVEMENT);
             return true;
         }

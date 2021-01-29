@@ -8,7 +8,7 @@ import InputHandler from './modules/InputHandler.js';
 import MiniMap from './modules/MiniMap.js';
 import Monster from './modules/things/Monster.js';
 import Player from './modules/Player.js';
-import RPC from './modules/RPC.js';
+import DiscordRP from './modules/DiscordRP.js';
 import World from './modules/World.js';
 
 export const gameVersion = 212801; // Date of the version being released in reverse (e.g. 03/14/15 -> 151403)
@@ -109,7 +109,7 @@ export default class game {
             for (const thing of game.world.getRoom(y, x).contents) {
                 if (thing instanceof Monster) {
                     if (thing.playerInteraction(game.player)) {
-                        RPC.updateDead();
+                        DiscordRP.updateDead();
                         GameLog.addMessage('--- GAME OVER ---', logTypes.SYSTEM);
                         GameLog.addMessage(`Score: ${game.score}`, logTypes.SUCCESS);
                         GameLog.addMessage('RESTART', logTypes.RESTART);

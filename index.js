@@ -4,20 +4,22 @@
 
 'use strict';
 
+// Imports
 const {app, BrowserWindow, ipcMain} = require('electron');
 const fs = require('fs');
 const path = require('path');
+const discordRP = require('discord-rich-presence')('801220293041455104');
 
-const client = require('discord-rich-presence')('801220293041455104');
-
-client.updatePresence({
+// Discord Rich Presence
+discordRP.updatePresence({
     instance: true
 });
 
+// Electron
 let window;
-
 const savePath = path.join(app.getPath('userData'), 'save.pta');
 
+// IPC Main
 ipcMain.on('saveGame', (event, gameData) => {
     fs.writeFile(savePath, gameData, () => {});
 });
@@ -33,7 +35,7 @@ ipcMain.on('resetGame', () => {
 });
 
 ipcMain.on('drpc', (event, content) => {
-    client.updatePresence({
+    discordRP.updatePresence({
         instance: true,
         state: content
     });
