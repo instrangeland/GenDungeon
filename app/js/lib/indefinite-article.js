@@ -1,12 +1,4 @@
 /*
- * GenDungeon is licensed under GNU General Public License v3.0.
- */
-
-/*
- * GenDungeon is licensed under GNU General Public License v3.0.
- */
-
-/*
  * indefinite-article.js v1.0.0, 12-18-2011
  *
  * @author: Rodrigo Neri (@rigoneri)
