@@ -307,4 +307,33 @@ export default class Room {
         GameLog.addMessage('That doesn\'t exist here.', logTypes.ALERT);
         return false;
     }
+
+    eatThing(player, thing) {
+        const food = this.getThing(thing);
+        if (food) {
+            if (food instanceof Food) {
+                this.takeThing(player,thing);
+            } else {
+                GameLog.addMessage('You can\'t eat that.', logTypes.ALERT);
+                return true;
+            }
+        } else {
+            GameLog.addMessage('That doesn\'t exist here.', logTypes.ALERT);
+            return false;
+        }
+    }
+
+    equipThing(player, thing) {
+        const weapon = this.getThing(thing);
+        if (weapon) {
+            if (weapon instanceof Weapon) {
+                return this.takeThing(player,thing);
+            } else {
+                GameLog.addMessage('You can\'t equip that.', logTypes.ALERT);
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

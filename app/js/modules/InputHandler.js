@@ -204,7 +204,9 @@ export default function InputHandler(input) {
 
 
     /* - OBJECT INTERACTION - */
-    const takeAliases = 'take,t,get,steal,grab,pick,collect,use,eat,consume';
+    const takeAliases = 'take,t,get,steal,grab,pick,collect,use';
+    const equipAliases = 'equip';
+    const eatAliases = 'eat,consume,munch,masticate';
 
 
     // take
@@ -214,9 +216,39 @@ export default function InputHandler(input) {
         question = 'take';
     }).matched) return false;
 
+    // eat
+    if (Verb.check(takeAliases, inputArray, () => {
+        GameLog.addMessage('What do you want to eat?', logTypes.GAME);
+        GameLog.addMessage('(Try: eat thing)', logTypes.ALERT);
+        question = 'take';
+    }).matched) return false;
+
+    // equip
+    if (Verb.check(takeAliases, inputArray, () => {
+        GameLog.addMessage('What do you want to equip?', logTypes.GAME);
+        GameLog.addMessage('(Try: equip thing)', logTypes.ALERT);
+        question = 'take';
+    }).matched) return false;
+
     // take [#]
     verb = Verb.check(`${takeAliases} #`, inputArray, args => {
         return room.takeThing(player, args[0]);
+    });
+    if (verb.matched) {
+        return verb.usedTurn;
+    }
+
+    // eat [#]
+    verb = Verb.check(`${eatAliases} #`, inputArray, args => {
+        return room.eatThing(player, args[0]);
+    });
+    if (verb.matched) {
+        return verb.usedTurn;
+    }
+
+    // equip [#]
+    verb = Verb.check(`${equipAliases} #`, inputArray, args => {
+        return room.equipThing(player, args[0]);
     });
     if (verb.matched) {
         return verb.usedTurn;
