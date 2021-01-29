@@ -7,7 +7,7 @@ import {isElectron} from '../game.js';
 /**
  * A handler for Discord Rich Presence state changes.
  */
-export default class RPC {
+export default class DiscordRP {
     /**
      * Update the status to show the player moving to a room.
      * @param {string} roomDescription A description of the room

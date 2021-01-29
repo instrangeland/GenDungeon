@@ -6,7 +6,7 @@ import Food from './things/Food.js';
 import game, {getRandInt, getRandomElement} from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
 import Monster, {monsterStates, monsterTypes} from './things/Monster.js';
-import RPC from './RPC.js';
+import DiscordRP from './DiscordRP.js';
 import Thing from './things/Thing.js';
 import Weapon from './things/Weapon.js';
 import Armor from './things/Armor.js';
@@ -274,11 +274,11 @@ export default class Room {
             game.score["attack"] += monster.strength * monster.attackAccuracy * Math.max(0, Math.min(damage, monster.hp));
             monster.hp -= damage;
             if (monster.hp > 0) {
-                RPC.updateAttack(monster.name.toLowerCase());
+                DiscordRP.updateAttack(monster.name.toLowerCase());
                 GameLog.addMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, taking its HP down to ${monster.hp}.`, logTypes.COMBAT);
             } else {
                 this.removeThing(thing);
-                RPC.updateKilled(monster.name.toLowerCase());
+                DiscordRP.updateKilled(monster.name.toLowerCase());
                 GameLog.addMessage(`You attack the ${monster.name.toLowerCase()} for ${player.strength} damage, killing it.`, logTypes.SUCCESS);
 
             }
@@ -301,15 +301,15 @@ export default class Room {
         const thingObject = this.getThing(thing);
         if (thingObject instanceof Food) {
             player.hp += thingObject.healing;
+            DiscordRP.updateTake(thingObject.name);
             game.score["eat"] += thingObject.healing;
-            RPC.updateTake(thingObject.name);
             this.removeThing(thing);
             GameLog.addMessage(`You take and eat the ${thingObject.name.toLowerCase()}, increasing your health to ${player.hp} HP.`, logTypes.SUCCESS);
             return true;
         } else if (thingObject instanceof Weapon) {
             player.strength += thingObject.strengthBoost;
+            DiscordRP.updateTake(thingObject.name);
             game.score["weapons"] += thingObject.strengthBoost;
-            RPC.updateTake(thingObject.name);
             this.removeThing(thing);
             GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your strength to ${player.strength}.`, logTypes.SUCCESS);
             return true;
@@ -321,7 +321,7 @@ export default class Room {
 
             game.score["armor"] += Armor.getDefenseByName(thingObject.name);
             player.playerHasArmorType[thingObject.name] = true;
-            RPC.updateTake(thingObject.name);
+            DiscordRP.updateTake(thingObject.name);
             this.removeThing(thing);
             GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your defense by ${Armor.getDefenseByName(thingObject.name)}.`, logTypes.SUCCESS);
             return true;
