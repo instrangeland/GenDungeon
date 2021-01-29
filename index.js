@@ -49,7 +49,7 @@ function newWindow() {
         icon: 'icon.png',
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, "app/js/preload.js")
+            preload: path.join(__dirname, 'app/js/preload.js')
         }
     });
     if (process.argv.includes('test')) {
