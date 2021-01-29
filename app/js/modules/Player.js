@@ -5,6 +5,8 @@
 import game from '../game.js';
 import {GameLog, logTypes} from './GameLog.js';
 import RPC from './RPC.js';
+import Armor, {ARMORS, hasArmorBeenGenerated} from './things/Armor.js';
+import {ARMOR_CHANCE} from "./Values.js";
 
 /**
  * A playable character.
@@ -18,6 +20,16 @@ export default class Player {
 
         this.previousY = null;
         this.previousX = null;
+
+
+        this.playerHasArmorType = {
+            "Helmet": false,
+            "Bucker": false,
+            "Shield": false,
+            "Gauntlet": false,
+            "Amulet": false,
+            "Boots": false
+        }
     }
 
     /**
@@ -28,7 +40,17 @@ export default class Player {
      * @return {boolean} Whether the player moved
      */
     move(yOffset, xOffset, directionName) {
-        if (game.world.getRoom(this.y + yOffset, this.x + xOffset).isActive) {
+        let roomToMoveTo = game.world.getRoom(this.y + yOffset, this.x + xOffset);
+        if (roomToMoveTo.isActive) {
+            if (!roomToMoveTo.isExplored) {
+                if (game.seed.quick() > ARMOR_CHANCE) {
+                    let armor = new Armor();
+                    if (armor.name) {
+                        roomToMoveTo.contents.push(armor);
+                        hasArmorBeenGenerated[armor.name] = true;
+                    }
+                }
+            }
             this.previousY = this.y;
             this.previousX = this.x;
             this.y += yOffset;
@@ -56,5 +78,26 @@ export default class Player {
         this.previousX = null;
         GameLog.addMessage('You go back to the previous room.', logTypes.MOVEMENT);
         return true;
+    }
+
+    hasArmor() {
+        for (const armor in this.playerHasArmorType) {
+            if (!this.playerHasArmorType.hasOwnProperty(armor)) continue;
+            if (this.playerHasArmorType[armor]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getTotalDefense() {
+        let total = 0;
+        for (const armor in this.playerHasArmorType) {
+            if (!this.playerHasArmorType.hasOwnProperty(armor)) continue;
+            if (this.playerHasArmorType[armor]) {
+                total += ARMORS.find(anArmor => anArmor.name === armor).defense;
+            }
+        }
+        return total;
     }
 }

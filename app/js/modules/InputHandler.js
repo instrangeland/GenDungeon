@@ -98,7 +98,7 @@ export default function InputHandler(input) {
 
     // info
     if (Verb.check(infoAliases, inputArray, () => {
-        GameLog.addMessage(`You currently have ${player.hp} HP, and are strength ${player.strength}.`, logTypes.GAME);
+        GameLog.addMessage(`You currently have ${player.hp} HP, strength ${player.strength}, and defense ${player.getTotalDefense()}.`, logTypes.GAME);
     }).matched) return false;
 
     // look

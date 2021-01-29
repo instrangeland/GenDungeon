@@ -6,6 +6,7 @@ import game from '../game.js';
 import Monster from "./things/Monster.js";
 import Food from "./things/Food.js";
 import Weapon from "./things/Weapon.js";
+import Armor from './things/Armor.js';
 
 /**
  * A minimap in the corner of the game.
@@ -53,7 +54,10 @@ export default class MiniMap {
                         box.addClass('void');
                     } else if (room.contents.filter(thing => thing instanceof Monster).length > 0) {
                         box.addClass('danger');
-                    } else if (room.contents.filter(thing => thing instanceof Food || thing instanceof Weapon).length > 0) {
+                    } else if (room.contents.filter(thing => thing instanceof Food
+                        || thing instanceof Weapon
+                        || thing instanceof Armor
+                    ).length > 0) {
                         box.addClass('collectable');
                     } else {
                         box.addClass('explored');

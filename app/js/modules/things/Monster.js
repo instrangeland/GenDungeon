@@ -5,6 +5,7 @@
 import game, {getRandInt} from '../../game.js';
 import {GameLog, logTypes} from '../GameLog.js';
 import Thing from './Thing.js';
+import Armor from "./Armor.js";
 
 export const monsterStates = {
     PASSIVE: 0,
@@ -52,11 +53,30 @@ export default class Monster extends Thing {
             }
         } else {
             if (game.seed.quick() < this.attackAccuracy) {
-                const damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
+                let damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
+                let armorInventory = player.playerHasArmorType;
+                let absorption = 0;
+                for (const armor in armorInventory)  {
+                    if (! armorInventory.hasOwnProperty(armor)) continue;
+                    if (armorInventory[armor]) { // Player has this armor type
+                        let absorb = getRandInt(0,Armor.getDefenseByName(armor));
+                        damage -= absorb;
+                        absorption += absorb;
+                    }
+                }
+                if (damage < 0) damage = 0;
                 player.hp -= damage;
                 if (player.hp > 0) {
-                    GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage.`, logTypes.ALERT);
-                    GameLog.addMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
+                    if (damage > 0) {
+                        if (player.hasArmor()) {
+                            GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage, but your armor absorbed ${absorption} damage.`, logTypes.ALERT);
+                        } else {
+                            GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage.`, logTypes.ALERT);
+                        }
+                        GameLog.addMessage(`Your HP is now: ${player.hp}`, logTypes.GAME);
+                    } else { // Armor shielded all attack
+                        GameLog.addMessage(`- The ${this.name} attacked you, but your armor absorbed all damage.`, logTypes.COMBAT);
+                    }
                 } else {
                     GameLog.addMessage(`- The ${this.name} attacks you for ${damage} damage, killing you.`, logTypes.ALERT);
                     return true;

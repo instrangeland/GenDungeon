@@ -9,6 +9,16 @@ import Monster, {monsterStates, monsterTypes} from './things/Monster.js';
 import RPC from './RPC.js';
 import Thing from './things/Thing.js';
 import Weapon from './things/Weapon.js';
+import Armor from './things/Armor.js';
+import {
+    FOOD_CHANCE,
+    GHOST_CHANCE,
+    GOBLIN_CHANCE,
+    SKELETON_CHANCE,
+    SPIDER_CHANCE,
+    VAMPIRE_CHANCE,
+    WEAPON_CHANCE, ZOMBIE_CHANCE
+} from './Values.js';
 
 /**
  * Compares whether two strings are equal, ignoring case.
@@ -48,10 +58,10 @@ export default class Room {
         this.contents = [];
 
         this.generateMonsters();
-        if (game.seed.quick() > 0.8) {
+        if (game.seed.quick() > FOOD_CHANCE) {
             this.contents.push(new Food());
         }
-        if (game.seed.quick() > 0.9) {
+        if (game.seed.quick() > WEAPON_CHANCE) {
             this.contents.push(new Weapon());
         }
 
@@ -107,12 +117,12 @@ export default class Room {
      * Adds monsters to the room.
      */
     generateMonsters() {
-        this.addMonsterChance(monsterTypes.ZOMBIE, 1, 0.85);
-        this.addMonsterChance(monsterTypes.SKELETON, 2, 0.8);
-        this.addMonsterChance(monsterTypes.GOBLIN, 2, 0.7);
-        this.addMonsterChance(monsterTypes.SPIDER, 3, 0.8);
-        this.addMonsterChance(monsterTypes.VAMPIRE, 5, 0.75);
-        this.addMonsterChance(monsterTypes.GHOST, 8, 0.55);
+        this.addMonsterChance(monsterTypes.ZOMBIE, 1, ZOMBIE_CHANCE);
+        this.addMonsterChance(monsterTypes.SKELETON, 2, SKELETON_CHANCE);
+        this.addMonsterChance(monsterTypes.GOBLIN, 2, GOBLIN_CHANCE);
+        this.addMonsterChance(monsterTypes.SPIDER, 3, SPIDER_CHANCE);
+        this.addMonsterChance(monsterTypes.VAMPIRE, 5, VAMPIRE_CHANCE);
+        this.addMonsterChance(monsterTypes.GHOST, 8, GHOST_CHANCE);
     }
 
     /**
@@ -300,6 +310,16 @@ export default class Room {
             this.removeThing(thing);
             GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your strength to ${player.strength}.`, logTypes.SUCCESS);
             return true;
+        } else if (thingObject instanceof Armor) {
+            if (player.playerHasArmorType[thingObject.name]) {
+                GameLog.addMessage(`You've already got ${indefiniteArticle(thingObject.name)} ${thingObject.name.toLowerCase()}.`, logTypes.ALERT);
+                return false;
+            }
+            player.playerHasArmorType[thingObject.name] = true;
+            RPC.updateTake(thingObject.name);
+            this.removeThing(thing);
+            GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your defense by ${Armor.getDefenseByName(thingObject.name)}.`, logTypes.SUCCESS);
+            return true;
         } else if (thingObject) {
             GameLog.addMessage('You can\'t take that.', logTypes.ALERT);
             return false;
@@ -315,7 +335,7 @@ export default class Room {
                 this.takeThing(player,thing);
             } else {
                 GameLog.addMessage('You can\'t eat that.', logTypes.ALERT);
-                return true;
+                return false;
             }
         } else {
             GameLog.addMessage('That doesn\'t exist here.', logTypes.ALERT);
@@ -324,9 +344,9 @@ export default class Room {
     }
 
     equipThing(player, thing) {
-        const weapon = this.getThing(thing);
-        if (weapon) {
-            if (weapon instanceof Weapon) {
+        const equippable = this.getThing(thing);
+        if (equippable) {
+            if (equippable instanceof Weapon || equippable instanceof Armor) {
                 return this.takeThing(player,thing);
             } else {
                 GameLog.addMessage('You can\'t equip that.', logTypes.ALERT);
