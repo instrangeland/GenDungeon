@@ -57,6 +57,9 @@ export default class Player {
             this.x += xOffset;
             RPC.updateRoom(game.world.getRoom(this.y, this.x).description);
             GameLog.addMessage(`You go ${directionName}.`, logTypes.MOVEMENT);
+            if (roomToMoveTo.distance > game.score["distance"]) {
+                game.score["distance"] = roomToMoveTo.distance;
+            }
             return true;
         }
         GameLog.addMessage(`You can't go ${directionName}, there's a wall there.`, logTypes.ALERT);

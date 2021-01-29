@@ -40,7 +40,13 @@ export default class game {
         this.player = new Player();
         this.world = new World();
 
-        this.score = 0;
+        this.score = {
+            "attack": 0,
+            "eat": 0,
+            "weapons": 0,
+            "armor": 0,
+            "distance": 0
+        };
         this.scrollEntry = 0;
 
         if (history) {
@@ -111,7 +117,7 @@ export default class game {
                     if (thing.playerInteraction(game.player)) {
                         RPC.updateDead();
                         GameLog.addMessage('--- GAME OVER ---', logTypes.SYSTEM);
-                        GameLog.addMessage(`Score: ${game.score}`, logTypes.SUCCESS);
+                        GameLog.addMessage(`Score: ${JSON.stringify(game.score)}`, logTypes.SUCCESS);
                         GameLog.addMessage('RESTART', logTypes.RESTART);
                         inputBox.prop('disabled', true);
                         inputBox.attr('placeholder', 'Thanks for playing!');
