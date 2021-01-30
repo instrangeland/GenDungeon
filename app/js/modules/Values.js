@@ -12,3 +12,9 @@ export const GOBLIN_CHANCE = 0.7;
 export const SPIDER_CHANCE = 0.8;
 export const VAMPIRE_CHANCE = 0.75;
 export const GHOST_CHANCE = 0.55;
+
+export const ATTACK_WEIGHT = 0.1;
+export const DISTANCE_WEIGHT = 3;
+export const WEAPONS_WEIGHT = 1;
+export const ARMOR_WEIGHT = 1;
+export const EATING_WEIGHT = 0.1;

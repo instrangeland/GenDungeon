@@ -10,6 +10,7 @@ import Monster from './modules/things/Monster.js';
 import Player from './modules/Player.js';
 import DiscordRP from './modules/DiscordRP.js';
 import World from './modules/World.js';
+import {ARMOR_WEIGHT, ATTACK_WEIGHT, DISTANCE_WEIGHT, EATING_WEIGHT, WEAPONS_WEIGHT} from "./modules/Values.js";
 
 export const gameVersion = 212801; // Date of the version being released in reverse (e.g. 03/14/15 -> 151403)
 
@@ -40,7 +41,13 @@ export default class game {
         this.player = new Player();
         this.world = new World();
 
-        this.score = 0;
+        this.score = {
+            "attack": 0,
+            "eat": 0,
+            "weapons": 0,
+            "armor": 0,
+            "distance": 0
+        };
         this.scrollEntry = 0;
 
         if (history) {
@@ -111,7 +118,8 @@ export default class game {
                     if (thing.playerInteraction(game.player)) {
                         DiscordRP.updateDead();
                         GameLog.addMessage('--- GAME OVER ---', logTypes.SYSTEM);
-                        GameLog.addMessage(`Score: ${game.score}`, logTypes.SUCCESS);
+                        GameLog.addMessage(`Score:
+                        ${game.getScoresAsString()}`, logTypes.SUCCESS);
                         GameLog.addMessage('RESTART', logTypes.RESTART);
                         inputBox.prop('disabled', true);
                         inputBox.attr('placeholder', 'Thanks for playing!');
@@ -127,6 +135,26 @@ export default class game {
 
         MiniMap.update();
     }
+
+    static getScoresAsString() {
+        return `Attacking:...${Math.round(game.score.attack * ATTACK_WEIGHT).toString().padStart(4, ".")}      
+                Distance:....${Math.round(game.score.distance * DISTANCE_WEIGHT).toString().padStart(4, ".")}                
+                Weapons:.....${Math.round(game.score.weapons  * WEAPONS_WEIGHT).toString().padStart(4, ".")}
+                Armor:.......${Math.round(game.score.armor  * ARMOR_WEIGHT).toString().padStart(4, ".")}
+                Eating:......${Math.round(game.score.eat * EATING_WEIGHT).toString().padStart(4, ".")}
+                TOTAL:.......${this.getFullScore().toString().padStart(4, ".")}`
+    }
+
+    static getFullScore() {
+        let total = 0;
+        total += Math.round(game.score.attack * ATTACK_WEIGHT);
+        total += Math.round(game.score.eat * EATING_WEIGHT);
+        total += Math.round(game.score.weapons * WEAPONS_WEIGHT);
+        total += Math.round(game.score.armor * ARMOR_WEIGHT);
+        total += Math.round(game.score.distance * DISTANCE_WEIGHT);
+        return Math.round(total);
+    }
+
 }
 
 const gameSave = new GameSave();
