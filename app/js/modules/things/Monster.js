@@ -21,7 +21,7 @@ export default class Monster extends Thing {
     constructor(monster, distance) {
         super();
         Object.assign(this, monster);
-        this.strength = Math.floor(this.strength * distance * 0.2);
+        this.strength = Math.floor(this.strength * distance * 0.25);
         this.hp = Math.floor(this.hp * distance);
         this.isVisible = true;
         this.state = monsterStates.PASSIVE;
