@@ -76,7 +76,7 @@ export default class game {
             inputBox.val(gameSave.history[this.scrollEntry]);
 
         } else if (event.keyCode === keyCodes.ENTER) {
-            const input = inputBox.val().trim();
+            let input = inputBox.val().trim().replaceAll(/\s{2,}/g," ");
             inputBox.val('');
 
             if (input) {
