@@ -12,7 +12,7 @@ import DiscordRP from './modules/DiscordRP.js';
 import World from './modules/World.js';
 import {ARMOR_WEIGHT, ATTACK_WEIGHT, DISTANCE_WEIGHT, EATING_WEIGHT, WEAPONS_WEIGHT} from "./modules/Values.js";
 
-export const gameVersion = 212801; // Date of the version being released in reverse (e.g. 03/14/15 -> 151403)
+export const gameVersion = 212901; // Date of the version being released in reverse (e.g. 03/14/15 -> 151403)
 
 export const isElectron = navigator.userAgent.indexOf('Electron') > -1;
 const inputBox = $('#input-box');
