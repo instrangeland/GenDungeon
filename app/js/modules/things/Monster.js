@@ -21,8 +21,8 @@ export default class Monster extends Thing {
     constructor(monster, distance) {
         super();
         Object.assign(this, monster);
-        this.strength = Math.floor(this.strength * distance * 0.3);
-        this.hp = Math.floor(this.hp * distance * 0.5);
+        this.strength = Math.floor(this.strength * distance * 0.2);
+        this.hp = Math.floor(this.hp * distance);
         this.isVisible = true;
         this.state = monsterStates.PASSIVE;
     }
@@ -32,7 +32,7 @@ export default class Monster extends Thing {
      * @return {string} The description
      */
     getDescription() {
-        return `${Monster.getArticle(this.name)} ${this.name.toLowerCase()} with ${this.hp} HP. It does an average of ${this.strength} damage, and is about ${this.attackAccuracy * 100}% accurate.`;
+        return `${Monster.getArticle(this.name)} ${this.name.toLowerCase()} with ${this.hp} HP. It does an average of ${Math.max(1, this.strength)} damage, and is about ${this.attackAccuracy * 100}% accurate.`;
     }
 
     /**
