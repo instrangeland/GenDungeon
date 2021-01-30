@@ -3,7 +3,7 @@
  */
 
 export const FOOD_CHANCE = 0.7;
-export const WEAPON_CHANCE = 0.7;
+export const WEAPON_CHANCE = 0.75;
 export const ARMOR_CHANCE = 0.95;
 
 export const ZOMBIE_CHANCE = 0.85;
