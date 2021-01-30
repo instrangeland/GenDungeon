@@ -56,13 +56,13 @@ export default class Monster extends Thing {
             }
         } else {
             if (game.seed.quick() < this.attackAccuracy) {
-                let damage = this.strength + getRandInt(-this.strengthVariance, this.strengthVariance);
+                let damage = Math.max(1, this.strength + getRandInt(-this.strengthVariance, this.strengthVariance));
                 let armorInventory = player.playerHasArmorType;
                 let absorption = 0;
-                for (const armor in armorInventory)  {
-                    if (! armorInventory.hasOwnProperty(armor)) continue;
+                for (const armor in armorInventory) {
+                    if (!armorInventory.hasOwnProperty(armor)) continue;
                     if (armorInventory[armor]) { // Player has this armor type
-                        let absorb = getRandInt(0,Armor.getDefenseByName(armor));
+                        let absorb = getRandInt(0, Armor.getDefenseByName(armor));
                         damage -= absorb;
                         absorption += absorb;
                     }
