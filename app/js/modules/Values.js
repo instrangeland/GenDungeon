@@ -5,6 +5,7 @@
 export const FOOD_CHANCE = 0.7;
 export const WEAPON_CHANCE = 0.75;
 export const ARMOR_CHANCE = 0.95;
+export const GOLD_CHANCE = 0.7;
 
 export const ZOMBIE_CHANCE = 0.85;
 export const SKELETON_CHANCE = 0.8;
@@ -18,3 +19,4 @@ export const DISTANCE_WEIGHT = 3;
 export const WEAPONS_WEIGHT = 1;
 export const ARMOR_WEIGHT = 1;
 export const EATING_WEIGHT = 0.1;
+export const GOLD_WEIGHT = 0.05;

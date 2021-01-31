@@ -10,9 +10,11 @@ import DiscordRP from './DiscordRP.js';
 import Thing from './things/Thing.js';
 import Weapon from './things/Weapon.js';
 import Armor from './things/Armor.js';
+import Gold from './things/Gold.js';
 import {
     FOOD_CHANCE,
     GHOST_CHANCE,
+    GOLD_CHANCE,
     GOBLIN_CHANCE,
     SKELETON_CHANCE,
     SPIDER_CHANCE,
@@ -63,6 +65,9 @@ export default class Room {
         }
         if (game.seed.quick() > WEAPON_CHANCE) {
             this.contents.push(new Weapon());
+        }
+        if (game.seed.quick() > GOLD_CHANCE) {
+            this.contents.push(new Gold());
         }
 
         this.contents.push(new Thing('wall'));
@@ -324,6 +329,12 @@ export default class Room {
             DiscordRP.updateTake(thingObject.name);
             this.removeThing(thing);
             GameLog.addMessage(`You take the ${thingObject.name.toLowerCase()}, increasing your defense by ${Armor.getDefenseByName(thingObject.name)}.`, logTypes.SUCCESS);
+            return true;
+        } else if (thingObject instanceof Gold) {
+            game.score["gold"] += thingObject.amount;
+            player.amountGold += thingObject.amount;
+            this.removeThing(thing);
+            GameLog.addMessage(`You take ${thingObject.amount} gold, you now have ${player.amountGold} gold.`, logTypes.SUCCESS);
             return true;
         } else if (thingObject) {
             GameLog.addMessage('You can\'t take that.', logTypes.ALERT);

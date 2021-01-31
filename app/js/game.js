@@ -10,7 +10,14 @@ import Monster from './modules/things/Monster.js';
 import Player from './modules/Player.js';
 import DiscordRP from './modules/DiscordRP.js';
 import World from './modules/World.js';
-import {ARMOR_WEIGHT, ATTACK_WEIGHT, DISTANCE_WEIGHT, EATING_WEIGHT, WEAPONS_WEIGHT} from "./modules/Values.js";
+import {
+    ARMOR_WEIGHT,
+    ATTACK_WEIGHT,
+    DISTANCE_WEIGHT,
+    EATING_WEIGHT,
+    GOLD_WEIGHT,
+    WEAPONS_WEIGHT
+} from "./modules/Values.js";
 
 export const gameVersion = 212901; // Date of the version being released in reverse (e.g. 03/14/15 -> 151403)
 
@@ -46,7 +53,8 @@ export default class game {
             "eat": 0,
             "weapons": 0,
             "armor": 0,
-            "distance": 0
+            "distance": 0,
+            "gold": 0
         };
         this.scrollEntry = 0;
 
@@ -142,6 +150,7 @@ export default class game {
                 Weapons:.....${Math.round(game.score.weapons  * WEAPONS_WEIGHT).toString().padStart(4, ".")}
                 Armor:.......${Math.round(game.score.armor  * ARMOR_WEIGHT).toString().padStart(4, ".")}
                 Eating:......${Math.round(game.score.eat * EATING_WEIGHT).toString().padStart(4, ".")}
+                Gold:........${Math.round(game.score.gold * GOLD_WEIGHT).toString().padStart(4, ".")}
                 TOTAL:.......${this.getFullScore().toString().padStart(4, ".")}`
     }
 

@@ -17,6 +17,7 @@ export default class Player {
         this.y = 0;
         this.hp = 10;
         this.strength = 2;
+        this.amountGold = 0
 
         this.previousY = null;
         this.previousX = null;
