@@ -1,10 +1,8 @@
-/*
- * GenDungeon is licensed under GNU General Public License v3.0.
- */
+'use strict';
 
 const {contextBridge, ipcRenderer} = require('electron');
 
-contextBridge.exposeInMainWorld('api', {
+contextBridge.exposeInMainWorld('ipc', {
     send: (channel, data) => {
         ipcRenderer.send(channel, data);
     },

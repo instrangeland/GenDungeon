@@ -1,44 +1,53 @@
-<!--
-  ~ GenDungeon is licensed under GNU General Public License v3.0.
-  -->
-
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <meta charset="utf-8">
     <title>GenDungeon</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-
-<div id="log">
-    <p class="msg-system">Loading...</p>
+<div id="menu">
+    <h1>GenDungeon</h1>
+    <ul id="main-menu">
+        <li>
+            <button class="new-game-button">New Game</button>
+        </li>
+        <li>
+            <button class="load-game-button">Load Game</button>
+        </li>
+        <li>
+            <button class="options-button">Options</button>
+        </li>
+        <li>
+            <button class="leaderboard-button">Leaderboard</button>
+        </li>
+        <li>
+            <button class="quit-button">Quit</button>
+        </li>
+    </ul>
+    <ul id="options-menu">
+        <li>
+            <button class="fullscreen-button">Fullscreen (Disabled)</button>
+        </li>
+        <li>
+            <button class="back-button">Go Back</button>
+        </li>
+    </ul>
+    <ul id="leaderboard-screen">
+        <li class="loading-text">Loading...</li>
+        <li class="leaderboard-wrapper">
+            <table class="leaderboard"></table>
+        </li>
+        <li>
+            <button class="back-button">Go Back</button>
+        </li>
+    </ul>
 </div>
-<div id="input-prefix">&gt;</div>
-<div id="input-wrapper">
-    <input id="input-box" type="text" placeholder="You can type here!" autocomplete="off"></div>
-<table id="minimap"></table>
+<button class="version-text">GenDungeon 0.3.1a</button>
 
-<script>
-    if (typeof module === 'object') {
-        window.module = module;
-        module = undefined;
-    }
-</script>
-
-<script src="js/lib/jquery-3.5.1.slim.min.js"></script>
-<script src="js/lib/perlin.min.js"></script>
-<script src="js/lib/seedrandom.min.js"></script>
-<script src="js/lib/indefinite-article.js"></script>
+<script src="js/lib/jquery-3.5.1.min.js"></script>
 <script src="js/game.js" type="module"></script>
-
-<script>
-    if (window.module) {
-        module = window.module;
-    }
-</script>
 
 </body>
 </html>

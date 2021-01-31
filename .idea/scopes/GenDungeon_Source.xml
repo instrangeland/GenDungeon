@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="GenDungeon Source" pattern="(file:index.js||file[GenDungeon]:app/js/modules//*||file:app/index.html||file:app/css/styles.css)&amp;&amp;!file[GenDungeon]:app/css/ttf//*&amp;&amp;!file[GenDungeon]:.idea//*&amp;&amp;!file:app/js/lib/indefinite-article.js&amp;&amp;!file:app/js/lib/jquery-3.5.1.slim.min.js&amp;&amp;!file:app/js/lib/seedrandom.min.js&amp;&amp;!file:app/js/lib/perlin.min.js&amp;&amp;!file[GenDungeon]:app/js/lib//*&amp;&amp;!file[GenDungeon]:app/js/lib/*" />
-</component>

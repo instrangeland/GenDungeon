@@ -12,22 +12,13 @@
     "start": "electron .",
     "test": "electron . test"
   },
-  "dependencies": {
-    "discord-rich-presence": "0.0.8",
-    "jquery": "^3.5.1",
-    "jsdoc": "^3.6.6"
-  },
   "devDependencies": {
-    "electron": "^11.1.1",
-    "electron-builder": "^22.9.1"
+    "electron": "^11.2.1",
+    "jsdoc": "^3.6.6",
+    "jshint": "^2.12.0"
   },
-  "build": {
-    "appId": "com.jlachniet.gendungeon",
-    "productName": "GenDungeon",
-    "copyright": "Licensed under GNU General Public License v3.0",
-    "artifactName": "gendungeon-setup-${version}a.${ext}",
-    "win": {
-      "target": "nsis"
-    }
+  "jshintConfig": {
+    "esversion": 9,
+    "node": true
   }
 }

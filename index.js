@@ -1,68 +1,44 @@
-/*
- * GenDungeon is licensed under GNU General Public License v3.0.
- */
-
 'use strict';
 
-// Imports
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, shell} = require('electron');
 const fs = require('fs');
 const path = require('path');
-const discordRP = require('discord-rich-presence')('801220293041455104');
 
-// Discord Rich Presence
-discordRP.updatePresence({
-    instance: true
-});
+const preferencesPath = path.join(app.getPath('userData'), 'options.json');
+const savePath = path.join(app.getPath('userData'), 'save.gend');
 
-// Electron
-let window;
-const savePath = path.join(app.getPath('userData'), 'save.pta');
-
-// IPC Main
-ipcMain.on('saveGame', (event, gameData) => {
-    fs.writeFile(savePath, gameData, () => {});
-});
-
-ipcMain.on('loadGame', () => {
-    fs.readFile(savePath, 'utf-8', (error, data) => {
-        window.webContents.send('receivedGameSave', data);
-    });
-});
-
-ipcMain.on('resetGame', () => {
-    fs.unlink(savePath, () => {});
-});
-
-ipcMain.on('drpc', (event, content) => {
-    discordRP.updatePresence({
-        instance: true,
-        state: content
-    });
-});
+let gameWindow;
 
 /**
- * Creates a new game window
+ * Creates a new Electron window and loads the game.
  */
-function newWindow() {
-    window = new BrowserWindow({
+function createWindow() {
+    gameWindow = new BrowserWindow({
         width: 1000,
         height: 600,
+        title: 'GenDungeon',
         icon: 'icon.png',
         webPreferences: {
             contextIsolation: true,
             preload: path.join(__dirname, 'app/js/preload.js')
         }
     });
+
     if (process.argv.includes('test')) {
-        window.openDevTools();
+        gameWindow.openDevTools();
     }
-    window.setTitle('GenDungeon');
-    window.removeMenu();
-    window.loadFile('app/index.html').then();
+
+    gameWindow.removeMenu();
+    gameWindow.loadFile('app\\index.html').then();
 }
 
-app.whenReady().then(newWindow);
+app.whenReady().then(createWindow);
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -70,8 +46,22 @@ app.on('window-all-closed', () => {
     }
 });
 
-app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-        newWindow();
+ipcMain.on('closeGame', () => {
+    gameWindow.close();
+});
+
+ipcMain.on('setFullScreen', (event, isFullScreen) => {
+    gameWindow.setFullScreen(isFullScreen);
+    fs.writeFileSync(preferencesPath, `{"isFullScreen": ${isFullScreen}}`);
+});
+
+ipcMain.on('openWebsite', () => {
+    shell.openExternal('https://gendungeon.com/').then();
+});
+
+ipcMain.on('getPreferences', () => {
+    if (!fs.existsSync(preferencesPath)) {
+        fs.writeFileSync(preferencesPath, '{"isFullScreen": false}');
     }
+    gameWindow.webContents.send('receivePreferences', fs.readFileSync(preferencesPath, 'utf-8'));
 });

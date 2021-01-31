@@ -1,173 +1,107 @@
-/*
- * GenDungeon is licensed under GNU General Public License v3.0.
- */
-
 @font-face {
-    font-family: "Press Start 2P";
-    src: url("ttf/PressStart2P-Regular.ttf");
+    font-family: 'RetroGaming';
+    src: url('../font/RetroGaming.ttf');
 }
 
-:root {
-    --background: #222;
-    --selected-text: #7be;
-    --divider: #888;
-    --input-placeholder: #888;
-    --restart-box-border: #eee;
-}
-
-.msg-player, #input-prefix, #input-box {
-    color: #aaa;
-}
-
-.msg-alert {
-    color: #e34;
-}
-
-.msg-combat {
-    color: #7af;
-}
-
-.msg-game {
-    color: #ffe;
-}
-
-.msg-movement {
-    color: #d80;
-}
-
-.msg-success {
-    color: #4a4;
-}
-
-.msg-system {
-    color: #5af;
-}
-
-.msg-restart {
-    color: #c34;
-}
-
-td {
-    background: #666;
-}
-
-td.explored {
-    background: #eee;
-}
-
-td.origin {
-    background: #48e;
-}
-
-td.player {
-    background: #4e9;
-}
-
-td.danger {
-    background: #e21;
-}
-
-td.collectable {
-    background: #fd2;
-}
-
-td.void {
-    background: black;
+html, body {
+    height: 100%;
 }
 
 html {
     box-shadow: inset 0 0 16px 4px rgba(0, 0, 0, 0.25);
-    height: 100%;
 }
 
 body {
+    background: #222;
     margin: 0;
 }
 
-body, #input-box {
-    background: var(--background);
-    font: 16px "Press Start 2P", monospace;
-}
-
-::selection {
-    background: var(--selected-text);
-}
-
-#log {
-    -ms-overflow-style: none;
-    bottom: 48px;
-    box-sizing: border-box;
-    line-height: 1.5;
-    overflow-wrap: break-word;
-    overflow-y: auto;
-    padding: 16px;
+#menu {
+    left: 50%;
     position: absolute;
-    scrollbar-width: none;
-    top: 0;
-    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
-::-webkit-scrollbar {
+h1 {
+    color: #4a7fff;
+    font: 44px 'RetroGaming';
+    letter-spacing: -2px;
+    margin: 0 0 16px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    background: none;
+    border: none;
+    color: #eee;
+    cursor: pointer;
+    font: 22px 'RetroGaming';
+    margin-bottom: 4px;
+    padding: 0;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    color: #bbb;
+}
+
+#options-menu, #leaderboard-screen {
     display: none;
 }
 
-p, hr {
-    margin: 0 0 24px;
+.fullscreen-button {
+    margin-bottom: 16px;
 }
 
-hr {
-    background: var(--divider);
-    border: 1px solid var(--divider);
+.loading-text, .leaderboard-wrapper {
+    color: #666;
+    font: 22px 'RetroGaming';
+    margin-bottom: 24px;
 }
 
-.msg-restart {
-    border: 1px solid var(--restart-box-border);
-    border-radius: 2px;
-    padding: 4px;
-    text-align: center;
-}
-
-.msg-restart:hover {
-    cursor: pointer;
-}
-
-#input-prefix, #input-wrapper {
-    bottom: 16px;
-    position: absolute;
-}
-
-#input-prefix {
-    left: 16px;
-}
-
-#input-wrapper {
-    left: 48px;
-    right: 16px;
-}
-
-#input-box {
-    border: none;
-    padding: 0;
-    width: 100%;
-}
-
-:focus {
-    outline: none;
-}
-
-::placeholder {
-    color: var(--input-placeholder);
-}
-
-#minimap {
-    opacity: 50%;
-    position: absolute;
-    right: 4px;
-    top: 4px;
+.leaderboard {
+    color: #ccc;
+    margin: auto;
 }
 
 td {
-    height: 8px;
-    padding: 0;
-    width: 8px;
+    padding: 0 16px;
+}
+
+.version-text {
+    bottom: 8px;
+    color: #888;
+    font: 22px 'RetroGaming';
+    left: 8px;
+    position: absolute;
+}
+
+@media (min-width: 1020px) {
+    h1 {
+        font-size: 66px;
+    }
+
+    button {
+        font-size: 33px;
+    }
+}
+
+@media (max-width: 340px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    button, .loading-text, td, .version-text {
+        font-size: 11px;
+    }
 }
