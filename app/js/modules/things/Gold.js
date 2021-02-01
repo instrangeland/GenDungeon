@@ -11,10 +11,9 @@ import Thing from './Thing.js';
 export default class Gold extends Thing {
     constructor() {
         super();
-        this.amount = this.generateGold();
+        this.amount = getRandInt(10,80);
         this.isVisible = true;
-        this.name = this.generateName();
-        this.isGrabbable = true;
+        this.name = 'gold';
     }
     getDescription() {
         return `${this.name.toLowerCase()}.`;
@@ -24,12 +23,6 @@ export default class Gold extends Thing {
      * Generates a random food name.
      * @return {number} The name of the food
      */
-    generateGold() {
-        return getRandInt(10,80);
-    }
-    generateName() {
-        return "gold";
-    }
     getShortDescription() {
         return this.amount.toString() + " gold";
     }

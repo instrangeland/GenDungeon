@@ -165,8 +165,7 @@ export default class Room {
         ];
 
 
-        var desc = `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
-        return desc;
+        return `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
     }
 
     /**
