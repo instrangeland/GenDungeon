@@ -5,7 +5,8 @@
 export const FOOD_CHANCE = 0.7;
 export const WEAPON_CHANCE = 0.75;
 export const ARMOR_CHANCE = 0.95;
-export const GOLD_CHANCE = 0.7;
+export const GOLD_CHANCE = 0.65;
+export const CURIOSITY_CHANCE = 0.8;
 
 export const ZOMBIE_CHANCE = 0.85;
 export const SKELETON_CHANCE = 0.8;

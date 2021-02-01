@@ -19,7 +19,7 @@ import {
     SKELETON_CHANCE,
     SPIDER_CHANCE,
     VAMPIRE_CHANCE,
-    WEAPON_CHANCE, ZOMBIE_CHANCE
+    WEAPON_CHANCE, ZOMBIE_CHANCE, CURIOSITY_CHANCE
 } from './Values.js';
 
 /**
@@ -38,6 +38,7 @@ function equalsCI(str1, str2) {
  * @param x {number} The x-coordinate
  */
 export default class Room {
+
     constructor(y, x) {
         this.y = y;
         this.x = x;
@@ -60,6 +61,7 @@ export default class Room {
         this.contents = [];
 
         this.generateMonsters();
+
         if (game.seed.quick() > FOOD_CHANCE) {
             this.contents.push(new Food());
         }
@@ -85,26 +87,52 @@ export default class Room {
      */
     generateDescription() {
         const adjectives = [
-            'An unlit',
-            'A dark',
-            'A dimly lit',
-            'A bright',
-            'A mysterious',
-            'An eerie',
-            'An unnerving',
-            'A pristine',
-            'A dirty',
-            'A slanted',
-            'A round',
-            'A curved',
-            'A square',
-            'A rectangular',
-            'A semicircular',
-            'A strange',
-            'A weird',
-            'A symmetrical',
-            'A tall'
+            'unlit',
+            'dark',
+            'dimly lit',
+            'bright',
+            'mysterious',
+            'eerie',
+            'unnerving',
+            'pristine',
+            'dirty',
+            'slanted',
+            'round',
+            'curved',
+            'square',
+            'rectangular',
+            'semicircular',
+            'strange',
+            'weird',
+            'symmetrical',
+            'tall'
         ];
+
+        function getExtra() {
+            const coolRoomThing = [
+                'small puddle',
+                'pit',
+                'carved mural',
+                'painted mural',
+                'mist of darkness',
+                'rock column',
+                'pile of skulls'
+            ];
+            const coolRoomThingDescriptions = {
+                'small puddle': "A small puddle, barely enough to wet your feet.",
+                'pit': "You can't see more tha few feet down this massive pit.",
+                'carved mural': "The wall appears to have had a mural carved into it. Unfortunately, water appears to have washed" +
+                    "away most of the detail...",
+                'painted mural': "Somehow, a painted mural has survived all this time. It looks like some sort of" +
+                    "primitive cave art.",
+                'mist of darkness': "You cstill see, but a faint mist obscures fine details.",
+                'rock column': "A massive column of rock supports the ceiling, best to not touch it.",
+                'pile of skulls': "... ewww"
+            };
+            var desc = getRandomElement(coolRoomThing);
+            desc = `${indefiniteArticle(desc)} ${desc}`;
+
+        }
 
         const nouns = [
             'room',
@@ -115,12 +143,18 @@ export default class Room {
             'entranceway'
         ];
 
-        return `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
+
+        var desc = `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
+        if (game.seed.quick() > CURIOSITY_CHANCE)
+            desc += getExtra();
+        console.log(desc)
+        return desc;
     }
 
     /**
      * Adds monsters to the room.
      */
+
     generateMonsters() {
         this.addMonsterChance(monsterTypes.ZOMBIE, 1, ZOMBIE_CHANCE);
         this.addMonsterChance(monsterTypes.SKELETON, 2, SKELETON_CHANCE);
@@ -134,10 +168,13 @@ export default class Room {
      * Gets a formatted description of the room and its contents.
      * @return {string} The description
      */
+    function
+
     getRoomInfo() {
         this.isExplored = true;
         const world = game.world;
         const pathList = [];
+
 
         if (world.getRoom(this.y + 1, this.x).isActive) {
             pathList.push('north');
@@ -165,13 +202,13 @@ export default class Room {
 
         let pathsDescription;
         if (pathList.length === 1) {
-            pathsDescription = `You can go ${pathList[0]} from here.`;
+            pathsDescription = `You cgo ${pathList[0]} from here.`;
         } else if (pathList.length === 2) {
-            pathsDescription = `You can go ${pathList[0]} and ${pathList[1]} from here.`;
+            pathsDescription = `You cgo ${pathList[0]} and ${pathList[1]} from here.`;
         } else if (pathList.length === 3) {
-            pathsDescription = `You can go ${pathList[0]}, ${pathList[1]}, and ${pathList[2]} from here.`;
+            pathsDescription = `You cgo ${pathList[0]}, ${pathList[1]}, and ${pathList[2]} from here.`;
         } else {
-            pathsDescription = 'You can go in every direction from here.';
+            pathsDescription = 'You cgo in every direction from here.';
         }
 
         if (this.listThings()) {
@@ -348,7 +385,7 @@ export default class Room {
         const food = this.getThing(thing);
         if (food) {
             if (food instanceof Food) {
-                this.takeThing(player,thing);
+                this.takeThing(player, thing);
             } else {
                 GameLog.addMessage('You can\'t eat that.', logTypes.ALERT);
                 return false;
@@ -363,7 +400,7 @@ export default class Room {
         const equippable = this.getThing(thing);
         if (equippable) {
             if (equippable instanceof Weapon || equippable instanceof Armor) {
-                return this.takeThing(player,thing);
+                return this.takeThing(player, thing);
             } else {
                 GameLog.addMessage('You can\'t equip that.', logTypes.ALERT);
                 return false;
