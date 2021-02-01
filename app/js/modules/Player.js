@@ -56,7 +56,6 @@ export default class Player {
             this.previousX = this.x;
             this.y += yOffset;
             this.x += xOffset;
-            console.log(game.world.getRoom(this.y, this.x))
             DiscordRP.updateRoom(game.world.getRoom(this.y, this.x).description);
             GameLog.addMessage(`You go ${directionName}.`, logTypes.MOVEMENT);
             if (roomToMoveTo.distance > game.score["distance"]) {
