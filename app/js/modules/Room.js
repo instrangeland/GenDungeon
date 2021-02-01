@@ -11,6 +11,7 @@ import Thing from './things/Thing.js';
 import Weapon from './things/Weapon.js';
 import Armor from './things/Armor.js';
 import Gold from './things/Gold.js';
+import Curiosity from './things/Curiosity.js';
 import {
     FOOD_CHANCE,
     GHOST_CHANCE,
@@ -55,10 +56,15 @@ export default class Room {
         } else {
             this.isActive = noise.simplex2(y / 2 + 471 * game.seed.quick(), x / 2 + 471 * game.seed.quick()) > -0.15;
         }
-
+        this.contents = [];
         this.description = this.generateDescription();
         this.distance = Math.sqrt(x ** 2 + y ** 2);
-        this.contents = [];
+        if (game.seed.quick() > CURIOSITY_CHANCE) {
+            var curiosity = this.makeRoomCuriosity();
+            this.contents.push(curiosity);
+            this.description += ` with a ${curiosity.name}`;
+        }
+
 
         this.generateMonsters();
 
@@ -80,7 +86,44 @@ export default class Room {
         this.contents.push(new Thing('pathway'));
         this.contents.push(new Thing('monster'));
     }
+    makeRoomCuriosity() {
+        const coolThingName = [
+            'puddle',
+            'pit',
+            'engraving',
+            'mural',
+            'mist',
+            'column',
+            'skulls',
+            'gravestone'
+        ]
+        const coolRoomThing = [
+            'small puddle',
+            'pit',
+            'carved engraving',
+            'painted mural',
+            'mist of darkness',
+            'rock column',
+            'pile of skulls',
+            'large gravestone'
+        ];
+        const coolRoomThingDescriptions = {
+            'puddle': "A small puddle, barely enough to wet your feet.",
+            'pit': "You can't see more tha few feet down this massive pit.",
+            'engraving': "The wall appears to have had a engraving carved into it. Unfortunately, water appears to have washed" +
+                "away most of the detail...",
+            'mural': "Somehow, a painted mural has survived all this time. It looks like some sort of" +
+                "primitive cave art.",
+            'mist': "You cstill see, but a faint mist obscures fine details.",
+            'column': "A massive column of rock supports the ceiling, best to not touch it.",
+            'skulls': "... ewww",
+            'gravestone': 'The gravestone is made of old and worn grey stone. The inscription has faded away.'
+        };
+        var name = getRandomElement(coolThingName);
 
+        return new Curiosity(name, coolRoomThingDescriptions[name], coolRoomThing[name]);
+
+    }
     /**
      * Generates a random room description.
      * @return {string} The description
@@ -109,33 +152,8 @@ export default class Room {
             'well lit'
         ];
 
-        function getExtra() {
-            const coolRoomThing = [
-                'small puddle',
-                'pit',
-                'carved mural',
-                'painted mural',
-                'mist of darkness',
-                'rock column',
-                'pile of skulls',
-                'large gravestone'
-            ];
-            const coolRoomThingDescriptions = {
-                'small puddle': "A small puddle, barely enough to wet your feet.",
-                'pit': "You can't see more tha few feet down this massive pit.",
-                'carved mural': "The wall appears to have had a mural carved into it. Unfortunately, water appears to have washed" +
-                    "away most of the detail...",
-                'painted mural': "Somehow, a painted mural has survived all this time. It looks like some sort of" +
-                    "primitive cave art.",
-                'mist of darkness': "You cstill see, but a faint mist obscures fine details.",
-                'rock column': "A massive column of rock supports the ceiling, best to not touch it.",
-                'pile of skulls': "... ewww",
-                'large gravestone': 'The gravestone is made of old and worn grey stone. The inscription has faded away.'
-            };
-            var desc = getRandomElement(coolRoomThing);
-            desc = `${indefiniteArticle(desc)} ${desc}`;
 
-        }
+
 
         const nouns = [
             'room',
@@ -148,9 +166,6 @@ export default class Room {
 
 
         var desc = `${getRandomElement(adjectives)} ${getRandomElement(nouns)}`;
-        if (game.seed.quick() > CURIOSITY_CHANCE)
-            desc += getExtra();
-        console.log(desc)
         return desc;
     }
 
