@@ -105,7 +105,8 @@ export default class Room {
             'strange',
             'weird',
             'symmetrical',
-            'tall'
+            'tall',
+            'well lit'
         ];
 
         function getExtra() {
@@ -116,7 +117,8 @@ export default class Room {
                 'painted mural',
                 'mist of darkness',
                 'rock column',
-                'pile of skulls'
+                'pile of skulls',
+                'large gravestone'
             ];
             const coolRoomThingDescriptions = {
                 'small puddle': "A small puddle, barely enough to wet your feet.",
@@ -127,7 +129,8 @@ export default class Room {
                     "primitive cave art.",
                 'mist of darkness': "You cstill see, but a faint mist obscures fine details.",
                 'rock column': "A massive column of rock supports the ceiling, best to not touch it.",
-                'pile of skulls': "... ewww"
+                'pile of skulls': "... ewww",
+                'large gravestone': 'The gravestone is made of old and worn grey stone. The inscription has faded away.'
             };
             var desc = getRandomElement(coolRoomThing);
             desc = `${indefiniteArticle(desc)} ${desc}`;
@@ -202,13 +205,13 @@ export default class Room {
 
         let pathsDescription;
         if (pathList.length === 1) {
-            pathsDescription = `You cgo ${pathList[0]} from here.`;
+            pathsDescription = `You can go ${pathList[0]} from here.`;
         } else if (pathList.length === 2) {
-            pathsDescription = `You cgo ${pathList[0]} and ${pathList[1]} from here.`;
+            pathsDescription = `You can go ${pathList[0]} and ${pathList[1]} from here.`;
         } else if (pathList.length === 3) {
-            pathsDescription = `You cgo ${pathList[0]}, ${pathList[1]}, and ${pathList[2]} from here.`;
+            pathsDescription = `You can go ${pathList[0]}, ${pathList[1]}, and ${pathList[2]} from here.`;
         } else {
-            pathsDescription = 'You cgo in every direction from here.';
+            pathsDescription = 'You can go in every direction from here.';
         }
 
         if (this.listThings()) {
